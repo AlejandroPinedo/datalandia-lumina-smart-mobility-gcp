@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "dataflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/dataflow-lumina-multifuente-20261019-224300/candidate.json",
+    "sha256": "14cdb5f639a6db8fa9272143b109974b47f0db2523192484f71ffdff37e58701",
+    "bytes": 7087
+  },
+  "artifact": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/02_lumina_dataflow_multifuente.html",
+    "sha256": "c9903d413971d0b45ddfd4296a0df13c6005376fccf9977bc70d78752bf8370f",
+    "bytes": 834677
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/02_lumina_dataflow_multifuente.finalize.json",
+    "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/02_lumina_dataflow_multifuente.finalize-summary.json",
+    "browserCheckReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/02_lumina_dataflow_multifuente.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-20T03:42:10.694Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2893,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

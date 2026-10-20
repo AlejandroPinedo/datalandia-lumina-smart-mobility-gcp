@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "774b4ffc-ef60-4c50-b291-ba8fd2a7ab1f",
+  "status": "current",
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/dataflow-lumina-multifuente-20261019-224300/candidate.json",
+  "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/02_lumina_dataflow_multifuente.html",
+  "specification": {
+    "sha256": "14cdb5f639a6db8fa9272143b109974b47f0db2523192484f71ffdff37e58701",
+    "bytes": 7087
+  },
+  "artifact": {
+    "sha256": "c9903d413971d0b45ddfd4296a0df13c6005376fccf9977bc70d78752bf8370f",
+    "bytes": 834677
+  }
+}

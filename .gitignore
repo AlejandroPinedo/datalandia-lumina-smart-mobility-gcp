@@ -1,0 +1,10 @@
+# macOS & Office temporary files
+.DS_Store
+~$*
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env.local

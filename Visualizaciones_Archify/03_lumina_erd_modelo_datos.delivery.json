@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "a90385d2-1db3-420f-b30f-770eba5bcfb9",
+  "status": "current",
+  "command": "deliver",
+  "type": "erd",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/erd-lumina-schema-20261019-224400/candidate.json",
+  "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/03_lumina_erd_modelo_datos.html",
+  "specification": {
+    "sha256": "b1ddbe79651f672989da2ac9aeaa751556f2c2c9afe2c52fb0a422d4b183c382",
+    "bytes": 7611
+  },
+  "artifact": {
+    "sha256": "9c9ee243b79ffecc499a35b06e64dd3b301da3e9b8cd8a91b0d755fa905bd965",
+    "bytes": 847904
+  }
+}

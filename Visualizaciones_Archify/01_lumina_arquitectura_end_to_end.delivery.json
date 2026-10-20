@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "4d0c9196-6602-42cc-9aee-6f4d4e42d70e",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/architecture-lumina-gcp-20261019-224200/candidate.json",
+  "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/01_lumina_arquitectura_end_to_end.html",
+  "specification": {
+    "sha256": "9f69644bf164c711ea69878464b27fa576b505607b3fe23460040ad2e0e45581",
+    "bytes": 7179
+  },
+  "artifact": {
+    "sha256": "0f8bf468c1448e8f3cbe07ddcb5241ba519365df24d2bbe446b5121cb87962be",
+    "bytes": 840782
+  }
+}
