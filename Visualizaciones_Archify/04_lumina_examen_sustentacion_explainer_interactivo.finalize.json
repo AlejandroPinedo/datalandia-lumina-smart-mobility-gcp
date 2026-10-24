@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "explainer",
   "quality": "showcase",
-  "startedAt": "2026-10-24T05:43:50.679Z",
+  "startedAt": "2026-10-24T05:50:19.460Z",
   "specification": {
-    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
-    "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
-    "bytes": 11147
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-deep-20261024-004800/candidate.archify.md",
+    "sha256": "c5a5ab22e2411664d33879b150bfd82ebab0c1c9c05b85d6ecd9317379fda977",
+    "bytes": 14915
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
-    "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
-    "bytes": 1001940
+    "sha256": "e9a899c0abb292b2253bb8ef2b9b79ed4da8e73ceb6cd50356692389752e2cfe",
+    "bytes": 1031278
   },
   "stages": {
     "browser-check": {
@@ -31,7 +31,7 @@
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "explainer",
-        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-deep-20261024-004800/candidate.archify.md",
         "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
         "--quality",
         "showcase",
@@ -42,8 +42,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
-          "bytes": 11147
+          "sha256": "c5a5ab22e2411664d33879b150bfd82ebab0c1c9c05b85d6ecd9317379fda977",
+          "bytes": 14915
         },
         "validation": {
           "checksPassed": 4,
@@ -58,13 +58,13 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 910,
+      "durationMs": 903,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "explainer",
-        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-deep-20261024-004800/candidate.archify.md",
         "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
         "--quality",
         "showcase",
@@ -72,14 +72,14 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "b0dcb4de-63ca-4c4b-9b94-863f9fd94e95",
+        "receiptId": "0152321d-5ccf-443e-b2c4-4d6697b21c63",
         "ok": true,
         "command": "deliver",
         "type": "explainer",
-        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-deep-20261024-004800/candidate.archify.md",
         "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
         "explainer": {
-          "preparedSha256": "6ab371571453f546ff9a0e3e2e439d581f1c100ad0c61ef35ddd9789f442bd92",
+          "preparedSha256": "358cf967c621e1abc583ae142115d49d6b29dc73a3922539b2364b298bba6d56",
           "dependencies": [
             {
               "kind": "diagram-spec",
@@ -98,12 +98,12 @@
           ]
         },
         "specification": {
-          "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
-          "bytes": 11147
+          "sha256": "c5a5ab22e2411664d33879b150bfd82ebab0c1c9c05b85d6ecd9317379fda977",
+          "bytes": 14915
         },
         "artifact": {
-          "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
-          "bytes": 1001940
+          "sha256": "e9a899c0abb292b2253bb8ef2b9b79ed4da8e73ceb6cd50356692389752e2cfe",
+          "bytes": 1031278
         },
         "validation": {
           "checksPassed": 4,
@@ -129,7 +129,7 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 487,
+      "durationMs": 517,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -142,15 +142,15 @@
         "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
         "family": "explainer",
         "artifact": {
-          "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
-          "bytes": 1001940
+          "sha256": "e9a899c0abb292b2253bb8ef2b9b79ed4da8e73ceb6cd50356692389752e2cfe",
+          "bytes": 1031278
         },
         "checks": [
           {
             "name": "explainer_structure",
             "ok": true,
             "details": [
-              "80 unique DOM IDs"
+              "100 unique DOM IDs"
             ]
           },
           {
@@ -188,7 +188,7 @@
               "id": "stress-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-1P3iul/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-NnN8Gp/child.html",
                 "artifact": {
                   "sha256": "a2412369c4e21d22dd8e4348f1e250c63912cdff6d7e5fbd591efdddc2b4c576",
                   "bytes": 819196
@@ -315,7 +315,7 @@
               "id": "drp-arch",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-GxmtTu/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-6vVCVM/child.html",
                 "artifact": {
                   "sha256": "ad2292d2d41231161d22172d4386af9d1a2b23ef171e64b847bc57565e041c91",
                   "bytes": 827709
@@ -476,7 +476,7 @@
         },
         "diagnostics": [],
         "provenance": "current",
-        "deliveryReceiptId": "b0dcb4de-63ca-4c4b-9b94-863f9fd94e95"
+        "deliveryReceiptId": "0152321d-5ccf-443e-b2c4-4d6697b21c63"
       }
     }
   },
@@ -490,8 +490,8 @@
     "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_lumina_examen_sustentacion_explainer_interactivo.finalize-summary.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-24T05:43:52.338Z",
-  "durationMs": 1659,
+  "finishedAt": "2026-10-24T05:50:21.157Z",
+  "durationMs": 1696,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",

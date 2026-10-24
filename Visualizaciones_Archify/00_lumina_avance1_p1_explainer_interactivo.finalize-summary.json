@@ -6,14 +6,14 @@
   "type": "explainer",
   "quality": "showcase",
   "specification": {
-    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-20261024-003800/candidate.archify.md",
-    "sha256": "f0f40d8378d63ee684959f777182f5404200bf75e9719f6aba87c2ac82db394c",
-    "bytes": 8121
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-deep-20261024-004800/candidate.archify.md",
+    "sha256": "f1a0a3c2d04ae86af7aae97b219bb60ac724e4138a12f643cd6783fb9c08f6d8",
+    "bytes": 14668
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Lumina_Avance1_P1_Explainer_Interactivo.html",
-    "sha256": "9676cc8bf0abff521c76ba39cd9bf294a1e9bdf9a6934a3fdca4c6f17da9df90",
-    "bytes": 1081292
+    "sha256": "5f48f8b91c134f31130eff6d7560fc55bf763912e2ae614f8465fe5c5fc559a9",
+    "bytes": 1130826
   },
   "gates": {
     "validate": "pass",
@@ -42,7 +42,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 1734,
+  "durationMs": 1727,
   "browserCheck": {
     "requested": false,
     "ran": false

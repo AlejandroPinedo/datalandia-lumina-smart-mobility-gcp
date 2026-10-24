@@ -6,14 +6,14 @@
   "type": "explainer",
   "quality": "showcase",
   "specification": {
-    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
-    "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
-    "bytes": 11147
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-deep-20261024-004800/candidate.archify.md",
+    "sha256": "c5a5ab22e2411664d33879b150bfd82ebab0c1c9c05b85d6ecd9317379fda977",
+    "bytes": 14915
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
-    "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
-    "bytes": 1001940
+    "sha256": "e9a899c0abb292b2253bb8ef2b9b79ed4da8e73ceb6cd50356692389752e2cfe",
+    "bytes": 1031278
   },
   "gates": {
     "validate": "pass",
@@ -42,7 +42,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 1659,
+  "durationMs": 1696,
   "browserCheck": {
     "requested": false,
     "ran": false
