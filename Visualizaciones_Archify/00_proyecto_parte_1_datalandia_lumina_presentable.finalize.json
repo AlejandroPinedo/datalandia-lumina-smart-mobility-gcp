@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "explainer",
   "quality": "showcase",
-  "startedAt": "2026-10-24T06:34:02.727Z",
+  "startedAt": "2026-10-24T06:43:57.046Z",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "a9f9844ef4c6672cb00af856a953f19ea426b873ac5327fe4b3bc7a60fab6720",
-    "bytes": 20511
+    "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
+    "bytes": 24515
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "3db46fc6549c0ea5d30b086175caff0964dd6303d3ce7b51277a6ec652ce1dfc",
-    "bytes": 1909441
+    "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
+    "bytes": 2368469
   },
   "stages": {
     "browser-check": {
@@ -42,8 +42,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "a9f9844ef4c6672cb00af856a953f19ea426b873ac5327fe4b3bc7a60fab6720",
-          "bytes": 20511
+          "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
+          "bytes": 24515
         },
         "validation": {
           "checksPassed": 4,
@@ -58,7 +58,7 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1357,
+      "durationMs": 1603,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -72,14 +72,14 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "3c82a596-abb8-4922-b92e-72c60cf6f39c",
+        "receiptId": "4b9976b2-5ebc-4995-bea0-ae25940c8321",
         "ok": true,
         "command": "deliver",
         "type": "explainer",
         "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
         "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "explainer": {
-          "preparedSha256": "2e68f9d4655dc8c7df02a306adbbcb4b6736f9df3c61526201cbf3d511f76dd4",
+          "preparedSha256": "81eb209d6936c5752539c93f93a9425428ef27ae40fd60a4940460cefb6e1830",
           "dependencies": [
             {
               "kind": "diagram-spec",
@@ -100,8 +100,8 @@
               "kind": "diagram-spec",
               "id": "stress-flow",
               "inline": true,
-              "sha256": "62834e768e41d35d39ad08e2429ad00310a56f4179a486588efa63bf574a6034",
-              "bytes": 1216
+              "sha256": "d9e9c18feb74e0fb5612e540411c783f2f88eb9fb9e430f381f62a43c9d6bc04",
+              "bytes": 1776
             },
             {
               "kind": "diagram-spec",
@@ -109,16 +109,23 @@
               "inline": true,
               "sha256": "d5019543c18d2ce7ad378b23cf4d322cdd1dda2d1ab591522aa932f147f5159b",
               "bytes": 1142
+            },
+            {
+              "kind": "diagram-spec",
+              "id": "drp-arch",
+              "inline": true,
+              "sha256": "210c8cdf375438d64dc7be10f0649e4c8aedaba56dbb679769a03d5f61a4fee8",
+              "bytes": 2293
             }
           ]
         },
         "specification": {
-          "sha256": "a9f9844ef4c6672cb00af856a953f19ea426b873ac5327fe4b3bc7a60fab6720",
-          "bytes": 20511
+          "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
+          "bytes": 24515
         },
         "artifact": {
-          "sha256": "3db46fc6549c0ea5d30b086175caff0964dd6303d3ce7b51277a6ec652ce1dfc",
-          "bytes": 1909441
+          "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
+          "bytes": 2368469
         },
         "validation": {
           "checksPassed": 4,
@@ -144,7 +151,7 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 835,
+      "durationMs": 964,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -157,15 +164,15 @@
         "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "family": "explainer",
         "artifact": {
-          "sha256": "3db46fc6549c0ea5d30b086175caff0964dd6303d3ce7b51277a6ec652ce1dfc",
-          "bytes": 1909441
+          "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
+          "bytes": 2368469
         },
         "checks": [
           {
             "name": "explainer_structure",
             "ok": true,
             "details": [
-              "146 unique DOM IDs"
+              "179 unique DOM IDs"
             ]
           },
           {
@@ -177,7 +184,7 @@
             "name": "explainer_dependencies",
             "ok": true,
             "details": [
-              "4 frozen dependencies"
+              "5 frozen dependencies"
             ]
           },
           {
@@ -187,7 +194,8 @@
               "lumina-arch-main: pass",
               "lumina-erd: pass",
               "stress-flow: pass",
-              "api-flow: pass"
+              "api-flow: pass",
+              "drp-arch: pass"
             ]
           }
         ],
@@ -205,7 +213,7 @@
               "id": "lumina-arch-main",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-WLER2n/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-dteX2s/child.html",
                 "artifact": {
                   "sha256": "3a9e5839ef4069e9b70b5f41cf9d335be0a54ab151b71bebf86014f89c2009c4",
                   "bytes": 832735
@@ -366,7 +374,7 @@
               "id": "lumina-erd",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-8Zggp6/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-RsqLcA/child.html",
                 "artifact": {
                   "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
                   "bytes": 847975
@@ -507,10 +515,10 @@
               "id": "stress-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-zPpU5t/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-XezdZh/child.html",
                 "artifact": {
-                  "sha256": "d4817ecd33c4081d6339deecc7afca2efee5236b5e94f6e324aec01ea9314dcd",
-                  "bytes": 815466
+                  "sha256": "f84e6890e7605005dea4595faf2cad2e35d8591e87dc3be8d61e920816602684",
+                  "bytes": 818994
                 },
                 "checks": [
                   {
@@ -577,18 +585,18 @@
                     "containerBorderRuns": 0,
                     "labelRouteClearanceIssues": 0,
                     "labelCanvasOverflowIssues": 0,
-                    "minLabelRouteClearance": 66.5,
+                    "minLabelRouteClearance": 13,
                     "desktopReadabilityIssues": 0,
                     "viewportHeightIssues": 0,
-                    "minProjectedNodeTextPx": 7.5,
-                    "maxBends": 1,
+                    "minProjectedNodeTextPx": 6.289095519864751,
+                    "maxBends": 0,
                     "routesOverSuggestedBends": 0,
                     "maxStretch": 1,
                     "routesOverSuggestedStretch": 0,
-                    "minSegmentPx": 133,
+                    "minSegmentPx": 8,
                     "minInteriorSegmentPx": null,
-                    "shortSegmentCount": 0,
-                    "shortEndpointSegmentCount": 0,
+                    "shortSegmentCount": 2,
+                    "shortEndpointSegmentCount": 2,
                     "shortInteriorSegmentCount": 0,
                     "microSegmentCount": 0
                   },
@@ -603,37 +611,28 @@
                     "detours": []
                   },
                   "leadingSpace": {
-                    "measured": true,
-                    "emptyTopPx": 80,
-                    "emptyTopRatio": 0.203,
-                    "occupiedTop": 80,
-                    "viewBoxTop": 0,
-                    "canvasHeight": 394,
-                    "typicalNodeHeight": 60,
+                    "measured": false,
                     "reviewSuggested": false
                   },
                   "desktopReadability": {
-                    "budgetBasis": "recognized-declared-wide",
+                    "budgetBasis": "legacy-930",
                     "readerContract": "declared-wide-v1",
-                    "availableDiagramWidth": 1136.25,
-                    "actualBudgetPx": 1136.25,
-                    "actualReaderWidth": 1166.25,
-                    "desiredReaderWidth": 1166.25,
-                    "viewportCap": 1376,
-                    "limit": "source-size",
-                    "requestedTargetPx": 7.5,
-                    "requestedTargetMet": true,
+                    "availableDiagramWidth": 930,
+                    "actualBudgetPx": 930,
+                    "limit": "legacy",
+                    "requestedTargetPx": null,
+                    "requestedTargetMet": null,
                     "hardFloorPx": 6,
                     "hardFloorMet": true,
                     "minimumOwner": {
                       "kind": "edge",
-                      "id": "spike-to-pubsub-1",
-                      "from": "spike",
-                      "to": "pubsub"
+                      "id": "beam-to-check-1",
+                      "from": "beam",
+                      "to": "check"
                     },
                     "minimumSourceTextPx": 8,
-                    "minimumProjectedTextPx": 7.5,
-                    "semanticTextCount": 9
+                    "minimumProjectedTextPx": 6.289095519864751,
+                    "semanticTextCount": 13
                   },
                   "issues": []
                 }
@@ -643,7 +642,7 @@
               "id": "api-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-fSUko0/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-FnjtOa/child.html",
                 "artifact": {
                   "sha256": "54d648f049f281ae7dd6423babdbdd903bdb46464cb93ffea0cace71602e0a90",
                   "bytes": 811085
@@ -777,12 +776,173 @@
                   "issues": []
                 }
               }
+            },
+            {
+              "id": "drp-arch",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-b5Og5J/child.html",
+                "artifact": {
+                  "sha256": "786254b2c2cb28e4a1d9d1c4540d5b2cb98f41d3490c93c9289976d26094f14d",
+                  "bytes": 827688
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 20,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.606134969325153,
+                    "maxBends": 3,
+                    "routesOverSuggestedBends": 1,
+                    "maxStretch": 1.081,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 24,
+                    "minInteriorSegmentPx": 47,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "run2-to-bt2-1",
+                          "from": "run2",
+                          "to": "bt2",
+                          "label": "lectura failover",
+                          "collectionIndex": 8,
+                          "artifactIndex": 9
+                        },
+                        "bends": 3,
+                        "stretch": 1.081,
+                        "directCorridorBlockers": [
+                          {
+                            "id": "bt1",
+                            "label": "Bigtable Cluster Z1 (us-central1)",
+                            "box": [
+                              1042,
+                              266,
+                              234,
+                              60
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "leadingSpace": {
+                    "measured": true,
+                    "emptyTopPx": 80,
+                    "emptyTopRatio": 0.138,
+                    "occupiedTop": 80,
+                    "viewBoxTop": 0,
+                    "canvasHeight": 580,
+                    "typicalNodeHeight": 60,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "recognized-declared-wide",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 1346,
+                    "actualBudgetPx": 1346,
+                    "actualReaderWidth": 1376,
+                    "desiredReaderWidth": 1558.125,
+                    "viewportCap": 1376,
+                    "limit": "viewport-cap",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": false,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "users-to-lb-1",
+                      "from": "users",
+                      "to": "lb"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.606134969325153,
+                    "semanticTextCount": 20
+                  },
+                  "issues": []
+                }
+              }
             }
           ]
         },
         "diagnostics": [],
         "provenance": "current",
-        "deliveryReceiptId": "3c82a596-abb8-4922-b92e-72c60cf6f39c"
+        "deliveryReceiptId": "4b9976b2-5ebc-4995-bea0-ae25940c8321"
       }
     }
   },
@@ -796,8 +956,8 @@
     "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize-summary.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-24T06:34:05.167Z",
-  "durationMs": 2440,
+  "finishedAt": "2026-10-24T06:43:59.856Z",
+  "durationMs": 2809,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",
