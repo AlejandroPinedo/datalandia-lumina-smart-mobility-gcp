@@ -144,12 +144,15 @@ def crear_infraestructura_gcp():
       total_fare_usd FLOAT64 OPTIONS(description='Costo total del viaje en USD'),
       cost_per_km_usd FLOAT64 OPTIONS(description='KPI clave: Costo por kilometro recorrido (USD/km)'),
       payment_type STRING OPTIONS(description='LUMINA_UNIFIED_PAY, CARD, CASH'),
+      rider_id_hash STRING OPTIONS(description='Identificador seudonimizado con SHA-256 (Cloud DLP / GDPR Privacy)'),
+      payment_token_masked STRING OPTIONS(description='Token de pago enmascarado (Lumina Unified Pay DLP Masked)'),
       ts_ingesta_bq TIMESTAMP OPTIONS(description='Timestamp de carga en BigQuery Bronze')
     )
     PARTITION BY DATE(pickup_datetime)
     CLUSTER BY origin_zone_id, dest_zone_id, transport_mode, agency_id
     OPTIONS (
-      description = 'Fuente F1 (Batch/Micro-batch): Registro de viajes multimodales basado en NYC TLC Trip Records'
+      description = 'Fuente F1 (Batch/Micro-batch): Registro de viajes multimodales basado en NYC TLC Trip Records',
+      partition_expiration_days = 90
     );
 
     -- =========================================================================
@@ -175,7 +178,8 @@ def crear_infraestructura_gcp():
     PARTITION BY travel_date
     CLUSTER BY origin_zone_id, dest_zone_id, hod
     OPTIONS (
-      description = 'Fuente F2 (Batch): Tiempos de viaje y velocidades urbanas basados en SF Caltrain / Uber Movement'
+      description = 'Fuente F2 (Batch): Tiempos de viaje y velocidades urbanas basados en SF Caltrain / Uber Movement',
+      partition_expiration_days = 90
     );
 
     -- =========================================================================
@@ -203,7 +207,8 @@ def crear_infraestructura_gcp():
     PARTITION BY DATE(timestamp_evento)
     CLUSTER BY zone_id, station_id, node_id, sensor_status
     OPTIONS (
-      description = 'Fuente F3 (Streaming): Telemetria de sensores urbanos Array of Things y red ferroviaria OART'
+      description = 'Fuente F3 (Streaming): Telemetria de sensores urbanos Array of Things y red ferroviaria OART',
+      partition_expiration_days = 90
     );
 
     -- =========================================================================
@@ -245,7 +250,8 @@ def crear_infraestructura_gcp():
     PARTITION BY DATE(ts_error)
     CLUSTER BY origen_fuente, motivo_error
     OPTIONS (
-      description = 'Dead-Letter Queue (DLQ) para garantizar cero perdida de datos ante fallos de sensores OART'
+      description = 'Dead-Letter Queue (DLQ) para garantizar cero perdida de datos ante fallos de sensores OART',
+      partition_expiration_days = 90
     );
     """
 

@@ -21,6 +21,7 @@ Flujo de Ingesta:
 
 import csv
 from datetime import datetime, timedelta, timezone
+import hashlib
 import os
 from pathlib import Path
 import random
@@ -199,7 +200,7 @@ def generar_nyc_tlc_trips_multimodal(num_trips: int = 600) -> Path:
         "county_id", "agency_id", "transport_mode", "connected_oart_station_id",
         "passenger_count", "trip_distance_km", "duration_minutes",
         "effective_speed_kmh", "base_fare_usd", "total_fare_usd",
-        "cost_per_km_usd", "payment_type", "ts_ingesta_bq",
+        "cost_per_km_usd", "payment_type", "rider_id_hash", "payment_token_masked", "ts_ingesta_bq",
     ]
 
     rows = []
@@ -253,6 +254,8 @@ def generar_nyc_tlc_trips_multimodal(num_trips: int = 600) -> Path:
             "total_fare_usd": total_fare,
             "cost_per_km_usd": cost_per_km,
             "payment_type": "LUMINA_UNIFIED_PAY" if modo != "PERSONAL_CAR_BENCHMARK" else "EXTERNAL_TOLL_FUEL",
+            "rider_id_hash": hashlib.sha256(f"usr_{orig['zone_id']}_{i}_{agency_num}".encode("utf-8")).hexdigest()[:24],
+            "payment_token_masked": f"tok_lumina_{random.randint(1000, 9999)}****" if modo != "PERSONAL_CAR_BENCHMARK" else "ext_direct_cash",
             "ts_ingesta_bq": now_iso,
         })
 

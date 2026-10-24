@@ -4,7 +4,8 @@
   <p style="color: #5F6368; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
     <b>Curso:</b> Taller de Arquitectura Big Data (UTEC - Sección 1) &nbsp;|&nbsp;
     <b>Nube Oficial:</b> Google Cloud Platform (GCP) + Open Source Standards &nbsp;|&nbsp;
-    <b>Hito:</b> Entrega 1 — Proyecto Parte 1 (P1 - 25%)
+    <b>Hito:</b> Entrega 1 — Proyecto Parte 1 (P1 - 25%) &nbsp;|&nbsp;
+    <b>Documento Complementario:</b> <a href="./Avance1_Examen_Sustentacion_Tecnica_Economica_Resiliencia.md"><b>Examen de Sustentación (E - 25%)</b></a>
   </p>
 </div>
 
@@ -334,6 +335,9 @@ Para optimizar el **costo por consulta** (evitar *Full Table Scans*) y acelerar 
 | **`iot_aot_telemetry_raw`** | **F3:** Nodos de Sensores Urbanos e Infraestructura OART (*Array of Things*) | `DATE(timestamp_evento)`<br/>*(Partición diaria)* | `zone_id`, `station_id`, `node_id`, `sensor_status` | Agrupa físicamente la telemetría por estación OART y nodo sensor, acelerando la detección de anomalías de **vibración (`vibration_mms`)** y **temperatura (`temperature_c`)** para Mantenimiento Preventivo. |
 | **`censo_demografia_raw`** | **F4:** Censo de Población y Vivienda (*INE Demografía*) | *Sin partición temporal (Dimensión Censal)* | `county_id`, `zone_id`, `nearest_oart_station_id` | Optimiza el cruce demográfico por condado (`CNT-01..08`) y zona (`ZDL-001..260`) para identificar dónde viven los **adultos mayores sin auto** y **jóvenes a < 8 km de OART**. |
 | **`ingesta_deadletter_raw`** | **Transversal (DLQ):** Eventos corruptos o fuera de SLA | `DATE(ts_error)`<br/>*(Partición diaria)* | `origen_fuente`, `motivo_error` | Garantiza **alta fiabilidad**: si un sensor de la red OART falla o envía un JSON truncado, queda auditado aquí con su payload original para reprocesamiento sin tirar el pipeline. |
+
+> [!TIP]
+> **Política de Retención y FinOps Activa:** Todas las tablas particionadas de la capa Bronze incorporan la directiva `partition_expiration_days = 90`. Los datos crudos con más de 90 días expiran automáticamente en BigQuery para evitar cobros de almacenamiento innecesarios, habiendo sido previamente consolidados en la capa Silver y archivados a bajo costo en Cloud Storage (Nearline/Coldline).
 
 ---
 
