@@ -7,13 +7,13 @@
   "quality": "showcase",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "fcacfa33edd42d49b3cadaed1d7b4aa62e31e481efe17a4e68efa7bdeec4ab35",
-    "bytes": 18670
+    "sha256": "9f011960fa3890071ffd63e3879f5c436b55181e2bc353badd37aca1c4f7bc6e",
+    "bytes": 18397
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "a7fdce6ff77fb4d8d40ce6a8dcd283788ed8ea241e7c4f11b4368ff82e30c116",
-    "bytes": 1914533
+    "sha256": "2673f70f7c814c88e53dba3f2ea3490b84828e27cc96b34947c5e89faf463b87",
+    "bytes": 1901546
   },
   "gates": {
     "validate": "pass",
@@ -42,7 +42,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 2434,
+  "durationMs": 2407,
   "browserCheck": {
     "requested": false,
     "ran": false

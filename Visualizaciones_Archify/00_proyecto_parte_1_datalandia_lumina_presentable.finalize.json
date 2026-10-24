@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "explainer",
   "quality": "showcase",
-  "startedAt": "2026-10-24T06:09:47.039Z",
+  "startedAt": "2026-10-24T06:23:05.597Z",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "fcacfa33edd42d49b3cadaed1d7b4aa62e31e481efe17a4e68efa7bdeec4ab35",
-    "bytes": 18670
+    "sha256": "9f011960fa3890071ffd63e3879f5c436b55181e2bc353badd37aca1c4f7bc6e",
+    "bytes": 18397
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "a7fdce6ff77fb4d8d40ce6a8dcd283788ed8ea241e7c4f11b4368ff82e30c116",
-    "bytes": 1914533
+    "sha256": "2673f70f7c814c88e53dba3f2ea3490b84828e27cc96b34947c5e89faf463b87",
+    "bytes": 1901546
   },
   "stages": {
     "browser-check": {
@@ -42,8 +42,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "fcacfa33edd42d49b3cadaed1d7b4aa62e31e481efe17a4e68efa7bdeec4ab35",
-          "bytes": 18670
+          "sha256": "9f011960fa3890071ffd63e3879f5c436b55181e2bc353badd37aca1c4f7bc6e",
+          "bytes": 18397
         },
         "validation": {
           "checksPassed": 4,
@@ -58,7 +58,7 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1393,
+      "durationMs": 1357,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -72,14 +72,14 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "d0149d8d-6138-4206-afb4-5b314ddf5d23",
+        "receiptId": "cb0c15fc-a3c2-40e6-a0aa-9b955681b2c8",
         "ok": true,
         "command": "deliver",
         "type": "explainer",
         "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
         "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "explainer": {
-          "preparedSha256": "98efb07579f6f5c6d53e1e164ac364cf7789e00efa3dbb8a1b9251c3929b1fb6",
+          "preparedSha256": "9e119647614ee0df8fb602d53dc5b227bfba5b4e69a8370fe7e793d96ff21783",
           "dependencies": [
             {
               "kind": "diagram-spec",
@@ -100,8 +100,8 @@
               "kind": "diagram-spec",
               "id": "stress-flow",
               "inline": true,
-              "sha256": "056fd12919cd3a3bd0876abb051689c8d6f979e04042bed74bc15f6af7e75ad8",
-              "bytes": 1785
+              "sha256": "62834e768e41d35d39ad08e2429ad00310a56f4179a486588efa63bf574a6034",
+              "bytes": 1216
             },
             {
               "kind": "diagram-spec",
@@ -113,12 +113,12 @@
           ]
         },
         "specification": {
-          "sha256": "fcacfa33edd42d49b3cadaed1d7b4aa62e31e481efe17a4e68efa7bdeec4ab35",
-          "bytes": 18670
+          "sha256": "9f011960fa3890071ffd63e3879f5c436b55181e2bc353badd37aca1c4f7bc6e",
+          "bytes": 18397
         },
         "artifact": {
-          "sha256": "a7fdce6ff77fb4d8d40ce6a8dcd283788ed8ea241e7c4f11b4368ff82e30c116",
-          "bytes": 1914533
+          "sha256": "2673f70f7c814c88e53dba3f2ea3490b84828e27cc96b34947c5e89faf463b87",
+          "bytes": 1901546
         },
         "validation": {
           "checksPassed": 4,
@@ -144,7 +144,7 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 814,
+      "durationMs": 809,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -157,15 +157,15 @@
         "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "family": "explainer",
         "artifact": {
-          "sha256": "a7fdce6ff77fb4d8d40ce6a8dcd283788ed8ea241e7c4f11b4368ff82e30c116",
-          "bytes": 1914533
+          "sha256": "2673f70f7c814c88e53dba3f2ea3490b84828e27cc96b34947c5e89faf463b87",
+          "bytes": 1901546
         },
         "checks": [
           {
             "name": "explainer_structure",
             "ok": true,
             "details": [
-              "145 unique DOM IDs"
+              "144 unique DOM IDs"
             ]
           },
           {
@@ -205,7 +205,7 @@
               "id": "lumina-arch-main",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-xIIHEy/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-2gjULn/child.html",
                 "artifact": {
                   "sha256": "3a9e5839ef4069e9b70b5f41cf9d335be0a54ab151b71bebf86014f89c2009c4",
                   "bytes": 832735
@@ -366,7 +366,7 @@
               "id": "lumina-erd",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-3KkPwr/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-ePnFdU/child.html",
                 "artifact": {
                   "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
                   "bytes": 847975
@@ -507,10 +507,10 @@
               "id": "stress-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-u7vZRj/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-ATQuAs/child.html",
                 "artifact": {
-                  "sha256": "86bc2b3cfed571fea4f55332bcda902ad1c1b2edb821f2f9b80cb706447d7b49",
-                  "bytes": 819185
+                  "sha256": "d4817ecd33c4081d6339deecc7afca2efee5236b5e94f6e324aec01ea9314dcd",
+                  "bytes": 815466
                 },
                 "checks": [
                   {
@@ -577,18 +577,18 @@
                     "containerBorderRuns": 0,
                     "labelRouteClearanceIssues": 0,
                     "labelCanvasOverflowIssues": 0,
-                    "minLabelRouteClearance": 13,
+                    "minLabelRouteClearance": 66.5,
                     "desktopReadabilityIssues": 0,
                     "viewportHeightIssues": 0,
-                    "minProjectedNodeTextPx": 6.289095519864751,
-                    "maxBends": 0,
+                    "minProjectedNodeTextPx": 7.5,
+                    "maxBends": 1,
                     "routesOverSuggestedBends": 0,
                     "maxStretch": 1,
                     "routesOverSuggestedStretch": 0,
-                    "minSegmentPx": 8,
+                    "minSegmentPx": 133,
                     "minInteriorSegmentPx": null,
-                    "shortSegmentCount": 4,
-                    "shortEndpointSegmentCount": 4,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
                     "shortInteriorSegmentCount": 0,
                     "microSegmentCount": 0
                   },
@@ -603,28 +603,37 @@
                     "detours": []
                   },
                   "leadingSpace": {
-                    "measured": false,
+                    "measured": true,
+                    "emptyTopPx": 80,
+                    "emptyTopRatio": 0.203,
+                    "occupiedTop": 80,
+                    "viewBoxTop": 0,
+                    "canvasHeight": 394,
+                    "typicalNodeHeight": 60,
                     "reviewSuggested": false
                   },
                   "desktopReadability": {
-                    "budgetBasis": "legacy-930",
+                    "budgetBasis": "recognized-declared-wide",
                     "readerContract": "declared-wide-v1",
-                    "availableDiagramWidth": 930,
-                    "actualBudgetPx": 930,
-                    "limit": "legacy",
-                    "requestedTargetPx": null,
-                    "requestedTargetMet": null,
+                    "availableDiagramWidth": 1136.25,
+                    "actualBudgetPx": 1136.25,
+                    "actualReaderWidth": 1166.25,
+                    "desiredReaderWidth": 1166.25,
+                    "viewportCap": 1376,
+                    "limit": "source-size",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": true,
                     "hardFloorPx": 6,
                     "hardFloorMet": true,
                     "minimumOwner": {
                       "kind": "edge",
-                      "id": "beam-to-check-1",
-                      "from": "beam",
-                      "to": "check"
+                      "id": "spike-to-pubsub-1",
+                      "from": "spike",
+                      "to": "pubsub"
                     },
                     "minimumSourceTextPx": 8,
-                    "minimumProjectedTextPx": 6.289095519864751,
-                    "semanticTextCount": 13
+                    "minimumProjectedTextPx": 7.5,
+                    "semanticTextCount": 9
                   },
                   "issues": []
                 }
@@ -634,7 +643,7 @@
               "id": "api-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-ymDdFq/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-nLUfUG/child.html",
                 "artifact": {
                   "sha256": "54d648f049f281ae7dd6423babdbdd903bdb46464cb93ffea0cace71602e0a90",
                   "bytes": 811085
@@ -773,7 +782,7 @@
         },
         "diagnostics": [],
         "provenance": "current",
-        "deliveryReceiptId": "d0149d8d-6138-4206-afb4-5b314ddf5d23"
+        "deliveryReceiptId": "cb0c15fc-a3c2-40e6-a0aa-9b955681b2c8"
       }
     }
   },
@@ -787,8 +796,8 @@
     "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize-summary.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-24T06:09:49.473Z",
-  "durationMs": 2434,
+  "finishedAt": "2026-10-24T06:23:08.004Z",
+  "durationMs": 2407,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",
