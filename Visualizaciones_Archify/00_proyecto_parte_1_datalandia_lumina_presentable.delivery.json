@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "receiptId": "7f5f1f75-3b8f-46d4-b98d-7c1f2efd7ad7",
+  "receiptId": "4e84325c-56f6-48b3-926a-1f3e1e36c34d",
   "status": "current",
   "command": "deliver",
   "type": "explainer",
   "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
   "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
   "specification": {
-    "sha256": "3b204a995ff96626af3bfdc2525cd17887c9c518de4fe957b1356f4a2e8863a5",
-    "bytes": 28673
+    "sha256": "f6be5f827150b0a32638fccb2abf0d91db8ee7a9727100dd0e526b7107837ce7",
+    "bytes": 28702
   },
   "artifact": {
-    "sha256": "ed8d1dab4f80fd990dd50b68cca2f7208fdf65fb5faf1587b7af93f120d5d6ff",
-    "bytes": 2450059
+    "sha256": "24eecff109daae3b7c144b1a07acc7013ded63b0bb42c29b68adeede28011ae1",
+    "bytes": 2451043
   },
   "explainer": {
-    "preparedSha256": "472984cc1811e6017303de2ea35364c3cd9352007378badbbcfafd6e84d409ad",
+    "preparedSha256": "311d303394ba16d521995b37e49ced51246bcbcfbe47024ecee4f75608d04888",
     "dependencies": [
       {
         "kind": "diagram-spec",
