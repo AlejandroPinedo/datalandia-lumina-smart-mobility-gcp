@@ -5738,17 +5738,29 @@ ORDER BY costo_prom_km_usd ASC;</code></pre></figure></div><div class="block blo
           height: 100% !important;
           overflow: hidden !important;
         }
+        #reader-rail, #node-outline, #rail-reveal, .rail-controls, .rail-reveal, .node-outline {
+          display: none !important;
+        }
       </style><script>(()=>{
         try {
-          localStorage.setItem('archify-rail-placement', 'right');
+          localStorage.setItem('archify-theme', 'dark');
+          localStorage.setItem('archify-preset', 'classic');
+          localStorage.setItem('archify-motion', 'live');
           localStorage.setItem('archify-rail-collapsed', '1');
-          localStorage.setItem('archify-motion-preference', 'live');
         } catch(_) {}
         const initViewer = () => {
           try {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.setAttribute('data-preset', 'classic');
             document.documentElement.setAttribute('data-motion', 'live');
             document.documentElement.setAttribute('data-ambient-motion', 'running');
-            document.documentElement.setAttribute('data-reader-rail', 'collapsed');
+            document.documentElement.setAttribute('data-present', 'true');
+            if (window.Archify?.presentation?.setActive) {
+              window.Archify.presentation.setActive(true);
+            }
+            if (window.Archify?.preset?.set) {
+              window.Archify.preset.set('classic');
+            }
             if (window.Archify?.view?.fit) window.Archify.view.fit();
           } catch(_) {}
         };
@@ -5766,7 +5778,7 @@ ORDER BY costo_prom_km_usd ASC;</code></pre></figure></div><div class="block blo
 
       nativeHtml(diagram).then(rawHtml => {
         let html = rawHtml;
-        html = html.replace(/<html\b([^>]*)>/i, '<html$1 data-motion="live" data-ambient-motion="running" data-reader-rail="collapsed">');
+        html = html.replace(/<html\b([^>]*)>/i, '<html$1 data-theme="dark" data-preset="classic" data-motion="live" data-ambient-motion="running" data-present="true">');
         const end = html.toLowerCase().lastIndexOf('</body>');
         frame.srcdoc = end < 0 ? html + setupScript : html.slice(0, end) + setupScript + html.slice(end);
         preview.replaceWith(frame);
