@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/candidate.archify.md",
+    "sha256": "8a69b494ad4b9d3638b9adba239e0c13cab0f54de58268679e48ef5204c33368",
+    "bytes": 23357
+  },
+  "artifact": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+    "sha256": "c88ea32f62c36517cb7142c939ca897e045da848e8659985857b1ce18ef970f2",
+    "bytes": 2011917
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "not-run"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_datalandia_lumina_entrega1_presentable_docente.finalize.json",
+    "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_datalandia_lumina_entrega1_presentable_docente.finalize-summary.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T05:38:43.385Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2368,
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  }
+}

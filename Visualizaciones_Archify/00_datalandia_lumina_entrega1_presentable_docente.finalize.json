@@ -1,0 +1,824 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "startedAt": "2026-10-24T06:01:29.037Z",
+  "specification": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/candidate.archify.md",
+    "sha256": "8a69b494ad4b9d3638b9adba239e0c13cab0f54de58268679e48ef5204c33368",
+    "bytes": 23357
+  },
+  "artifact": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+    "sha256": "c88ea32f62c36517cb7142c939ca897e045da848e8659985857b1ce18ef970f2",
+    "bytes": 2011917
+  },
+  "stages": {
+    "browser-check": {
+      "status": "not-run",
+      "execution": "not-requested"
+    },
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "8a69b494ad4b9d3638b9adba239e0c13cab0f54de58268679e48ef5204c33368",
+          "bytes": 23357
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 1327,
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "47804228-8c32-4d0f-a7fe-b432f2feb5fa",
+        "ok": true,
+        "command": "deliver",
+        "type": "explainer",
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/candidate.archify.md",
+        "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+        "explainer": {
+          "preparedSha256": "bf6d1dfcfaf7183471998c9cc0cdaf96ec757d09f1d9efac0c153ba22cb82415",
+          "dependencies": [
+            {
+              "kind": "diagram-spec",
+              "id": "lumina-arch-main",
+              "inline": true,
+              "sha256": "5472a472265b77eb08e66541dff7f0fb8ece2dc9dd69fe07fd14f54131ddb7df",
+              "bytes": 2392
+            },
+            {
+              "kind": "diagram-spec",
+              "id": "lumina-erd",
+              "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-docente-principal-20261024-005900/lumina-erd.erd.json",
+              "relativePath": "lumina-erd.erd.json",
+              "sha256": "87a1f9dd027a09f155a8f0df09373c4a24d9c511d503b24f8a66dc9150951e02",
+              "bytes": 7551
+            },
+            {
+              "kind": "diagram-spec",
+              "id": "stress-flow",
+              "inline": true,
+              "sha256": "df61c3684bf0d4a14c825322ee66b456fe639f7b1c5be22e98ac3fec44881deb",
+              "bytes": 1792
+            },
+            {
+              "kind": "diagram-spec",
+              "id": "drp-arch",
+              "inline": true,
+              "sha256": "210c8cdf375438d64dc7be10f0649e4c8aedaba56dbb679769a03d5f61a4fee8",
+              "bytes": 2293
+            }
+          ]
+        },
+        "specification": {
+          "sha256": "8a69b494ad4b9d3638b9adba239e0c13cab0f54de58268679e48ef5204c33368",
+          "bytes": 23357
+        },
+        "artifact": {
+          "sha256": "c88ea32f62c36517cb7142c939ca897e045da848e8659985857b1ce18ef970f2",
+          "bytes": 2011917
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 781,
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_DataLandia_Lumina_Entrega1_Presentable_Docente.html",
+        "family": "explainer",
+        "artifact": {
+          "sha256": "c88ea32f62c36517cb7142c939ca897e045da848e8659985857b1ce18ef970f2",
+          "bytes": 2011917
+        },
+        "checks": [
+          {
+            "name": "explainer_structure",
+            "ok": true,
+            "details": [
+              "170 unique DOM IDs"
+            ]
+          },
+          {
+            "name": "explainer_payload_identity",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "explainer_dependencies",
+            "ok": true,
+            "details": [
+              "4 frozen dependencies"
+            ]
+          },
+          {
+            "name": "explainer_native_diagrams",
+            "ok": true,
+            "details": [
+              "lumina-arch-main: pass",
+              "lumina-erd: pass",
+              "stress-flow: pass",
+              "drp-arch: pass"
+            ]
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "issues": [],
+          "nativeDiagrams": [
+            {
+              "id": "lumina-arch-main",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-MV9s9O/child.html",
+                "artifact": {
+                  "sha256": "3a9e5839ef4069e9b70b5f41cf9d335be0a54ab151b71bebf86014f89c2009c4",
+                  "bytes": 832735
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 8,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.751097178683386,
+                    "maxBends": 4,
+                    "routesOverSuggestedBends": 2,
+                    "maxStretch": 1.214,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 24,
+                    "minInteriorSegmentPx": 54,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "beam-to-bt-1",
+                          "from": "beam",
+                          "to": "bt",
+                          "label": "GPS 18ms",
+                          "collectionIndex": 4,
+                          "artifactIndex": 5
+                        },
+                        "bends": 3,
+                        "stretch": 1.214
+                      },
+                      {
+                        "relationship": {
+                          "id": "bq-to-api-1",
+                          "from": "bq",
+                          "to": "api",
+                          "label": "Capa Gold",
+                          "collectionIndex": 9,
+                          "artifactIndex": 10
+                        },
+                        "bends": 4,
+                        "stretch": 1
+                      }
+                    ]
+                  },
+                  "leadingSpace": {
+                    "measured": true,
+                    "emptyTopPx": 80,
+                    "emptyTopRatio": 0.138,
+                    "occupiedTop": 80,
+                    "viewBoxTop": 0,
+                    "canvasHeight": 580,
+                    "typicalNodeHeight": 60,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "recognized-declared-wide",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 1346,
+                    "actualBudgetPx": 1346,
+                    "actualReaderWidth": 1376,
+                    "desiredReaderWidth": 1525.3125,
+                    "viewportCap": 1376,
+                    "limit": "viewport-cap",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": false,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "iot-to-pubsub-1",
+                      "from": "iot",
+                      "to": "pubsub"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.751097178683386,
+                    "semanticTextCount": 24
+                  },
+                  "issues": []
+                }
+              }
+            },
+            {
+              "id": "lumina-erd",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-w8axC4/child.html",
+                "artifact": {
+                  "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
+                  "bytes": 847975
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 5.9,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 7.5,
+                    "maxBends": 4,
+                    "routesOverSuggestedBends": 1,
+                    "maxStretch": 1.342,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 16,
+                    "minInteriorSegmentPx": 97,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "rel_iot_zona",
+                          "from": "iot_aot_telemetry_raw",
+                          "to": "censo_demografia_raw",
+                          "label": "geo-join OART",
+                          "collectionIndex": 2,
+                          "artifactIndex": 3
+                        },
+                        "bends": 4,
+                        "stretch": 1.342
+                      }
+                    ]
+                  },
+                  "leadingSpace": {
+                    "measured": false,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "recognized-declared-wide",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 1004.1666666666667,
+                    "actualBudgetPx": 1004.1666666666667,
+                    "actualReaderWidth": 1034.1666666666667,
+                    "desiredReaderWidth": 1034.1666666666667,
+                    "viewportCap": 1376,
+                    "limit": "source-size",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": true,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "node",
+                      "id": "censo_demografia_raw"
+                    },
+                    "minimumSourceTextPx": 9,
+                    "minimumProjectedTextPx": 7.5,
+                    "semanticTextCount": 107
+                  },
+                  "issues": []
+                }
+              }
+            },
+            {
+              "id": "stress-flow",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-940yT2/child.html",
+                "artifact": {
+                  "sha256": "8ead56a47b19dd89c1378b36e1f44b73d5c100de3fe721a11b54794e759570b6",
+                  "bytes": 819211
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 13,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.289095519864751,
+                    "maxBends": 0,
+                    "routesOverSuggestedBends": 0,
+                    "maxStretch": 1,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 8,
+                    "minInteriorSegmentPx": null,
+                    "shortSegmentCount": 4,
+                    "shortEndpointSegmentCount": 4,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": []
+                  },
+                  "leadingSpace": {
+                    "measured": false,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "legacy-930",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 930,
+                    "actualBudgetPx": 930,
+                    "limit": "legacy",
+                    "requestedTargetPx": null,
+                    "requestedTargetMet": null,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "beam-to-check-1",
+                      "from": "beam",
+                      "to": "check"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.289095519864751,
+                    "semanticTextCount": 13
+                  },
+                  "issues": []
+                }
+              }
+            },
+            {
+              "id": "drp-arch",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-L8M0Ax/child.html",
+                "artifact": {
+                  "sha256": "786254b2c2cb28e4a1d9d1c4540d5b2cb98f41d3490c93c9289976d26094f14d",
+                  "bytes": 827688
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 20,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.606134969325153,
+                    "maxBends": 3,
+                    "routesOverSuggestedBends": 1,
+                    "maxStretch": 1.081,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 24,
+                    "minInteriorSegmentPx": 47,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "run2-to-bt2-1",
+                          "from": "run2",
+                          "to": "bt2",
+                          "label": "lectura failover",
+                          "collectionIndex": 8,
+                          "artifactIndex": 9
+                        },
+                        "bends": 3,
+                        "stretch": 1.081,
+                        "directCorridorBlockers": [
+                          {
+                            "id": "bt1",
+                            "label": "Bigtable Cluster Z1 (us-central1)",
+                            "box": [
+                              1042,
+                              266,
+                              234,
+                              60
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "leadingSpace": {
+                    "measured": true,
+                    "emptyTopPx": 80,
+                    "emptyTopRatio": 0.138,
+                    "occupiedTop": 80,
+                    "viewBoxTop": 0,
+                    "canvasHeight": 580,
+                    "typicalNodeHeight": 60,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "recognized-declared-wide",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 1346,
+                    "actualBudgetPx": 1346,
+                    "actualReaderWidth": 1376,
+                    "desiredReaderWidth": 1558.125,
+                    "viewportCap": 1376,
+                    "limit": "viewport-cap",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": false,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "users-to-lb-1",
+                      "from": "users",
+                      "to": "lb"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.606134969325153,
+                    "semanticTextCount": 20
+                  },
+                  "issues": []
+                }
+              }
+            }
+          ]
+        },
+        "diagnostics": [],
+        "provenance": "current",
+        "deliveryReceiptId": "47804228-8c32-4d0f-a7fe-b432f2feb5fa"
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_datalandia_lumina_entrega1_presentable_docente.finalize.json",
+    "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_datalandia_lumina_entrega1_presentable_docente.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-24T06:01:31.405Z",
+  "durationMs": 2368,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T05:38:43.385Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
