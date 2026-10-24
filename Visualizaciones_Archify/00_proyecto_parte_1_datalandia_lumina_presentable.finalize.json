@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "explainer",
   "quality": "showcase",
-  "startedAt": "2026-10-24T06:43:57.046Z",
+  "startedAt": "2026-10-24T12:52:18.309Z",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
-    "bytes": 24515
+    "sha256": "f770a66efa8f01febd72d8343024cf247dc708706e9d9fcf1a569bd85fcae12b",
+    "bytes": 25847
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
-    "bytes": 2368469
+    "sha256": "50c1d1d0e22b7707b23d2a9139129bbc44ef72283929117a9f45a980c9989447",
+    "bytes": 2412354
   },
   "stages": {
     "browser-check": {
@@ -42,8 +42,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
-          "bytes": 24515
+          "sha256": "f770a66efa8f01febd72d8343024cf247dc708706e9d9fcf1a569bd85fcae12b",
+          "bytes": 25847
         },
         "validation": {
           "checksPassed": 4,
@@ -58,7 +58,7 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1603,
+      "durationMs": 1586,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -72,21 +72,21 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "4b9976b2-5ebc-4995-bea0-ae25940c8321",
+        "receiptId": "e9d2f020-4339-45a2-918f-90729af66b3b",
         "ok": true,
         "command": "deliver",
         "type": "explainer",
         "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
         "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "explainer": {
-          "preparedSha256": "81eb209d6936c5752539c93f93a9425428ef27ae40fd60a4940460cefb6e1830",
+          "preparedSha256": "07c406cf685534b0c5cb32eb20c49f987f338d4f5b72c267761ae1630523f068",
           "dependencies": [
             {
               "kind": "diagram-spec",
               "id": "lumina-arch-main",
               "inline": true,
-              "sha256": "5472a472265b77eb08e66541dff7f0fb8ece2dc9dd69fe07fd14f54131ddb7df",
-              "bytes": 2392
+              "sha256": "831f440db55cdd8e9122f406f6e7f5b3caa88f57e3d09eac0ee3fb887fdb59e9",
+              "bytes": 3465
             },
             {
               "kind": "diagram-spec",
@@ -120,12 +120,12 @@
           ]
         },
         "specification": {
-          "sha256": "7c1cd6b3f4c393b8d2b6e17cc6a63fb46e4606df9c3f14cf1223c881dbf0dc12",
-          "bytes": 24515
+          "sha256": "f770a66efa8f01febd72d8343024cf247dc708706e9d9fcf1a569bd85fcae12b",
+          "bytes": 25847
         },
         "artifact": {
-          "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
-          "bytes": 2368469
+          "sha256": "50c1d1d0e22b7707b23d2a9139129bbc44ef72283929117a9f45a980c9989447",
+          "bytes": 2412354
         },
         "validation": {
           "checksPassed": 4,
@@ -151,7 +151,7 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 964,
+      "durationMs": 887,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -164,15 +164,15 @@
         "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "family": "explainer",
         "artifact": {
-          "sha256": "0764aec435663f7102d2364e0e9ecd39a6b7088d8429c624d6f5e364110168e2",
-          "bytes": 2368469
+          "sha256": "50c1d1d0e22b7707b23d2a9139129bbc44ef72283929117a9f45a980c9989447",
+          "bytes": 2412354
         },
         "checks": [
           {
             "name": "explainer_structure",
             "ok": true,
             "details": [
-              "179 unique DOM IDs"
+              "190 unique DOM IDs"
             ]
           },
           {
@@ -213,10 +213,10 @@
               "id": "lumina-arch-main",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-dteX2s/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-0UXPe4/child.html",
                 "artifact": {
-                  "sha256": "3a9e5839ef4069e9b70b5f41cf9d335be0a54ab151b71bebf86014f89c2009c4",
-                  "bytes": 832735
+                  "sha256": "357a4d5629ce2375319743e94669d6d45797567d50ee2fa57be6483b50295208",
+                  "bytes": 841245
                 },
                 "checks": [
                   {
@@ -277,22 +277,22 @@
                   },
                   "metrics": {
                     "properCrossings": 0,
-                    "resolvedCrossovers": 0,
+                    "resolvedCrossovers": 4,
                     "ambiguousCorridors": 0,
                     "arrowheadCollisions": 0,
                     "containerBorderRuns": 0,
                     "labelRouteClearanceIssues": 0,
                     "labelCanvasOverflowIssues": 0,
-                    "minLabelRouteClearance": 8,
+                    "minLabelRouteClearance": null,
                     "desktopReadabilityIssues": 0,
                     "viewportHeightIssues": 0,
-                    "minProjectedNodeTextPx": 6.751097178683386,
+                    "minProjectedNodeTextPx": 6.7025803531009505,
                     "maxBends": 4,
-                    "routesOverSuggestedBends": 2,
-                    "maxStretch": 1.214,
+                    "routesOverSuggestedBends": 3,
+                    "maxStretch": 1.128,
                     "routesOverSuggestedStretch": 0,
-                    "minSegmentPx": 24,
-                    "minInteriorSegmentPx": 54,
+                    "minSegmentPx": 17.2,
+                    "minInteriorSegmentPx": 17.2,
                     "shortSegmentCount": 0,
                     "shortEndpointSegmentCount": 0,
                     "shortInteriorSegmentCount": 0,
@@ -305,41 +305,188 @@
                     "microSegmentPx": 8
                   },
                   "routeReview": {
-                    "crossings": [],
-                    "detours": [
+                    "crossings": [
                       {
-                        "relationship": {
-                          "id": "beam-to-bt-1",
+                        "left": {
+                          "id": "beam-to-bronze-1",
                           "from": "beam",
-                          "to": "bt",
-                          "label": "GPS 18ms",
-                          "collectionIndex": 4,
-                          "artifactIndex": 5
+                          "to": "bronze",
+                          "label": "",
+                          "collectionIndex": 7,
+                          "artifactIndex": 8
                         },
-                        "bends": 3,
-                        "stretch": 1.214
+                        "right": {
+                          "id": "dlp-to-silver-1",
+                          "from": "dlp",
+                          "to": "silver",
+                          "label": "",
+                          "collectionIndex": 14,
+                          "artifactIndex": 15
+                        },
+                        "point": [
+                          673,
+                          701
+                        ]
                       },
                       {
-                        "relationship": {
-                          "id": "bq-to-api-1",
-                          "from": "bq",
-                          "to": "api",
-                          "label": "Capa Gold",
+                        "left": {
+                          "id": "gcs-to-bronze-1",
+                          "from": "gcs",
+                          "to": "bronze",
+                          "label": "",
+                          "collectionIndex": 8,
+                          "artifactIndex": 9
+                        },
+                        "right": {
+                          "id": "dlp-to-silver-1",
+                          "from": "dlp",
+                          "to": "silver",
+                          "label": "",
+                          "collectionIndex": 14,
+                          "artifactIndex": 15
+                        },
+                        "point": [
+                          388.5,
+                          701
+                        ]
+                      },
+                      {
+                        "left": {
+                          "id": "bronze-to-silver-1",
+                          "from": "bronze",
+                          "to": "silver",
+                          "label": "",
                           "collectionIndex": 9,
                           "artifactIndex": 10
                         },
+                        "right": {
+                          "id": "composer-to-silver-1",
+                          "from": "composer",
+                          "to": "silver",
+                          "label": "",
+                          "collectionIndex": 16,
+                          "artifactIndex": 17
+                        },
+                        "point": [
+                          1220.5,
+                          854
+                        ],
+                        "sharedNode": "silver"
+                      },
+                      {
+                        "left": {
+                          "id": "dlp-to-silver-1",
+                          "from": "dlp",
+                          "to": "silver",
+                          "label": "",
+                          "collectionIndex": 14,
+                          "artifactIndex": 15
+                        },
+                        "right": {
+                          "id": "composer-to-silver-1",
+                          "from": "composer",
+                          "to": "silver",
+                          "label": "",
+                          "collectionIndex": 16,
+                          "artifactIndex": 17
+                        },
+                        "point": [
+                          1220.5,
+                          701
+                        ],
+                        "sharedNode": "silver"
+                      }
+                    ],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "tlc-to-gcs-1",
+                          "from": "tlc",
+                          "to": "gcs",
+                          "label": "",
+                          "collectionIndex": 1,
+                          "artifactIndex": 2
+                        },
                         "bends": 4,
                         "stretch": 1
+                      },
+                      {
+                        "relationship": {
+                          "id": "silver-to-gold-1",
+                          "from": "silver",
+                          "to": "gold",
+                          "label": "",
+                          "collectionIndex": 10,
+                          "artifactIndex": 11
+                        },
+                        "bends": 4,
+                        "stretch": 1.128,
+                        "directCorridorBlockers": [
+                          {
+                            "id": "bqml",
+                            "label": "Vertex AI &amp; BigQuery ML",
+                            "box": [
+                              1445,
+                              452,
+                              168,
+                              60
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "relationship": {
+                          "id": "bt-to-api-1",
+                          "from": "bt",
+                          "to": "api",
+                          "label": "",
+                          "collectionIndex": 18,
+                          "artifactIndex": 19
+                        },
+                        "bends": 4,
+                        "stretch": 1.053,
+                        "directCorridorBlockers": [
+                          {
+                            "id": "silver",
+                            "label": "BigQuery Silver Clean",
+                            "box": [
+                              1164,
+                              452,
+                              155,
+                              60
+                            ]
+                          },
+                          {
+                            "id": "gold",
+                            "label": "BigQuery Gold Star Schema",
+                            "box": [
+                              1726,
+                              452,
+                              181,
+                              60
+                            ]
+                          },
+                          {
+                            "id": "bqml",
+                            "label": "Vertex AI &amp; BigQuery ML",
+                            "box": [
+                              1445,
+                              452,
+                              168,
+                              60
+                            ]
+                          }
+                        ]
                       }
                     ]
                   },
                   "leadingSpace": {
                     "measured": true,
                     "emptyTopPx": 80,
-                    "emptyTopRatio": 0.138,
+                    "emptyTopRatio": 0.07,
                     "occupiedTop": 80,
                     "viewBoxTop": 0,
-                    "canvasHeight": 580,
+                    "canvasHeight": 1138,
                     "typicalNodeHeight": 60,
                     "reviewSuggested": false
                   },
@@ -349,7 +496,7 @@
                     "availableDiagramWidth": 1346,
                     "actualBudgetPx": 1346,
                     "actualReaderWidth": 1376,
-                    "desiredReaderWidth": 1525.3125,
+                    "desiredReaderWidth": 1536.1363636363635,
                     "viewportCap": 1376,
                     "limit": "viewport-cap",
                     "requestedTargetPx": 7.5,
@@ -357,14 +504,12 @@
                     "hardFloorPx": 6,
                     "hardFloorMet": true,
                     "minimumOwner": {
-                      "kind": "edge",
-                      "id": "iot-to-pubsub-1",
-                      "from": "iot",
-                      "to": "pubsub"
+                      "kind": "node",
+                      "id": "iot"
                     },
-                    "minimumSourceTextPx": 8,
-                    "minimumProjectedTextPx": 6.751097178683386,
-                    "semanticTextCount": 24
+                    "minimumSourceTextPx": 11,
+                    "minimumProjectedTextPx": 6.7025803531009505,
+                    "semanticTextCount": 18
                   },
                   "issues": []
                 }
@@ -374,7 +519,7 @@
               "id": "lumina-erd",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-RsqLcA/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-sXWv2c/child.html",
                 "artifact": {
                   "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
                   "bytes": 847975
@@ -515,7 +660,7 @@
               "id": "stress-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-XezdZh/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-fSUCeq/child.html",
                 "artifact": {
                   "sha256": "f84e6890e7605005dea4595faf2cad2e35d8591e87dc3be8d61e920816602684",
                   "bytes": 818994
@@ -642,7 +787,7 @@
               "id": "api-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-FnjtOa/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-6rlMkh/child.html",
                 "artifact": {
                   "sha256": "54d648f049f281ae7dd6423babdbdd903bdb46464cb93ffea0cace71602e0a90",
                   "bytes": 811085
@@ -781,7 +926,7 @@
               "id": "drp-arch",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-b5Og5J/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-K9jBuX/child.html",
                 "artifact": {
                   "sha256": "786254b2c2cb28e4a1d9d1c4540d5b2cb98f41d3490c93c9289976d26094f14d",
                   "bytes": 827688
@@ -942,7 +1087,7 @@
         },
         "diagnostics": [],
         "provenance": "current",
-        "deliveryReceiptId": "4b9976b2-5ebc-4995-bea0-ae25940c8321"
+        "deliveryReceiptId": "e9d2f020-4339-45a2-918f-90729af66b3b"
       }
     }
   },
@@ -956,8 +1101,8 @@
     "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize-summary.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-24T06:43:59.856Z",
-  "durationMs": 2809,
+  "finishedAt": "2026-10-24T12:52:21.018Z",
+  "durationMs": 2708,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",
