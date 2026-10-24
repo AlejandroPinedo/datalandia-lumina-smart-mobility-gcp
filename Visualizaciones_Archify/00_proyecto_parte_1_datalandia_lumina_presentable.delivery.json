@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "d0149d8d-6138-4206-afb4-5b314ddf5d23",
+  "status": "current",
+  "command": "deliver",
+  "type": "explainer",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+  "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
+  "specification": {
+    "sha256": "fcacfa33edd42d49b3cadaed1d7b4aa62e31e481efe17a4e68efa7bdeec4ab35",
+    "bytes": 18670
+  },
+  "artifact": {
+    "sha256": "a7fdce6ff77fb4d8d40ce6a8dcd283788ed8ea241e7c4f11b4368ff82e30c116",
+    "bytes": 1914533
+  },
+  "explainer": {
+    "preparedSha256": "98efb07579f6f5c6d53e1e164ac364cf7789e00efa3dbb8a1b9251c3929b1fb6",
+    "dependencies": [
+      {
+        "kind": "diagram-spec",
+        "id": "lumina-arch-main",
+        "inline": true,
+        "sha256": "5472a472265b77eb08e66541dff7f0fb8ece2dc9dd69fe07fd14f54131ddb7df",
+        "bytes": 2392
+      },
+      {
+        "kind": "diagram-spec",
+        "id": "lumina-erd",
+        "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/lumina-erd.erd.json",
+        "relativePath": "lumina-erd.erd.json",
+        "sha256": "87a1f9dd027a09f155a8f0df09373c4a24d9c511d503b24f8a66dc9150951e02",
+        "bytes": 7551
+      },
+      {
+        "kind": "diagram-spec",
+        "id": "stress-flow",
+        "inline": true,
+        "sha256": "056fd12919cd3a3bd0876abb051689c8d6f979e04042bed74bc15f6af7e75ad8",
+        "bytes": 1785
+      },
+      {
+        "kind": "diagram-spec",
+        "id": "api-flow",
+        "inline": true,
+        "sha256": "d5019543c18d2ce7ad378b23cf4d322cdd1dda2d1ab591522aa932f147f5159b",
+        "bytes": 1142
+      }
+    ]
+  }
+}
