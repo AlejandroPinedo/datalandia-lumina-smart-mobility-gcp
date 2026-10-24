@@ -1,0 +1,505 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "explainer",
+  "quality": "showcase",
+  "startedAt": "2026-10-24T05:43:50.679Z",
+  "specification": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+    "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
+    "bytes": 11147
+  },
+  "artifact": {
+    "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+    "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
+    "bytes": 1001940
+  },
+  "stages": {
+    "browser-check": {
+      "status": "not-run",
+      "execution": "not-requested"
+    },
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
+          "bytes": 11147
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 910,
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "explainer",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "b0dcb4de-63ca-4c4b-9b94-863f9fd94e95",
+        "ok": true,
+        "command": "deliver",
+        "type": "explainer",
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+        "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+        "explainer": {
+          "preparedSha256": "6ab371571453f546ff9a0e3e2e439d581f1c100ad0c61ef35ddd9789f442bd92",
+          "dependencies": [
+            {
+              "kind": "diagram-spec",
+              "id": "stress-flow",
+              "inline": true,
+              "sha256": "2f478c3730a395e305a2e90933a9f2750b0ef3a2150ef1316068b9c19ad7fb87",
+              "bytes": 1787
+            },
+            {
+              "kind": "diagram-spec",
+              "id": "drp-arch",
+              "inline": true,
+              "sha256": "f2478da3811fc322517e1010e6948fed525493d1e4385136bacdfc1426562c82",
+              "bytes": 2300
+            }
+          ]
+        },
+        "specification": {
+          "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
+          "bytes": 11147
+        },
+        "artifact": {
+          "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
+          "bytes": 1001940
+        },
+        "validation": {
+          "checksPassed": 4,
+          "checkCount": 4,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 487,
+      "command": [
+        "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+        "family": "explainer",
+        "artifact": {
+          "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
+          "bytes": 1001940
+        },
+        "checks": [
+          {
+            "name": "explainer_structure",
+            "ok": true,
+            "details": [
+              "80 unique DOM IDs"
+            ]
+          },
+          {
+            "name": "explainer_payload_identity",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "explainer_dependencies",
+            "ok": true,
+            "details": [
+              "2 frozen dependencies"
+            ]
+          },
+          {
+            "name": "explainer_native_diagrams",
+            "ok": true,
+            "details": [
+              "stress-flow: pass",
+              "drp-arch: pass"
+            ]
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "issues": [],
+          "nativeDiagrams": [
+            {
+              "id": "stress-flow",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-1P3iul/child.html",
+                "artifact": {
+                  "sha256": "a2412369c4e21d22dd8e4348f1e250c63912cdff6d7e5fbd591efdddc2b4c576",
+                  "bytes": 819196
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 13,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.289095519864751,
+                    "maxBends": 0,
+                    "routesOverSuggestedBends": 0,
+                    "maxStretch": 1,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 8,
+                    "minInteriorSegmentPx": null,
+                    "shortSegmentCount": 4,
+                    "shortEndpointSegmentCount": 4,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": []
+                  },
+                  "leadingSpace": {
+                    "measured": false,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "legacy-930",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 930,
+                    "actualBudgetPx": 930,
+                    "limit": "legacy",
+                    "requestedTargetPx": null,
+                    "requestedTargetMet": null,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "beam-to-check-1",
+                      "from": "beam",
+                      "to": "check"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.289095519864751,
+                    "semanticTextCount": 13
+                  },
+                  "issues": []
+                }
+              }
+            },
+            {
+              "id": "drp-arch",
+              "receipt": {
+                "ok": true,
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-GxmtTu/child.html",
+                "artifact": {
+                  "sha256": "ad2292d2d41231161d22172d4386af9d1a2b23ef171e64b847bc57565e041c91",
+                  "bytes": 827709
+                },
+                "checks": [
+                  {
+                    "name": "single_svg",
+                    "ok": true,
+                    "details": [
+                      "found 1 <svg> block(s)"
+                    ]
+                  },
+                  {
+                    "name": "finite_svg",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "orthogonal_arrows",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "label_route_clearance",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_crossings",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "relationship_corridors",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "container_border_runs",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "route_rhythm",
+                    "ok": true,
+                    "details": []
+                  },
+                  {
+                    "name": "legend_clearance",
+                    "ok": true,
+                    "details": []
+                  }
+                ],
+                "composition": {
+                  "schemaVersion": 1,
+                  "profile": "showcase",
+                  "status": "pass",
+                  "summary": {
+                    "errors": 0,
+                    "warnings": 0
+                  },
+                  "metrics": {
+                    "properCrossings": 0,
+                    "resolvedCrossovers": 0,
+                    "ambiguousCorridors": 0,
+                    "arrowheadCollisions": 0,
+                    "containerBorderRuns": 0,
+                    "labelRouteClearanceIssues": 0,
+                    "labelCanvasOverflowIssues": 0,
+                    "minLabelRouteClearance": 20,
+                    "desktopReadabilityIssues": 0,
+                    "viewportHeightIssues": 0,
+                    "minProjectedNodeTextPx": 6.606134969325153,
+                    "maxBends": 3,
+                    "routesOverSuggestedBends": 1,
+                    "maxStretch": 1.081,
+                    "routesOverSuggestedStretch": 0,
+                    "minSegmentPx": 24,
+                    "minInteriorSegmentPx": 47,
+                    "shortSegmentCount": 0,
+                    "shortEndpointSegmentCount": 0,
+                    "shortInteriorSegmentCount": 0,
+                    "microSegmentCount": 0
+                  },
+                  "suggestedLimits": {
+                    "bendsPerRelationship": 2,
+                    "stretch": 1.35,
+                    "segmentPx": 16,
+                    "microSegmentPx": 8
+                  },
+                  "routeReview": {
+                    "crossings": [],
+                    "detours": [
+                      {
+                        "relationship": {
+                          "id": "run2-to-bt2-1",
+                          "from": "run2",
+                          "to": "bt2",
+                          "label": "lectura failover",
+                          "collectionIndex": 8,
+                          "artifactIndex": 9
+                        },
+                        "bends": 3,
+                        "stretch": 1.081,
+                        "directCorridorBlockers": [
+                          {
+                            "id": "bt1",
+                            "label": "Bigtable Cluster Z1 (us-central1)",
+                            "box": [
+                              1042,
+                              266,
+                              234,
+                              60
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "leadingSpace": {
+                    "measured": true,
+                    "emptyTopPx": 80,
+                    "emptyTopRatio": 0.138,
+                    "occupiedTop": 80,
+                    "viewBoxTop": 0,
+                    "canvasHeight": 580,
+                    "typicalNodeHeight": 60,
+                    "reviewSuggested": false
+                  },
+                  "desktopReadability": {
+                    "budgetBasis": "recognized-declared-wide",
+                    "readerContract": "declared-wide-v1",
+                    "availableDiagramWidth": 1346,
+                    "actualBudgetPx": 1346,
+                    "actualReaderWidth": 1376,
+                    "desiredReaderWidth": 1558.125,
+                    "viewportCap": 1376,
+                    "limit": "viewport-cap",
+                    "requestedTargetPx": 7.5,
+                    "requestedTargetMet": false,
+                    "hardFloorPx": 6,
+                    "hardFloorMet": true,
+                    "minimumOwner": {
+                      "kind": "edge",
+                      "id": "users-to-lb-1",
+                      "from": "users",
+                      "to": "lb"
+                    },
+                    "minimumSourceTextPx": 8,
+                    "minimumProjectedTextPx": 6.606134969325153,
+                    "semanticTextCount": 20
+                  },
+                  "issues": []
+                }
+              }
+            }
+          ]
+        },
+        "diagnostics": [],
+        "provenance": "current",
+        "deliveryReceiptId": "b0dcb4de-63ca-4c4b-9b94-863f9fd94e95"
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": false,
+    "ran": false
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_lumina_examen_sustentacion_explainer_interactivo.finalize.json",
+    "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_lumina_examen_sustentacion_explainer_interactivo.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-24T05:43:52.338Z",
+  "durationMs": 1659,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-24T05:38:43.385Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

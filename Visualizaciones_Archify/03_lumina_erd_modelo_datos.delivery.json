@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "a90385d2-1db3-420f-b30f-770eba5bcfb9",
+  "receiptId": "8de44d7d-6c3d-4e81-8dca-9eb1f9d1b27f",
   "status": "current",
   "command": "deliver",
   "type": "erd",
-  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/erd-lumina-schema-20261019-224400/candidate.json",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/erd-lumina-schema-20261024-003700/candidate.json",
   "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/03_lumina_erd_modelo_datos.html",
   "specification": {
-    "sha256": "b1ddbe79651f672989da2ac9aeaa751556f2c2c9afe2c52fb0a422d4b183c382",
-    "bytes": 7611
+    "sha256": "87a1f9dd027a09f155a8f0df09373c4a24d9c511d503b24f8a66dc9150951e02",
+    "bytes": 7551
   },
   "artifact": {
-    "sha256": "9c9ee243b79ffecc499a35b06e64dd3b301da3e9b8cd8a91b0d755fa905bd965",
-    "bytes": 847904
+    "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
+    "bytes": 847975
   }
 }

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b0dcb4de-63ca-4c4b-9b94-863f9fd94e95",
+  "status": "current",
+  "command": "deliver",
+  "type": "explainer",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-examen-20261024-003900/candidate.archify.md",
+  "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/04_Lumina_Examen_Sustentacion_Explainer_Interactivo.html",
+  "specification": {
+    "sha256": "8f31600f40ead2f753d63ad64924e625853146d9c12fbffcf0b0873aa47d2e07",
+    "bytes": 11147
+  },
+  "artifact": {
+    "sha256": "74ec6404946e5ad5fadfed9d7b12e4bb1287dc69445680d2fa69fb1ec7cb3636",
+    "bytes": 1001940
+  },
+  "explainer": {
+    "preparedSha256": "6ab371571453f546ff9a0e3e2e439d581f1c100ad0c61ef35ddd9789f442bd92",
+    "dependencies": [
+      {
+        "kind": "diagram-spec",
+        "id": "stress-flow",
+        "inline": true,
+        "sha256": "2f478c3730a395e305a2e90933a9f2750b0ef3a2150ef1316068b9c19ad7fb87",
+        "bytes": 1787
+      },
+      {
+        "kind": "diagram-spec",
+        "id": "drp-arch",
+        "inline": true,
+        "sha256": "f2478da3811fc322517e1010e6948fed525493d1e4385136bacdfc1426562c82",
+        "bytes": 2300
+      }
+    ]
+  }
+}

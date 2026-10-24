@@ -1,36 +1,36 @@
 {
   "schemaVersion": 1,
-  "receiptId": "f641c39f-40dc-4bdc-9ce5-a69408a25bb4",
+  "receiptId": "303a1fb8-8e5a-4124-922e-949d12be4ae3",
   "status": "current",
   "command": "deliver",
   "type": "explainer",
-  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-20261019-224600/candidate.archify.md",
+  "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-20261024-003800/candidate.archify.md",
   "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Lumina_Avance1_P1_Explainer_Interactivo.html",
   "specification": {
-    "sha256": "58a0a3b14e5fd8c901a0e67ed1a9e22aa42cd7fe0d44dbf093f1d82a295a3717",
-    "bytes": 6229
+    "sha256": "f0f40d8378d63ee684959f777182f5404200bf75e9719f6aba87c2ac82db394c",
+    "bytes": 8121
   },
   "artifact": {
-    "sha256": "31d4f1a645cd30c4052808930cecb6d83f0858d6b9469722a20db93aa19b018f",
-    "bytes": 1064096
+    "sha256": "9676cc8bf0abff521c76ba39cd9bf294a1e9bdf9a6934a3fdca4c6f17da9df90",
+    "bytes": 1081292
   },
   "explainer": {
-    "preparedSha256": "eafd319386f5ebb0ac5f925c3cfaa56d5a9e7d0e6bec5e3f7ac78a8b38651694",
+    "preparedSha256": "4e1c64e5477931558edd221f3456a97f325ba87c19c7bd445111ac7c726e4b54",
     "dependencies": [
       {
         "kind": "diagram-spec",
         "id": "lumina-arch",
         "inline": true,
-        "sha256": "9a4621903b5935ed5cecac5993c01a3d0bfc014644007eebb46cc3fd49d2eebf",
-        "bytes": 2319
+        "sha256": "8bb11256528c6e7e7b2f06183c5ea08e09955c62983068233814ea90d1ee7c81",
+        "bytes": 2389
       },
       {
         "kind": "diagram-spec",
         "id": "lumina-erd",
-        "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-20261019-224600/lumina-erd.erd.json",
+        "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-20261024-003800/lumina-erd.erd.json",
         "relativePath": "lumina-erd.erd.json",
-        "sha256": "b1ddbe79651f672989da2ac9aeaa751556f2c2c9afe2c52fb0a422d4b183c382",
-        "bytes": 7611
+        "sha256": "87a1f9dd027a09f155a8f0df09373c4a24d9c511d503b24f8a66dc9150951e02",
+        "bytes": 7551
       }
     ]
   }
