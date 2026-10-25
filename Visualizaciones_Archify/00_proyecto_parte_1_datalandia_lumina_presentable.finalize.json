@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "explainer",
   "quality": "showcase",
-  "startedAt": "2026-10-25T00:03:33.579Z",
+  "startedAt": "2026-10-25T00:25:51.522Z",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "e6053845e5678eb335cef00fdc44de642caeb4944f8569e191519fc7bdb474ab",
-    "bytes": 31634
+    "sha256": "873988d45f211e3bb7a2abb132e70484d83d8ccf1582c9e71387c50a7726648b",
+    "bytes": 35455
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "6c8caea72d4ab953233fd01186deec1f01b37501eb58ffea520c8620f39be08d",
-    "bytes": 2477009
+    "sha256": "b6613ed82b950e7826bd05af580950cb03a872498ac04c49040fddff5f76a3f5",
+    "bytes": 2508557
   },
   "stages": {
     "browser-check": {
@@ -42,8 +42,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "e6053845e5678eb335cef00fdc44de642caeb4944f8569e191519fc7bdb474ab",
-          "bytes": 31634
+          "sha256": "873988d45f211e3bb7a2abb132e70484d83d8ccf1582c9e71387c50a7726648b",
+          "bytes": 35455
         },
         "validation": {
           "checksPassed": 4,
@@ -58,7 +58,7 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1804,
+      "durationMs": 1674,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -72,14 +72,14 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "92a2227e-bf48-4c8b-b7d9-6e61db0f6910",
+        "receiptId": "1a3d20a7-547d-467f-920e-d53a22e2083b",
         "ok": true,
         "command": "deliver",
         "type": "explainer",
         "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
         "output": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "explainer": {
-          "preparedSha256": "e5c25039fb8c1c9d45fa26cccc10b4188d0372ce8c0b728e6f5f87b610e07b32",
+          "preparedSha256": "34bd4e7dedf476705e93a1af7f794dc3e6f41c56673a4b255a5a279b6016504b",
           "dependencies": [
             {
               "kind": "diagram-spec",
@@ -121,12 +121,12 @@
           ]
         },
         "specification": {
-          "sha256": "e6053845e5678eb335cef00fdc44de642caeb4944f8569e191519fc7bdb474ab",
-          "bytes": 31634
+          "sha256": "873988d45f211e3bb7a2abb132e70484d83d8ccf1582c9e71387c50a7726648b",
+          "bytes": 35455
         },
         "artifact": {
-          "sha256": "6c8caea72d4ab953233fd01186deec1f01b37501eb58ffea520c8620f39be08d",
-          "bytes": 2477009
+          "sha256": "b6613ed82b950e7826bd05af580950cb03a872498ac04c49040fddff5f76a3f5",
+          "bytes": 2508557
         },
         "validation": {
           "checksPassed": 4,
@@ -136,6 +136,92 @@
           "errors": 0,
           "warnings": 0
         },
+        "diagnostics": [
+          {
+            "code": "explainer/writing-sentence-length",
+            "severity": "warning",
+            "message": "Sentence has 41 reading units, above the configured en limit of 28.",
+            "subject": {
+              "line": 187,
+              "component": "prose",
+              "panelId": "benchmark-movilidad",
+              "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md"
+            },
+            "evidence": {
+              "rule": "sentence-length",
+              "reason": "Sentence has 41 reading units, above the configured en limit of 28.",
+              "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+              "units": 41,
+              "limit": 28
+            },
+            "supportedFixes": [
+              "Split at a logical action or condition boundary while preserving qualifications and causal links."
+            ]
+          },
+          {
+            "code": "explainer/writing-sentence-length",
+            "severity": "warning",
+            "message": "Sentence has 62 reading units, above the configured en limit of 28.",
+            "subject": {
+              "line": 217,
+              "component": "prose",
+              "panelId": "benchmark-movilidad",
+              "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md"
+            },
+            "evidence": {
+              "rule": "sentence-length",
+              "reason": "Sentence has 62 reading units, above the configured en limit of 28.",
+              "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+              "units": 62,
+              "limit": 28
+            },
+            "supportedFixes": [
+              "Split at a logical action or condition boundary while preserving qualifications and causal links."
+            ]
+          },
+          {
+            "code": "explainer/writing-sentence-length",
+            "severity": "warning",
+            "message": "Sentence has 42 reading units, above the configured en limit of 28.",
+            "subject": {
+              "line": 235,
+              "component": "callout",
+              "panelId": "benchmark-movilidad",
+              "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md"
+            },
+            "evidence": {
+              "rule": "sentence-length",
+              "reason": "Sentence has 42 reading units, above the configured en limit of 28.",
+              "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+              "units": 42,
+              "limit": 28
+            },
+            "supportedFixes": [
+              "Split at a logical action or condition boundary while preserving qualifications and causal links."
+            ]
+          },
+          {
+            "code": "explainer/writing-sentence-length",
+            "severity": "warning",
+            "message": "Sentence has 35 reading units, above the configured en limit of 28.",
+            "subject": {
+              "line": 236,
+              "component": "callout",
+              "panelId": "benchmark-movilidad",
+              "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md"
+            },
+            "evidence": {
+              "rule": "sentence-length",
+              "reason": "Sentence has 35 reading units, above the configured en limit of 28.",
+              "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+              "units": 35,
+              "limit": 28
+            },
+            "supportedFixes": [
+              "Split at a logical action or condition boundary while preserving qualifications and causal links."
+            ]
+          }
+        ],
         "update": {
           "status": "unavailable",
           "installedVersion": null,
@@ -147,12 +233,13 @@
           "noticeText": null,
           "reason": "disabled"
         }
-      }
+      },
+      "stderr": "archify: Sentence has 41 reading units, above the configured en limit of 28.\narchify: Sentence has 62 reading units, above the configured en limit of 28.\narchify: Sentence has 42 reading units, above the configured en limit of 28.\narchify: Sentence has 35 reading units, above the configured en limit of 28."
     },
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1090,
+      "durationMs": 1091,
       "command": [
         "/Applications/LM Studio.app/Contents/Resources/app/.webpack/bin/node",
         "/Users/herivera/Documents/MAESTRIA/Big Data/.agents/skills/archify/bin/archify.mjs",
@@ -165,15 +252,15 @@
         "file": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
         "family": "explainer",
         "artifact": {
-          "sha256": "6c8caea72d4ab953233fd01186deec1f01b37501eb58ffea520c8620f39be08d",
-          "bytes": 2477009
+          "sha256": "b6613ed82b950e7826bd05af580950cb03a872498ac04c49040fddff5f76a3f5",
+          "bytes": 2508557
         },
         "checks": [
           {
             "name": "explainer_structure",
             "ok": true,
             "details": [
-              "219 unique DOM IDs"
+              "231 unique DOM IDs"
             ]
           },
           {
@@ -214,7 +301,7 @@
               "id": "lumina-arch-main",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-c3ombx/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-c6n98r/child.html",
                 "artifact": {
                   "sha256": "74224e8c5893ffecd6134304c725854983dc01efa196ece7450c219ca8212dd9",
                   "bytes": 845372
@@ -516,7 +603,7 @@
               "id": "lumina-erd",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-bQbBmo/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-yAVWqf/child.html",
                 "artifact": {
                   "sha256": "b1fb50c152b3d3d1c5427fece1b29341d923b7b01091009ffa852d9d70d838a5",
                   "bytes": 847975
@@ -657,7 +744,7 @@
               "id": "stress-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-dvqoeP/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-4yxzee/child.html",
                 "artifact": {
                   "sha256": "060016f0a25627bf60e067cb3739d564fc35c5d422ab9bc42d44404e6e9a6d7a",
                   "bytes": 819019
@@ -784,7 +871,7 @@
               "id": "api-flow",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-evpyky/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-YDQtNe/child.html",
                 "artifact": {
                   "sha256": "54d648f049f281ae7dd6423babdbdd903bdb46464cb93ffea0cace71602e0a90",
                   "bytes": 811085
@@ -923,7 +1010,7 @@
               "id": "drp-arch",
               "receipt": {
                 "ok": true,
-                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-C9ka04/child.html",
+                "file": "/var/folders/y9/l517gtzj3n3_m2f5kz_mf56r0000gp/T/archify-explainer-check-tbglJv/child.html",
                 "artifact": {
                   "sha256": "786254b2c2cb28e4a1d9d1c4540d5b2cb98f41d3490c93c9289976d26094f14d",
                   "bytes": 827688
@@ -1084,7 +1171,7 @@
         },
         "diagnostics": [],
         "provenance": "current",
-        "deliveryReceiptId": "92a2227e-bf48-4c8b-b7d9-6e61db0f6910"
+        "deliveryReceiptId": "1a3d20a7-547d-467f-920e-d53a22e2083b"
       }
     }
   },
@@ -1092,14 +1179,99 @@
     "requested": false,
     "ran": false
   },
-  "diagnostics": [],
+  "diagnostics": [
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 41 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 187,
+        "component": "prose",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 41 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 41,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 62 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 217,
+        "component": "prose",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 62 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 62,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 42 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 235,
+        "component": "callout",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 42 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 42,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 35 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 236,
+        "component": "callout",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 35 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 35,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    }
+  ],
   "evidence": {
     "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize.json",
     "summaryReceipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize-summary.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-25T00:03:36.751Z",
-  "durationMs": 3172,
+  "finishedAt": "2026-10-25T00:25:54.554Z",
+  "durationMs": 3032,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",

@@ -7,13 +7,13 @@
   "quality": "showcase",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "e6053845e5678eb335cef00fdc44de642caeb4944f8569e191519fc7bdb474ab",
-    "bytes": 31634
+    "sha256": "873988d45f211e3bb7a2abb132e70484d83d8ccf1582c9e71387c50a7726648b",
+    "bytes": 35455
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "6c8caea72d4ab953233fd01186deec1f01b37501eb58ffea520c8620f39be08d",
-    "bytes": 2477009
+    "sha256": "b6613ed82b950e7826bd05af580950cb03a872498ac04c49040fddff5f76a3f5",
+    "bytes": 2508557
   },
   "gates": {
     "validate": "pass",
@@ -21,10 +21,95 @@
     "check": "pass",
     "browser-check": "not-run"
   },
-  "diagnostics": [],
+  "diagnostics": [
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 41 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 187,
+        "component": "prose",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 41 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 41,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 42 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 235,
+        "component": "callout",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 42 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 42,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 62 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 217,
+        "component": "prose",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 62 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 62,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 35 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 236,
+        "component": "callout",
+        "panelId": "benchmark-movilidad"
+      },
+      "evidence": {
+        "reason": "Sentence has 35 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 35,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
+    }
+  ],
   "diagnosticSummary": {
-    "total": 0,
-    "shown": 0,
+    "total": 4,
+    "shown": 4,
     "truncated": false
   },
   "evidence": {
@@ -42,7 +127,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 3172,
+  "durationMs": 3032,
   "browserCheck": {
     "requested": false,
     "ran": false
