@@ -7,13 +7,13 @@
   "quality": "showcase",
   "specification": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
-    "sha256": "083e080cf250f4c0300df9a063cf1363dda886495f2fc2b5d704ef9c32dc28b0",
-    "bytes": 40380
+    "sha256": "5da4d00b811ebc87a1cea50bea8a18a13b7e82814deedf53ec4c6ea321496d66",
+    "bytes": 43204
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "56fdbf5ff8e6c5f970cd303a702b48ff69dba3dbeb3692c4bc05e98547a23f04",
-    "bytes": 2581896
+    "sha256": "8507f26402d38e0dc9784522460faa8381c23622c2b85c6fd81773b57a1154d3",
+    "bytes": 2599695
   },
   "gates": {
     "validate": "pass",
@@ -168,12 +168,36 @@
       "supportedFixes": [
         "Split at a logical action or condition boundary while preserving qualifications and causal links."
       ]
+    },
+    {
+      "code": "explainer/writing-sentence-length",
+      "severity": "warning",
+      "message": "Sentence has 42 reading units, above the configured en limit of 28.",
+      "subject": {
+        "input": "/Users/herivera/Documents/MAESTRIA/Big Data/.archify/explainer-lumina-p1-docente-20261024-010800/candidate.archify.md",
+        "line": 313,
+        "component": "prose",
+        "panelId": "drp-resiliencia"
+      },
+      "evidence": {
+        "reason": "Sentence has 42 reading units, above the configured en limit of 28.",
+        "example": "先查缓存。未命中时再查数据库。 / Check the cache first. Query the database on a miss.",
+        "rule": "sentence-length",
+        "units": 42,
+        "limit": 28
+      },
+      "supportedFixes": [
+        "Split at a logical action or condition boundary while preserving qualifications and causal links."
+      ]
     }
   ],
   "diagnosticSummary": {
-    "total": 7,
-    "shown": 7,
-    "truncated": false
+    "total": 9,
+    "shown": 8,
+    "truncated": true,
+    "omittedByCode": {
+      "explainer/writing-sentence-length": 1
+    }
   },
   "evidence": {
     "receipt": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_proyecto_parte_1_datalandia_lumina_presentable.finalize.json",
@@ -190,7 +214,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 3023,
+  "durationMs": 3340,
   "browserCheck": {
     "requested": false,
     "ran": false
