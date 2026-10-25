@@ -12,8 +12,8 @@
   },
   "artifact": {
     "path": "/Users/herivera/Documents/MAESTRIA/Big Data/Tareas/Visualizaciones_Archify/00_Proyecto_Parte_1_DataLandia_Lumina_Presentable.html",
-    "sha256": "908339713e4b15161c05526beda9ebd6b16d7da40ac7a75d17880ec3585071b8",
-    "bytes": 2476674
+    "sha256": "6c8caea72d4ab953233fd01186deec1f01b37501eb58ffea520c8620f39be08d",
+    "bytes": 2477009
   },
   "gates": {
     "validate": "pass",
@@ -42,7 +42,7 @@
     "noticeText": null
   },
   "visualReview": "not-requested",
-  "durationMs": 2950,
+  "durationMs": 3172,
   "browserCheck": {
     "requested": false,
     "ran": false
