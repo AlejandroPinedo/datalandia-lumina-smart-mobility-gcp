@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 04_pipeline_streaming_beam_bq.py
-Pipeline de Ingesta y Validación para la Fuente F3 (Array of Things + Telemetría OART).
-Lee los mensajes en tiempo real desde la suscripción de Cloud Pub/Sub, aplica las reglas
-de integridad física y negocio de Lumina:
-  - Si el sensor OART reporta lecturas corruptas (node_id vacío, vibración <= 0, o
-    temperatura fuera de [-40, 180] °C), desvía el evento a la tabla Dead-Letter Queue
-    (`ingesta_deadletter_raw`) sin interrumpir la operación.
-  - Si el evento es válido, calcula `sensor_status` (NORMAL, WARNING_PDM, CRITICAL_PDM)
-    y `requiere_mantenimiento_pdm` (BOOLEAN) y lo inserta en BigQuery (`iot_aot_telemetry_raw`).
+Pipeline de Ingesta y Procesamiento Streaming para la Fuente F3 (Array of Things + Telemetría OART).
+Soporta dos modos de ejecución pensados para optimizar el presupuesto de $250 USD en GCP:
+  1. Modo Rápido Serverless (`--mode=pull`, por defecto):
+     Drena los mensajes en vivo desde la suscripción de Cloud Pub/Sub, aplica la lógica
+     de validación física y enrutamiento Dead-Letter Queue (DLQ) e inserta en BigQuery
+     en < 3 segundos con costo $0.00 en máquinas virtuales.
+  2. Modo Apache Beam / Cloud Dataflow (`--mode=beam --runner=DirectRunner` o `DataflowRunner`):
+     Ejecuta el grafo completo de Apache Beam (`beam.DoFn` con `pvalue.TaggedOutput('deadletter')`,
+     `ReadFromPubSub` y `WriteToBigQuery`) siguiendo el estándar del Laboratorio 01 de clase.
 """
 
+import argparse
 from datetime import datetime, timezone
 import json
 from google.cloud import bigquery, pubsub_v1
@@ -147,5 +149,144 @@ def consumir_pubsub_hacia_bigquery(max_pull: int = 100):
     print("👉 Siguiente paso: python3 05_verificar_cruce_multifuente_bq.py")
 
 
+def ejecutar_pipeline_apache_beam(runner: str, extra_args: list[str]):
+    """
+    Grafo nativo de Apache Beam (compatible con DirectRunner y Cloud DataflowRunner).
+    """
+    import apache_beam as beam
+    from apache_beam import pvalue
+    from apache_beam.io import ReadFromPubSub, WriteToBigQuery
+    from apache_beam.io.gcp.bigquery import BigQueryDisposition
+    from apache_beam.options.pipeline_options import (
+        GoogleCloudOptions,
+        PipelineOptions,
+        SetupOptions,
+        StandardOptions,
+    )
+
+    class ProcesarTelemetriaLuminaDoFn(beam.DoFn):
+        OUTPUT_TAG_DLQ = "deadletter"
+
+        def process(self, element: bytes):
+            import json
+            from datetime import datetime, timezone
+            from apache_beam import pvalue
+
+            now_iso = datetime.now(timezone.utc).isoformat()
+            raw_str = element.decode("utf-8", errors="replace") if isinstance(element, bytes) else str(element)
+            try:
+                data = json.loads(raw_str)
+            except Exception as exc:
+                yield pvalue.TaggedOutput(
+                    self.OUTPUT_TAG_DLQ,
+                    {
+                        "payload_crudo": raw_str[:1000],
+                        "origen_fuente": "IOT_AOT_BEAM",
+                        "motivo_error": f"JSON_MALFORMADO: {exc}",
+                        "ts_error": now_iso,
+                    },
+                )
+                return
+
+            node_id = str(data.get("node_id") or "").strip()
+            vib = float(data.get("vibration_mms", -1.0))
+            temp = float(data.get("temperature_c", -999.0))
+
+            if not node_id or vib <= 0.0 or vib > 100.0 or temp < -40.0 or temp > 180.0:
+                yield pvalue.TaggedOutput(
+                    self.OUTPUT_TAG_DLQ,
+                    {
+                        "payload_crudo": raw_str[:1000],
+                        "origen_fuente": "IOT_AOT_BEAM",
+                        "motivo_error": f"LECTURA_FUERA_RANGO (node={node_id}, vib={vib}, temp={temp})",
+                        "ts_error": now_iso,
+                    },
+                )
+                return
+
+            status = "CRITICAL_PDM" if (vib >= 7.5 or temp >= 80.0) else ("WARNING_PDM" if (vib >= 5.5 or temp >= 65.0) else "NORMAL")
+            yield {
+                "event_id": data.get("event_id", "EVT-UNKNOWN"),
+                "timestamp_evento": data.get("timestamp_evento", now_iso),
+                "node_id": node_id,
+                "zone_id": data.get("zone_id", "ZDL-001"),
+                "county_id": data.get("county_id", "CNT-01"),
+                "station_id": data.get("station_id", "OART-ST-01"),
+                "asset_type": data.get("asset_type", "OART_RAIL_SWITCH"),
+                "lat": float(data.get("lat", 37.7897)),
+                "lon": float(data.get("lon", -122.4014)),
+                "vibration_mms": vib,
+                "temperature_c": temp,
+                "sound_db": float(data.get("sound_db", 65.0)),
+                "pm25_ugm3": float(data.get("pm25_ugm3", 12.0)),
+                "passenger_load_pct": int(data.get("passenger_load_pct", 50)),
+                "sensor_status": status,
+                "requiere_mantenimiento_pdm": status == "CRITICAL_PDM",
+                "ts_ingesta_bq": now_iso,
+            }
+
+    options = PipelineOptions(extra_args)
+    std_opts = options.view_as(StandardOptions)
+    std_opts.runner = runner
+    std_opts.streaming = True
+    options.view_as(SetupOptions).save_main_session = False
+
+    gcp_opts = options.view_as(GoogleCloudOptions)
+    gcp_opts.project = config.GCP_PROJECT_ID
+    gcp_opts.region = config.GCP_REGION
+    gcp_opts.job_name = f"{config.DATAFLOW_JOB_NAME}-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
+    gcp_opts.temp_location = config.GCS_TEMP_LOCATION
+    gcp_opts.staging_location = config.GCS_STAGING_LOCATION
+
+    print(f"🚀 Iniciando Pipeline Apache Beam con runner='{runner}'...")
+    with beam.Pipeline(options=options) as p:
+        resultados = (
+            p
+            | "1_ReadFromPubSub" >> ReadFromPubSub(subscription=config.PUBSUB_SUB_PATH)
+            | "2_ValidarYClasificarPdM"
+            >> beam.ParDo(ProcesarTelemetriaLuminaDoFn()).with_outputs(
+                ProcesarTelemetriaLuminaDoFn.OUTPUT_TAG_DLQ, main="validos"
+            )
+        )
+
+        _ = (
+            resultados.validos
+            | "3A_WriteValidosBigQuery"
+            >> WriteToBigQuery(
+                table=config.BQ_FULL_IOT,
+                schema=config.BQ_SCHEMA_IOT_AOT,
+                write_disposition=BigQueryDisposition.WRITE_APPEND,
+                create_disposition=BigQueryDisposition.CREATE_IF_NEEDED,
+                method=WriteToBigQuery.Method.STREAMING_INSERTS,
+            )
+        )
+
+        _ = (
+            resultados[ProcesarTelemetriaLuminaDoFn.OUTPUT_TAG_DLQ]
+            | "3B_WriteDLQBigQuery"
+            >> WriteToBigQuery(
+                table=config.BQ_FULL_DLQ,
+                schema=config.BQ_SCHEMA_DEADLETTER,
+                write_disposition=BigQueryDisposition.WRITE_APPEND,
+                create_disposition=BigQueryDisposition.CREATE_IF_NEEDED,
+                method=WriteToBigQuery.Method.STREAMING_INSERTS,
+            )
+        )
+
+
 if __name__ == "__main__":
-    consumir_pubsub_hacia_bigquery()
+    parser = argparse.ArgumentParser(description="Pipeline Streaming IoT AoT + OART hacia BigQuery")
+    parser.add_argument(
+        "--mode",
+        choices=["pull", "beam"],
+        default="pull",
+        help="'pull' drena la suscripción instantáneamente sin costo de VMs; 'beam' lanza Apache Beam continuo.",
+    )
+    parser.add_argument("--runner", default=config.DATAFLOW_RUNNER, help="DirectRunner o DataflowRunner")
+    parser.add_argument("--max-pull", type=int, default=100)
+    args, extra = parser.parse_known_args()
+
+    if args.mode == "beam":
+        ejecutar_pipeline_apache_beam(args.runner, extra)
+    else:
+        consumir_pubsub_hacia_bigquery(max_pull=args.max_pull)

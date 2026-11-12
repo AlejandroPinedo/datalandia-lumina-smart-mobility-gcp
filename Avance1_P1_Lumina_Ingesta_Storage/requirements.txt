@@ -3,3 +3,5 @@ google-cloud-pubsub>=2.23.0
 google-cloud-storage>=2.18.0
 python-dotenv>=1.0.1
 apache-beam[gcp]>=2.60.0
+flask>=3.0.0
+gunicorn>=22.0.0

@@ -6,7 +6,7 @@
   <h2 style="color: #B3E5FC; margin-top: 10px; font-weight: 400; font-size: 18px;">Caso de Estudio: DataLandia Metropolitan — Autoridad de Tránsito Unificada "Lumina" (Smart Mobility)</h2>
   <p style="color: #E1F5FE; font-size: 14px; margin-top: 14px; margin-bottom: 0;">
     <b>Programa:</b> Maestría en Big Data & Data Science (UTEC) &nbsp;|&nbsp;
-    <b>Curso:</b> Taller de Arquitectura Big Data (Sección 1) &nbsp;|&nbsp;
+    <b>Curso:</b> Big Data &nbsp;|&nbsp;
     <b>Audiencia:</b> Comité Ejecutivo de Negocio, CIO / CTO & Panel Evaluador
   </p>
 </div>
