@@ -2,13 +2,17 @@ GUION DE SUSTENTACIÓN DE LUMINA
 Presentación Lumina-P3.pptx
 Duración orientativa de 10 a 12 minutos, más el tiempo de la demo
 
-1. Lumina — Movilidad urbana en DataLandia
+David · Diapositivas 1 a 6 · Problema, fuentes y criterios de éxito
+José Carlos · Diapositivas 7 a 11 · Arquitectura, resultados y costos
+Alejandro · Diapositivas 12 a 17 · Demo, conclusiones y próximos pasos
 
-Buenos días. Somos Herles Pinedo, David Jimenez y José Nomberto, y presentamos Lumina, nuestra implementación para el caso de movilidad urbana de DataLandia.
+1. David · Lumina — Movilidad urbana en DataLandia
+
+Buenos días. Somos David, José Carlos y Alejandro. Hoy presentamos Lumina, nuestra implementación para el caso de movilidad urbana de DataLandia.
 
 El proyecto integra los datos disponibles en una plataforma que permite consultar alternativas de transporte y analizar patrones históricos. Durante la presentación explicaremos cómo ingresan los datos, cómo los transformamos y validamos, y cómo llegan hasta la aplicación que utiliza el pasajero.
 
-2. Resumen ejecutivo — Un trayecto, varias alternativas
+2. David · Resumen ejecutivo — Un trayecto, varias alternativas
 
 Partimos de una pregunta concreta del pasajero. Si quiero trasladarme entre dos zonas, ¿qué alternativas existen y qué tiempos y tarifas registraron?
 
@@ -16,7 +20,7 @@ Para responderla, integramos cuatro fuentes del proyecto y construimos un recorr
 
 Esto permite comparar alternativas observadas para un trayecto y consultar los registros que respaldan los indicadores.
 
-3. Situación actual — Las fuentes tienen fechas distintas
+3. David · Situación actual — Las fuentes tienen fechas distintas
 
 Trabajamos con cinco millones de registros de viajes, quinientos cuatro registros de tráfico, once observaciones de sensores y ocho zonas censales.
 
@@ -24,7 +28,7 @@ Durante la revisión encontramos una característica que condiciona los cruces. 
 
 Por eso conservamos las fechas originales y distinguimos las coincidencias temporales del contexto territorial. Esta decisión permite interpretar correctamente los resultados.
 
-4. Criterios de éxito — Calidad, integridad y rendimiento
+4. David · Criterios de éxito — Calidad, integridad y rendimiento
 
 Definimos indicadores para comprobar que el procesamiento funcionara.
 
@@ -32,9 +36,9 @@ Primero, verificamos que las cuatro tablas conservaran su conteo y su huella de 
 
 También comprobamos que Gold mantuviera una fila por viaje. Finalmente, en una prueba local de cuarenta y ocho solicitudes, obtuvimos cero errores y una latencia p95 de aproximadamente ciento cuarenta y nueve milisegundos.
 
-5. Productos tecnológicos — Cada herramienta cumple una función
+5. David · Productos tecnológicos — Cada herramienta cumple una función
 
-La selección tecnológica responde a las etapas del procesamiento.
+A la izquierda vemos los archivos Parquet en el bucket del proyecto. Desde ese punto podemos seguir el recorrido hasta la aplicación.
 
 Cloud Storage y Parquet permiten conservar y transferir archivos por fuente. BigQuery ejecuta la depuración, los controles de calidad y las agregaciones mediante SQL.
 
@@ -42,7 +46,7 @@ Python y SQLite permiten reproducir eventos y conservar el estado de cada sensor
 
 Además, el proyecto cuenta con un tópico de Pub/Sub configurado. Cloud Run forma parte del diseño previsto para alojar la API en producción.
 
-6. Dependencias y supuestos — Qué requiere el siguiente nivel operativo
+6. David · Dependencias y supuestos — Qué requiere el siguiente nivel operativo
 
 Para avanzar hacia una operación actual necesitamos fuentes adicionales.
 
@@ -50,7 +54,9 @@ La asignación de vehículos requiere conocer la flota disponible, los turnos y 
 
 En el presupuesto asumimos un consumo mensual constante durante doce meses. La estimación presentada cubre el escenario del piloto OLAP. El almacenamiento en Cloud Storage, el streaming continuo y la recuperación multirregional requieren un cálculo adicional.
 
-7. Arquitectura final — Del archivo a la decisión del pasajero
+Con estos requisitos claros, le paso la palabra a José Carlos para que explique cómo construimos y validamos el flujo de datos.
+
+7. José Carlos · Arquitectura final — Del archivo a la decisión del pasajero
 
 Este diagrama muestra el recorrido principal.
 
@@ -62,15 +68,15 @@ En paralelo, el carril de telemetría procesa los eventos históricos y mantiene
 
 [Indicación para el expositor] Señala cada etapa del diagrama mientras explicas el recorrido.
 
-8. Procesamiento — La depuración conserva una fila por viaje
+8. José Carlos · Procesamiento — La depuración conserva una fila por viaje
 
 El procesamiento empieza con cinco millones de filas de viajes. Durante la limpieza excluimos tres mil novecientas noventa y una filas, y obtenemos cuatro millones novecientos noventa y seis mil nueve viajes únicos en Gold.
 
 La publicación depende de cuatro controles de calidad. Cada uno debe alcanzar al menos el noventa y cinco por ciento.
 
-Esta compuerta permite comprobar el estado de los datos antes de construir los indicadores. Los manifiestos guardan los resultados y los identificadores de los trabajos ejecutados en BigQuery.
+La captura muestra la auditoría de una etapa anterior. Los resultados del cierre están arriba. Esta compuerta permite comprobar el estado de los datos antes de construir los indicadores. Los manifiestos guardan los resultados y los identificadores de los trabajos ejecutados en BigQuery.
 
-9. Resultados OLAP — Multimodal OART concentra el 38 %
+9. José Carlos · Resultados OLAP — Multimodal OART concentra el 38 %
 
 El gráfico presenta la distribución de los viajes validados.
 
@@ -82,7 +88,7 @@ Este resultado describe el volumen observado en el histórico. Para evaluar qué
 
 [Indicación para el expositor] Señala las dos primeras barras y después conecta el resultado con la consulta por trayecto.
 
-10. Calculadora de consumo — USD 216,81 para el primer año
+10. José Carlos · Calculadora de consumo — USD 216,81 para el primer año
 
 Construimos una calculadora con parámetros editables para relacionar la arquitectura con su consumo.
 
@@ -92,7 +98,7 @@ Las consultas de BigQuery representan la mayor parte del costo. El subtotal mens
 
 Los parámetros están guardados en el repositorio para recalcular otros escenarios.
 
-11. Demo de extremo a extremo — Del manifiesto al trayecto
+11. José Carlos · Demo de extremo a extremo — Del manifiesto al trayecto
 
 La demostración conecta cuatro momentos.
 
@@ -102,7 +108,9 @@ Luego pasamos a la consulta del pasajero, donde elegimos un origen y un destino.
 
 Así podemos seguir el recorrido desde las fuentes hasta una consulta concreta de negocio.
 
-12. Demo — Consulta del pasajero
+Alejandro, ya vimos cómo se obtuvieron las cifras. Muéstranos ahora cómo las consulta un pasajero.
+
+12. Alejandro · Demo — Consulta del pasajero
 
 En esta pantalla seleccionamos como origen el Centro Financiero Metropolitano y como destino el Distrito Tecnológico Norte.
 
@@ -112,7 +120,7 @@ El usuario puede ordenarlas según menor duración, menor tarifa o menor distanc
 
 [Indicación para el expositor] En la demo en vivo, baja hasta las alternativas y cambia el orden de duración a tarifa.
 
-13. Demo — Viajes registrados
+13. Alejandro · Demo — Viajes registrados
 
 Esta vista permite examinar los viajes exportados con mayor detalle.
 
@@ -122,7 +130,7 @@ Cada fila presenta el identificador, el trayecto, el transporte, la duración y 
 
 [Indicación para el expositor] Selecciona un modo de transporte y abre una fila para mostrar su detalle.
 
-14. Demo — Resumen de movilidad
+14. Alejandro · Demo — Resumen de movilidad
 
 El tablero permite explorar el comportamiento del histórico mediante indicadores y gráficos.
 
@@ -130,7 +138,7 @@ Aquí observamos el volumen de viajes, la distancia acumulada, los importes de t
 
 Esta vista utiliza la exportación del Gold histórico, con cuatro millones novecientos noventa y ocho mil novecientos veintiséis registros. La siguiente pantalla presenta el resultado de la ejecución final depurada.
 
-15. Demo — Validación integral
+15. Alejandro · Demo — Validación integral
 
 Esta pantalla reúne la evidencia de la ejecución de cierre.
 
@@ -142,17 +150,17 @@ Al desplazarnos hacia abajo podemos revisar las reglas de calidad, la cobertura 
 
 [Indicación para el expositor] Señala los tres indicadores y desplázate hasta la tabla de calidad.
 
-16. Conclusiones — Qué demuestra la implementación
+16. Alejandro · Conclusiones — Qué demuestra la implementación
 
 Con la implementación conseguimos una consulta histórica funcional y un procesamiento trazable desde las fuentes hasta los indicadores.
 
 La reingesta conserva los conteos, Gold mantiene una fila por viaje y los resultados de calidad quedan documentados.
 
-También evaluamos retrospectivamente treinta y dos series de demanda. En el procesamiento de eventos comprobamos la detección de reentregas y la restauración del estado local.
+En la imagen se ve el tópico de Pub/Sub configurado. También evaluamos retrospectivamente treinta y dos series de demanda. En el procesamiento de eventos comprobamos la detección de reentregas y la restauración del estado local.
 
 Estos resultados permiten sustentar tanto el funcionamiento del proceso OLAP como las pruebas de modelos y recuperación realizadas.
 
-17. Next Steps — Del piloto a la operación
+17. Alejandro · Next Steps — Del piloto a la operación
 
 Los siguientes pasos se concentran en actualizar los datos y validar el comportamiento operativo.
 

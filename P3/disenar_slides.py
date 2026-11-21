@@ -72,15 +72,15 @@ class Slide:
         for i, line in enumerate(lines):
             self.draw.text((x,y+i*line_height), line, font=font, fill="#"+color)
 
-    def picture(self, name, x, y, w, h):
-        path = OUT / "capturas" / (name + ".png")
+    def picture(self, name, x, y, w, h, folder=OUT / "capturas"):
+        path = folder / (name + ".png")
         source = Image.open(path).convert("RGB")
         scale = min(w/source.width, h/source.height)
         width, height = round(source.width*scale), round(source.height*scale)
         x, y = x+(w-width)/2, y+(h-height)/2
         self.pic.paste(source.resize((width,height), Image.Resampling.LANCZOS), (round(x),round(y)))
         rid = "rIdPicture" + str(len(self.rels))
-        self.rels.append((rid, name))
+        self.rels.append((rid, path))
         n = len(self.xml) + 2
         self.xml.append(f'<p:pic><p:nvPicPr><p:cNvPr id="{n}" name="{name}"/><p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="{rid}"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="{int(x*EMU)}" y="{int(y*EMU)}"/><a:ext cx="{int(width*EMU)}" cy="{int(height*EMU)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>')
 
@@ -110,7 +110,8 @@ def design():
     s=new("Lumina\nMovilidad urbana en DataLandia",dark=True)
     s.text("Sustentación de la implementación",65,300,1000,70,40,CYAN)
     s.text("UTEC · Big Data · Entrega 3",65,400,1000,60,31,WHITE)
-    s.text("Herles Pinedo\nDavid Jimenez\nJosé Nomberto",65,590,800,160,30,WHITE)
+    s.text("Exponen",65,575,800,52,27,CYAN)
+    s.text("David  ·  José Carlos  ·  Alejandro",65,640,1050,80,38,WHITE,True)
     s.rect(1180,280,300,390,CYAN)
     s.text("4,996 M",1210,330,250,100,58,INK,True)
     s.text("viajes únicos\nvalidados",1210,450,250,140,35,INK)
@@ -144,13 +145,15 @@ def design():
         s.text(value,440,y,480,65,45,CYAN,True)
         s.text(body,940,y+8,590,90,29)
 
-    s=new("Productos tecnológicos\nCada herramienta cumple una función")
+    historical = ROOT.parent / "Capturas de pantalla"
+    s=new("Productos tecnológicos\nDel archivo Parquet a la aplicación")
+    s.picture("G4",55,250,830,465,historical)
+    s.text("Captura histórica · objetos Parquet en Cloud Storage",65,725,830,80,25,GRAY)
     for i,(a,b,c) in enumerate([("Conservar","GCS + Parquet","Archivos por fuente"),("Procesar","BigQuery + SQL","Silver, calidad y Gold"),("Reproducir eventos","Python + SQLite","Estado durable por sensor"),("Consultar","Node.js + React","API y web de pasajeros")]):
-        y=255+i*130
-        s.text(a,65,y,350,70,33,INK,True)
-        s.text(b,460,y,510,65,36,CYAN,True)
-        s.text(c,1000,y,500,90,30,GRAY)
-    s.text("Pub/Sub tiene un tópico configurado. Cloud Run es el alojamiento previsto para la API.",65,790,1460,45,25,GRAY)
+        y=255+i*132
+        s.text(b,940,y,580,55,36,INK,True)
+        s.text(c,940,y+55,600,65,28,GRAY)
+    s.text("Pub/Sub tiene un tópico configurado. Cloud Run es el alojamiento previsto para la API.",65,830,1460,50,25,GRAY)
 
     s=new("Dependencias y supuestos\nQué requiere el siguiente nivel operativo")
     for i,(t,b) in enumerate([("Asignar vehículos","Flota disponible, turnos y solicitudes vigentes."),("Anticipar fallas","Historial por activo y fallas etiquetadas."),("Dimensionar el año","Consumo mensual constante y doce meses de operación.")]):
@@ -179,8 +182,9 @@ def design():
         s.text(t,x,300,480,100,64,CYAN if i!=1 else GRAY,True)
         s.text(b,x,420,450,100,32)
         if i<2:s.text("−" if i==0 else "=",x+450,335,65,90,52,GRAY,True)
-    s.rect(65,650,1460,110,LIGHT)
-    s.text("Cuatro reglas controlan la publicación. Cada una debe alcanzar al menos 95 %.",95,675,1400,75,34,INK,True)
+    s.picture("C2",60,505,480,290,historical)
+    s.text("Auditoría histórica de BigQuery",595,510,900,65,36,INK,True)
+    s.text("En el cierre, cuatro reglas evalúan la calidad. Gold se publica cuando todas alcanzan el 95 %.",595,594,890,150,34,GRAY)
 
     s=new("Resultados OLAP\nMultimodal OART concentra el 38 %","Fuente · Gold validado, 4.996.009 viajes únicos. Porcentajes redondeados.")
     labels={"LUMINA_MULTIMODAL_OART":"Multimodal OART","LUMINA_EV_MINIVAN_POOL":"Minivan eléctrica","PERSONAL_CAR_BENCHMARK":"Auto de referencia","LUMINA_BUS_RAPID":"Bus rápido","LUMINA_BIKE_AND_OART":"Bicicleta + OART"}
@@ -227,10 +231,12 @@ def design():
         s.text(body,1250,445,290,280,30,GRAY)
 
     s=new("Conclusiones\nQué demuestra la implementación",dark=True)
-    for i,(t,b) in enumerate([("Datos trazables","Conteos conciliados y trabajos de BigQuery identificados."),("Consulta funcional","Alternativas históricas por trayecto y análisis de movilidad."),("Modelos y resiliencia","32 series evaluadas y recuperación local de 11 eventos.")]):
-        y=280+i*170
-        s.text(t,65,y,550,65,39,CYAN,True)
-        s.text(b,710,y,790,120,34,WHITE)
+    s.picture("C3",60,265,720,430,historical)
+    s.text("Tópico de telemetría en Pub/Sub",65,715,720,75,27,WHITE)
+    s.text("11 eventos históricos",845,280,670,75,44,CYAN,True)
+    s.text("El consumidor local reconoció las 11 reentregas y restauró el estado desde un respaldo.",845,375,650,170,32,WHITE)
+    s.text("32 series de demanda",845,590,670,75,43,CYAN,True)
+    s.text("Evaluadas con semanas separadas para selección y prueba.",845,677,650,130,31,WHITE)
 
     s=new("Next Steps\nDel piloto a la operación")
     for i,(t,b) in enumerate([("Actualizar fuentes","Medir coincidencias de viajes, tráfico e IoT del mismo período."),("Conectar la flota","Evaluar asignaciones con disponibilidad y turnos vigentes."),("Ampliar sensores","Evaluar fallas con series por activo y etiquetas."),("Ensayar en nube","Medir p95, recuperación regional y costo de la carga real.")]):
@@ -252,13 +258,43 @@ def main():
     size=presentation.find(f"{{{P}}}sldSz")
     size.set("cx",str(W*EMU));size.set("cy",str(H*EMU))
     package["ppt/presentation.xml"]=ET.tostring(presentation,encoding="utf-8",xml_declaration=True)
+    speech = (OUT / "Guion-sustentacion-Lumina-P3.txt").read_text(encoding="utf-8")
+    sections = re.split(r"(?m)(?=^\d+\. )", speech)[1:]
+    if len(sections) != len(slides):
+        raise ValueError("Cada diapositiva debe tener su sección de guion.")
+    template = package["ppt/notesSlides/notesSlide1.xml"]
+    content_types = ET.fromstring(package["[Content_Types].xml"])
+    types_namespace = "http://schemas.openxmlformats.org/package/2006/content-types"
+    existing = {item.get("PartName") for item in content_types}
     for i,s in enumerate(slides,1):
         package[f"ppt/slides/slide{i}.xml"]=s.export(i)
         relationships=f'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="{R}/slideLayout" Target="../slideLayouts/slideLayout2.xml"/>'
-        for rid,name in s.rels:
-            relationships+=f'<Relationship Id="{rid}" Type="{R}/image" Target="../media/{name}.png"/>'
-            package[f"ppt/media/{name}.png"]=(OUT/"capturas"/(name+".png")).read_bytes()
+        notes = ET.fromstring(template)
+        for shape in notes.findall(f".//{{{P}}}sp"):
+            ph = shape.find(f".//{{{P}}}ph")
+            if ph is None:
+                continue
+            if ph.get("type") == "sldNum":
+                shape.find(f".//{{{A}}}t").text = str(i)
+            if ph.get("type") == "body":
+                body = shape.find(f"{{{P}}}txBody")
+                for old in body.findall(f"{{{A}}}p"):
+                    body.remove(old)
+                for line in sections[i-1].strip().splitlines():
+                    para = ET.SubElement(body, f"{{{A}}}p")
+                    run = ET.SubElement(para, f"{{{A}}}r")
+                    ET.SubElement(run, f"{{{A}}}t").text = line
+        name = f"ppt/notesSlides/notesSlide{i}.xml"
+        package[name] = ET.tostring(notes, encoding="utf-8", xml_declaration=True)
+        if "/"+name not in existing:
+            ET.SubElement(content_types, f"{{{types_namespace}}}Override", PartName="/"+name, ContentType="application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml")
+        relationships+=f'<Relationship Id="rIdNotes" Type="{R}/notesSlide" Target="../notesSlides/notesSlide{i}.xml"/>'
+        package[f"ppt/notesSlides/_rels/notesSlide{i}.xml.rels"] = f'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="{R}/notesMaster" Target="../notesMasters/notesMaster1.xml"/><Relationship Id="rId2" Type="{R}/slide" Target="../slides/slide{i}.xml"/></Relationships>'.encode()
+        for rid,path in s.rels:
+            relationships+=f'<Relationship Id="{rid}" Type="{R}/image" Target="../media/{path.name}"/>'
+            package[f"ppt/media/{path.name}"]=path.read_bytes()
         package[f"ppt/slides/_rels/slide{i}.xml.rels"]=(relationships+"</Relationships>").encode()
+    package["[Content_Types].xml"] = ET.tostring(content_types, encoding="utf-8", xml_declaration=True)
     temporary=PREVIEW/"diseno.pptx"
     with ZipFile(temporary,"w",ZIP_DEFLATED) as z:
         for name,data in package.items():
