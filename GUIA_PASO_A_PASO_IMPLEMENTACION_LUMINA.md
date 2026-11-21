@@ -1,5 +1,12 @@
 # Guía de ejecución y validación de Lumina
 
+## P3 vigente usa las tablas existentes
+
+La ejecución vigente de P3 se documenta en P3/README.md. Consultar de nuevo con
+`P3/usar_datos_existentes.ps1` y servir el resultado con `python P3/demo_e2e.py --serve`.
+Se utiliza todo el Gold existente; no se generan viajes ni se cargan CSV de prueba.
+Las instrucciones históricas de generación que aparecen más abajo no forman parte de la P3 vigente.
+
 La versión corregida se valida primero localmente. Los pasos cloud escriben recursos y tablas;
 ejecutarlos en un proyecto/datasets de ensayo con credenciales propias. No se ejecutaron en esta revisión.
 

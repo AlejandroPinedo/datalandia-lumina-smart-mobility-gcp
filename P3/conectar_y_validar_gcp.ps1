@@ -34,11 +34,11 @@ if ($LASTEXITCODE -ne 0) { throw 'No se pudo instalar el cliente BigQuery.' }
 
 Push-Location $repoRoot
 try {
-    Write-Host 'Ejecutando CSV/IoT -> Bronze -> Silver -> Gold -> API. No se modifican las tablas historicas.'
-    python -X utf8 P3/demo_e2e.py --backend bigquery
+    Write-Host 'Consultando Gold existente -> SELECT OLAP -> API. No se generan ni cargan viajes.'
+    python -X utf8 P3/usar_datos_existentes.py
     if ($LASTEXITCODE -ne 0) {
         throw 'La validacion no termino. Informa el error; nunca compartas tokens ni archivos de credenciales.'
     }
     Write-Host ''
-    Write-Host 'LISTO: demo BigQuery validada. Avisa a Codex para revisar P3/evidencias/bigquery_latest.json.'
+    Write-Host 'LISTO: demo BigQuery validada. Avisa a Codex para revisar P3/evidencias/datos_existentes_latest.json.'
 } finally { Pop-Location }

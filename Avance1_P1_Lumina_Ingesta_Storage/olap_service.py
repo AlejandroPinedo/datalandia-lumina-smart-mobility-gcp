@@ -1,54 +1,42 @@
-"""Servicio de lectura P3: devuelve datos materializados, nunca métricas de ejemplo."""
-from datetime import datetime, timezone
-from contextlib import closing
+"""P3 expone únicamente datos existentes o una exportación identificada de esa consulta."""
+from datetime import datetime,timezone
 import json
+import logging
 import os
 from pathlib import Path
-import re
-import sqlite3
 import time
+from existing_project_data import read_existing
+
+ROOT=Path(__file__).resolve().parents[1]
 
 
 def load_olap_report():
-    start = time.monotonic()
-    backend = os.getenv("LUMINA_DATA_BACKEND", "sqlite")
+    started=time.monotonic()
+    backend=os.getenv('LUMINA_DATA_BACKEND','project_export')
     try:
-        if backend == "sqlite":
-            path = Path(os.environ["LUMINA_SQLITE_PATH"]).resolve()
-            with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as connection:
-                connection.row_factory = sqlite3.Row
-                rows = [dict(row) for row in connection.execute("SELECT * FROM p3_gold_kpi ORDER BY transport_mode")]
-                meta = dict(connection.execute("SELECT key, value FROM p3_run_metadata").fetchall())
-            source = "sqlite:p3_gold_kpi"
-        elif backend == "bigquery":
-            import config
+        if backend=='project_export':
+            path=Path(os.getenv('LUMINA_PROJECT_REPORT',str(ROOT/'P3/evidencias/datos_existentes_latest.json')))
+            data=json.loads(path.read_text(encoding='utf-8'))
+            if data.get('data_origin')!='existing_project_data' or data.get('status')!='ok':
+                raise ValueError('La API solo admite una consulta verificada a las tablas existentes')
+            if not data.get('source','').startswith('bigquery:') or not data.get('job_id'):
+                raise ValueError('Faltan la tabla fuente o el job de consulta')
+            data['backend']='project_export'
+            data['live_query']=False
+            data['served_at']=datetime.now(timezone.utc).isoformat()
+            data['latency_ms']=round((time.monotonic()-started)*1000,2)
+            return data
+        if backend in ('bigquery_existing','bigquery'):
             from google.cloud import bigquery
-            dataset = os.environ["LUMINA_P3_DATASET"]
-            if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", dataset):
-                raise ValueError("Dataset no válido")
-            client = bigquery.Client(project=config.GCP_PROJECT_ID)
-            prefix = f"{config.GCP_PROJECT_ID}.{dataset}"
-            rows = [dict(row) for row in client.query(f"SELECT * FROM `{prefix}.p3_gold_kpi` ORDER BY transport_mode").result(timeout=20)]
-            meta = {row["key"]: row["value"] for row in client.query(f"SELECT key,value FROM `{prefix}.p3_run_metadata`").result(timeout=20)}
-            source = f"bigquery:{prefix}.p3_gold_kpi"
-        else:
-            raise ValueError("Backend no válido")
-        if not rows:
-            raise ValueError("Gold no contiene resultados")
-        return {"status": "ok", "backend": backend, "source": source,
-                "data_origin": meta.get("data_origin", "unknown"),
-                "run_id": meta.get("run_id"), "processed_at": meta.get("processed_at"),
-                "queried_at": datetime.now(timezone.utc).isoformat(),
-                "summary": {"total_trips": sum(int(row["total_trips"]) for row in rows),
-                            "total_km": round(sum(float(row["total_km"]) for row in rows), 2),
-                            "total_revenue_usd": round(sum(float(row["total_revenue_usd"]) for row in rows
-                                if row["transport_mode"] != "PERSONAL_CAR_BENCHMARK"), 2)},
-                "by_mode": json.loads(json.dumps(rows, default=str)),
-                "latency_ms": round((time.monotonic() - start) * 1000, 2)}
-    except (Exception,) as exc:
-        # No se exponen rutas, tokens ni detalles internos al consumidor.
-        import logging
-        logging.getLogger("lumina.olap").warning("Consulta OLAP no disponible (%s)", type(exc).__name__)
-        return {"status": "unavailable", "backend": backend,
-                "reason": "Ejecuta primero el pipeline P3 y configura el backend correspondiente.",
-                "by_mode": [], "summary": None}
+            import config
+            source=os.getenv('LUMINA_SOURCE_TABLE',
+                f'{config.GCP_PROJECT_ID}.{config.BQ_DATASET_GOLD}.{config.BQ_GOLD_FACT_TRIPS}')
+            with bigquery.Client(project=config.GCP_PROJECT_ID) as client:
+                return read_existing(client,source,
+                    bigquery.QueryJobConfig(maximum_bytes_billed=5*1024**3))
+        raise ValueError('P3 no admite generadores, bases de demo ni datos suplentes')
+    except Exception as exc:
+        logging.getLogger('lumina.olap').warning('Datos existentes no disponibles (%s)',type(exc).__name__)
+        return {'status':'unavailable','backend':backend,'data_origin':None,
+                'reason':'No hay una consulta a las tablas existentes disponible. Ejecuta P3/usar_datos_existentes.ps1.',
+                'by_mode':[],'summary':None}

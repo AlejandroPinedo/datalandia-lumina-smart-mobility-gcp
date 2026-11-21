@@ -1,0 +1,256 @@
+{
+  "status": "ok",
+  "backend": "bigquery_existing",
+  "live_query": true,
+  "source": "bigquery:bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold",
+  "data_origin": "existing_project_data",
+  "provenance_status": "not_independently_verified",
+  "run_id": "existing_20261121_033107",
+  "processed_at": "2026-11-11T04:27:08.500000+00:00",
+  "queried_at": "2026-11-21T03:31:07.982726+00:00",
+  "summary": {
+    "total_trips": 4998926,
+    "total_km": 45585485.89,
+    "total_revenue_usd": 82534392.08
+  },
+  "by_mode": [
+    {
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "total_trips": 449972,
+      "unique_trip_ids": 449972,
+      "total_km": 4515519.470000003,
+      "total_revenue_usd": 8690529.880000137,
+      "revenue_per_km_usd": 1.924591387045914,
+      "avg_duration_min": 15.17147718080236,
+      "avg_passengers": 1.4015316508582758,
+      "traffic_matched_trips": null,
+      "iot_matched_trips": null,
+      "missing_distance_rows": 0,
+      "missing_amount_rows": 0,
+      "negative_distance_rows": 0
+    },
+    {
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "total_trips": 700521,
+      "unique_trip_ids": 700521,
+      "total_km": 6684155.439999985,
+      "total_revenue_usd": 13549524.809999527,
+      "revenue_per_km_usd": 2.027110968861544,
+      "avg_duration_min": 15.152550573073468,
+      "avg_passengers": 1.4011842614282792,
+      "traffic_matched_trips": null,
+      "iot_matched_trips": null,
+      "missing_distance_rows": 0,
+      "missing_amount_rows": 0,
+      "negative_distance_rows": 0
+    },
+    {
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "total_trips": 1199319,
+      "unique_trip_ids": 1199319,
+      "total_km": 13356956.239999946,
+      "total_revenue_usd": 23213932.309997655,
+      "revenue_per_km_usd": 1.7379657380683122,
+      "avg_duration_min": 15.071976213167645,
+      "avg_passengers": 1.4015128585472252,
+      "traffic_matched_trips": null,
+      "iot_matched_trips": null,
+      "missing_distance_rows": 0,
+      "missing_amount_rows": 0,
+      "negative_distance_rows": 0
+    },
+    {
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "total_trips": 1898803,
+      "unique_trip_ids": 1898803,
+      "total_km": 14750930.819999913,
+      "total_revenue_usd": 37080405.07999866,
+      "revenue_per_km_usd": 2.513767133239045,
+      "avg_duration_min": 15.080976151817765,
+      "avg_passengers": 1.4015171663411101,
+      "traffic_matched_trips": null,
+      "iot_matched_trips": null,
+      "missing_distance_rows": 0,
+      "missing_amount_rows": 0,
+      "negative_distance_rows": 0
+    },
+    {
+      "transport_mode": "PERSONAL_CAR_BENCHMARK",
+      "total_trips": 750311,
+      "unique_trip_ids": 750311,
+      "total_km": 6277923.919999985,
+      "total_revenue_usd": 14492415.489999365,
+      "revenue_per_km_usd": 2.3084726216305276,
+      "avg_duration_min": 15.105126300960533,
+      "avg_passengers": 1.4003566521082593,
+      "traffic_matched_trips": null,
+      "iot_matched_trips": null,
+      "missing_distance_rows": 0,
+      "missing_amount_rows": 0,
+      "negative_distance_rows": 0
+    }
+  ],
+  "source_table": {
+    "table_id": "bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold",
+    "table_type": "TABLE",
+    "num_rows_at_inspection": 4998926,
+    "num_bytes_at_inspection": 1931902533,
+    "location": "US",
+    "modified": "2026-11-11T04:27:08.500000+00:00",
+    "description": null,
+    "schema": [
+      {
+        "name": "trip_id",
+        "type": "STRING"
+      },
+      {
+        "name": "travel_date",
+        "type": "DATE"
+      },
+      {
+        "name": "pickup_datetime",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "hod",
+        "type": "INTEGER"
+      },
+      {
+        "name": "origin_zone_id",
+        "type": "STRING"
+      },
+      {
+        "name": "origin_zone_name",
+        "type": "STRING"
+      },
+      {
+        "name": "dest_zone_id",
+        "type": "STRING"
+      },
+      {
+        "name": "county_id",
+        "type": "STRING"
+      },
+      {
+        "name": "county_name",
+        "type": "STRING"
+      },
+      {
+        "name": "agency_id",
+        "type": "STRING"
+      },
+      {
+        "name": "transport_mode",
+        "type": "STRING"
+      },
+      {
+        "name": "connected_oart_station_id",
+        "type": "STRING"
+      },
+      {
+        "name": "passenger_count",
+        "type": "INTEGER"
+      },
+      {
+        "name": "trip_distance_km",
+        "type": "FLOAT"
+      },
+      {
+        "name": "lumina_duration_min",
+        "type": "FLOAT"
+      },
+      {
+        "name": "lumina_speed_kmh",
+        "type": "FLOAT"
+      },
+      {
+        "name": "lumina_total_fare_usd",
+        "type": "FLOAT"
+      },
+      {
+        "name": "lumina_cost_per_km_usd",
+        "type": "FLOAT"
+      },
+      {
+        "name": "street_traffic_speed_kmh",
+        "type": "FLOAT"
+      },
+      {
+        "name": "is_street_congested_24kmh",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "car_benchmark_duration_min",
+        "type": "FLOAT"
+      },
+      {
+        "name": "car_benchmark_total_cost_usd",
+        "type": "FLOAT"
+      },
+      {
+        "name": "car_benchmark_cost_per_km_usd",
+        "type": "FLOAT"
+      },
+      {
+        "name": "savings_usd_vs_car",
+        "type": "FLOAT"
+      },
+      {
+        "name": "time_saved_min_vs_car",
+        "type": "FLOAT"
+      },
+      {
+        "name": "pct_adulto_mayor_65",
+        "type": "FLOAT"
+      },
+      {
+        "name": "pct_jovenes_18_34",
+        "type": "FLOAT"
+      },
+      {
+        "name": "pct_menos_8km_estacion_oart",
+        "type": "FLOAT"
+      },
+      {
+        "name": "indice_prioridad_primera_milla",
+        "type": "FLOAT"
+      },
+      {
+        "name": "station_oart_load_pct",
+        "type": "FLOAT"
+      },
+      {
+        "name": "station_pdm_alerts",
+        "type": "INTEGER"
+      },
+      {
+        "name": "rider_id_dlp_sha256",
+        "type": "STRING"
+      },
+      {
+        "name": "ts_actualizacion_gold",
+        "type": "TIMESTAMP"
+      }
+    ]
+  },
+  "column_mapping": {
+    "mode": "`transport_mode`",
+    "distance_km": "`trip_distance_km`",
+    "amount_usd": "`lumina_total_fare_usd`",
+    "duration_min": "`lumina_duration_min`",
+    "passengers": "`passenger_count`",
+    "traffic_match": null,
+    "iot_match": null,
+    "trip_id": "`trip_id`"
+  },
+  "job_id": "47635f4c-2483-4d2d-840c-1499dfeba6f5",
+  "sql_sha256": "3406aa297236af53b81d055a715b6c5afa42add7f4a575d9c7c172c6819b9278",
+  "query_sql": "SELECT `transport_mode` AS transport_mode,COUNT(*) AS total_trips,\n      COUNT(DISTINCT `trip_id`) AS unique_trip_ids,\n      SUM(`trip_distance_km`) AS total_km,SUM(`lumina_total_fare_usd`) AS total_revenue_usd,\n      SAFE_DIVIDE(SUM(`lumina_total_fare_usd`),SUM(`trip_distance_km`)) AS revenue_per_km_usd,\n      AVG(`lumina_duration_min`) AS avg_duration_min,AVG(`passenger_count`) AS avg_passengers,\n      CAST(NULL AS INT64) AS traffic_matched_trips,CAST(NULL AS INT64) AS iot_matched_trips,\n      COUNTIF(`trip_distance_km` IS NULL) AS missing_distance_rows,\n      COUNTIF(`lumina_total_fare_usd` IS NULL) AS missing_amount_rows,\n      COUNTIF(`trip_distance_km` < 0) AS negative_distance_rows\n    FROM `bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold` GROUP BY transport_mode ORDER BY transport_mode",
+  "latency_ms": 3620.13,
+  "source_modified_by_this_process": false,
+  "limitation": "Se usan los registros ya existentes; no se certifica su procedencia externa por el solo hecho de estar en BigQuery.",
+  "verification": {
+    "api_matches_existing_query": "passed",
+    "consumer_references_api": "passed"
+  }
+}

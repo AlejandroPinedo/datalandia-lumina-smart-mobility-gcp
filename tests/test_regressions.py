@@ -15,6 +15,7 @@ import sys
 import tempfile
 import threading
 import urllib.request
+import urllib.error
 from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
@@ -118,6 +119,7 @@ class SQLTests(unittest.TestCase):
         b = sql.index(';', a)
         query = cte + '\nSELECT t.trip_id, u.avg_speed_kmh, i.avg_oart_load_pct\n' + sql[a:b]
         db = connection()
+        self.addCleanup(db.close)
         db.executescript(f'''
             CREATE TABLE {config.BQ_SILVER_TRIPS}(trip_id, origin_zone_id, dest_zone_id, pickup_datetime, connected_oart_station_id);
             CREATE TABLE {config.BQ_SILVER_CENSO}(zone_id);
@@ -132,6 +134,7 @@ class SQLTests(unittest.TestCase):
 
     def audit_db(self):
         db = connection()
+        self.addCleanup(db.close)
         db.executescript(f'''
             CREATE TABLE {config.BQ_TABLE_TLC_TRIPS}(origin_zone_id, dest_zone_id, trip_distance_km, total_fare_usd, duration_minutes, dropoff_datetime, pickup_datetime);
             CREATE TABLE {config.BQ_SILVER_TRIPS}(trip_id);
@@ -232,8 +235,10 @@ class APITests(unittest.TestCase):
                         self.assertEqual(json.load(response)['status'], 'unavailable')
             request = urllib.request.Request(prefix + '/api/v1/route-simulator', data=b'{}',
                                              headers={'Content-Type': 'application/json'})
-            with urllib.request.urlopen(request, timeout=3) as response:
-                self.assertTrue(json.load(response)['is_simulation'])
+            with self.assertRaises(urllib.error.HTTPError) as error:
+                urllib.request.urlopen(request, timeout=3)
+            self.assertEqual(error.exception.code, 410)
+            error.exception.close()
         finally:
             server.shutdown()
             server.server_close()

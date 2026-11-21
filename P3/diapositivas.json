@@ -16,12 +16,12 @@
       "title": "Un proceso completo para informar la operación",
       "section": "Resumen ejecutivo y alcance",
       "body": [
-        "Integrar viajes, tráfico, demografía y telemetría bajo llaves comunes",
-        "Limpiar y deduplicar antes de publicar indicadores Gold",
-        "Exponer datos procesados mediante una API y un tablero consumidor",
-        "Demo académica con datos sintéticos identificados; no prueba ahorro real"
+        "Consultar las tablas Gold ya disponibles en el proyecto",
+        "Calcular indicadores sobre todos los registros de la fuente seleccionada",
+        "Exponer esos agregados mediante API y tablero, sin generar viajes",
+        "Mostrar la procedencia y conservar como ausentes los campos no disponibles"
       ],
-      "notes": "La rúbrica exige al menos un proceso clave end-to-end. OLAP permite demostrar las capas completas sin fingir un despacho de vehículos. Fuentes: P3/demo_e2e.py, P3/olap_sql.py, olap_service.py."
+      "notes": "P3 usa consultas SELECT a tablas existentes. No ejecuta generadores, no añade errores ni duplica viajes como entrada de la demo."
     },
     {
       "title": "La fragmentación impide una visión metropolitana",
@@ -30,53 +30,48 @@
         "Caso DataLandia: 9.25 millones de habitantes, 8 condados y 12 agencias",
         "Congestión de referencia: 24 km/h; OART requiere primera y última milla",
         "Fuentes heterogéneas con identificadores y fechas distintos",
-        "Existe evidencia histórica de 4,998,926 filas Gold; no acredita esta nueva ejecución"
+        "Las capturas históricas muestran 4,998,926 filas; el conteo actual se consultará en la fuente"
       ],
       "notes": "Las magnitudes son del caso académico y del dimensionamiento del proyecto. La captura C1 es histórica. No extrapolar la muestra de 600 viajes a toda la población."
     },
     {
-      "title": "La demo conserva 600 viajes únicos",
+      "title": "La consulta utiliza los 4,998,926 registros existentes",
       "section": "Criterios de éxito y KPI",
       "table": {
         "headers": [
           "Indicador",
-          "Resultado local y BigQuery",
-          "Criterio"
+          "Resultado consultado",
+          "Fuente"
         ],
         "rows": [
           [
-            "Grano de Gold",
-            "600 filas / 600 IDs",
-            "Una fila por viaje"
+            "Registros",
+            "4,998,926",
+            "COUNT(*) del Gold existente"
           ],
           [
-            "Limpieza",
-            "602 entradas → 600 únicas",
-            "Retirar duplicado y distancia negativa"
+            "Distancia",
+            "45,585,485.89 km",
+            "SUM(trip_distance_km)"
           ],
           [
-            "Cruce con tráfico",
-            "540 / 600 = 90%",
-            "Declarar faltantes"
+            "Importes Lumina",
+            "USD 82,534,392.08",
+            "Suma de tarifas; excluye benchmark"
           ],
           [
-            "Cruce con sensores",
-            "600 / 600 = 100%",
-            "Fecha, hora, zona y estación"
+            "Desglose",
+            "5 modos en la fuente",
+            "transport_mode"
           ],
           [
-            "Anomalías IoT",
-            "2 eventos aislados",
-            "No interrumpir válidos"
-          ],
-          [
-            "Lectura del consumidor",
-            "API consulta Gold",
-            "Sin valores de respaldo"
+            "Cobertura explícita de cruces",
+            "No disponible en el esquema",
+            "No se inventan porcentajes"
           ]
         ]
       },
-      "notes": "Resultados coincidentes en P3/evidencias/sqlite_latest.json y bigquery_latest.json. BigQuery: dataset p3_20261121_031258_1e7263, 16 job IDs, 600 viajes únicos. Datos sintéticos: no son SLAs ni mediciones reales de transporte."
+      "notes": "Consulta de solo lectura. Tabla: bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold. Job: 47635f4c-2483-4d2d-840c-1499dfeba6f5. Consulta: 2026-11-21T03:31:07.982726+00:00. Los importes son agregados de las columnas existentes, no facturación auditada. La procedencia externa sigue sin verificación independiente."
     },
     {
       "title": "Cada componente tiene una responsabilidad concreta",
@@ -89,63 +84,63 @@
         ],
         "rows": [
           [
-            "Ingesta",
-            "Python / CSV / validador IoT",
-            "Cargar fuentes y aislar anomalías"
+            "Fuente",
+            "BigQuery Gold existente",
+            "Conservar datos del proyecto"
           ],
           [
             "Cómputo",
-            "SQL portable / BigQuery",
-            "Deduplicar y cruzar"
-          ],
-          [
-            "Storage",
-            "BigQuery; SQLite local",
-            "Separar Bronze, Silver y Gold"
+            "SELECT de agregación",
+            "Consulta de solo lectura"
           ],
           [
             "Exposición",
             "Python HTTP / Flask",
-            "API de solo lectura"
+            "API sin datos suplentes"
           ],
           [
             "Consumo",
             "HTML y JavaScript",
-            "Consultar indicadores Gold"
+            "Tablero conectado a API"
+          ],
+          [
+            "Sin red",
+            "Exportación identificada",
+            "Resultados de la consulta, no generación"
           ]
         ]
       },
-      "notes": "Los dos modos fueron ejecutados. BigQuery usa un dataset aislado y la API de lectura fue verificada contra su Gold. No se desplegó Cloud Run."
+      "notes": "Las tablas fuente no se modifican. La exportación para consulta sin red conserva la identificación del job y la fecha de la consulta remota."
     },
     {
       "title": "El alcance termina en el informe operativo",
       "section": "Dependencias supuestos y fuera de alcance",
       "body": [
-        "Datos sintéticos: 24 zonas, 600 viajes y 4,968 velocidades; sensores de demo",
-        "UTC común para los cruces; ninguna coincidencia temporal se inventa",
-        "Acceso GCP validado en la demo; GitHub todavía requiere permiso de escritura",
-        "Fuera de alcance: despacho real, cobros, accesibilidad personalizada y mantenimiento de seguridad"
+        "Usar únicamente las tablas disponibles del proyecto bigdata-herles-pinedo",
+        "No generar viajes, telemetría, valores anómalos ni tarifas para la demo",
+        "Las columnas y unidades se comprueban contra el esquema de la fuente",
+        "La procedencia externa requiere evidencia; no se certifica por tener una tabla en GCP"
       ],
-      "notes": "Las credenciales se guardan en .runtime, excluido de Git. Los costos y las tarifas de simulación son supuestos, no datos observados. Las preferencias de accesibilidad reales todavía no están integradas."
+      "notes": "No llamar reales a registros cuya procedencia externa no se ha verificado. Datos existentes significa que no se producen ni cargan nuevos datos por este proceso."
     },
     {
       "title": "Gold conecta el procesamiento con el consumidor",
       "section": "Arquitectura final",
       "diagram": [
-        "CSV + IoT",
-        "Bronze",
-        "Silver SQL",
-        "Gold OLAP",
+        "Gold existente",
+        "Esquema",
+        "SELECT OLAP",
+        "Trazabilidad",
         "API REST",
         "Tablero /p3"
       ],
       "body": [
-        "Llaves de cruce: origen, destino, fecha y hora; sensores por estación y zona",
-        "La API consulta tablas materializadas en modo de solo lectura",
-        "GCP: dataset aislado por ejecución; tablas de demo con expiración de 7 días",
-        "Local: mismo proceso SQL con adaptaciones explícitas de dialecto"
+        "Fuente: lumina_gold_governed.fact_movilidad_multimodal_gold",
+        "Se agrega la tabla completa, sin una muestra fija de 600 viajes",
+        "La consulta no crea, carga ni reemplaza tablas en BigQuery",
+        "La exportación local se identifica como tal; no se presenta como consulta en vivo"
       ],
-      "notes": "Fuentes: P3/olap_sql.py, P3/demo_e2e.py y olap_service.py. En GCP se prioriza BigQuery para el piloto; Pub/Sub y Beam siguen siendo parte del diseño más amplio y no son necesarios para la prueba OLAP de P3."
+      "notes": "El modo nuevo de P3 no depende de p3_20261121_031258_1e7263 ni de las tablas creadas para la prueba sintética retirada."
     },
     {
       "title": "El primer año se estima para un piloto OLAP",
@@ -232,30 +227,29 @@
       "title": "La demo permite seguir cada cambio de los datos",
       "section": "Demo end-to-end de implementación",
       "body": [
-        "Ensayo cloud completado: 16 job IDs, 62.982 s y datos sintéticos",
-        "Mostrar 602 viajes Bronze y las dos anomalías IoT de entrada",
-        "Mostrar Gold: 600 viajes únicos y cobertura explícita de los cruces",
-        "Abrir /api/v1/olap-kpis y /p3; contrastar run_id y totales",
-        "Repetir la consulta; comprobar que el tablero consume esa API"
+        "Consultar con P3/usar_datos_existentes.ps1 sin generar ni cargar registros",
+        "Mostrar el Gold existente: 4,998,926 filas y su esquema",
+        "Abrir /api/v1/olap-kpis y contrastar tabla fuente, fecha y job ID",
+        "Abrir /p3: muestra los mismos agregados o datos no disponibles"
       ],
-      "notes": "El ensayo BigQuery terminó el 21/11/2026 a las 03:14 UTC (20/11/2026 22:14 Lima). API status=ok y run_id coincidente; consulta de muestra 3701.85 ms, sin inferir SLA. Para repetir: python P3/demo_e2e.py --backend bigquery --serve desde una terminal autenticada con red. La sustentación en clase sigue pendiente."
+      "notes": "Evidencia vigente: P3/evidencias/datos_existentes_latest.json. API y consumidor verificados. La fuente no fue modificada por este proceso. Job 47635f4c-2483-4d2d-840c-1499dfeba6f5. La exportación local se identifica y no se confunde con una consulta remota en vivo."
     },
     {
       "title": "El prototipo demuestra exposición de datos procesados",
       "section": "Conclusiones",
       "body": [
-        "El informe OLAP conecta ingesta, SQL, almacenamiento, API y consumidor",
-        "La deduplicación conserva el grano de viaje y los faltantes siguen visibles",
-        "La demo en BigQuery consulta el Gold de esa ejecución, sin caché histórica",
-        "La factibilidad económica depende del consumo; se presenta una calculadora editable"
+        "P3 consulta los registros que ya estaban disponibles en el proyecto",
+        "La API y el tablero usan los agregados de 4,998,926 registros",
+        "No se generan viajes ni se rellenan indicadores ausentes con cifras de ejemplo",
+        "La evidencia anterior de 600 viajes está archivada y no se usa en la entrega vigente"
       ],
-      "notes": "Evidencia cloud registrada y contrastada con SQLite: 600 viajes únicos, 540 con tráfico y 600 con IoT. No acredita todos los componentes P1/P2 ni despliegue Cloud Run."
+      "notes": "La comprobación final corresponde a datos_existentes_latest.json, no a los antiguos manifiestos de la prueba de 600 viajes."
     },
     {
       "title": "Publicar la evidencia y ensayar la defensa",
       "section": "Next Steps",
       "body": [
-        "Conservar manifiesto y job IDs del ensayo BigQuery completado",
+        "Conservar tabla fuente, esquema, fecha y job ID de la consulta existente ya verificada",
         "Ampliar las mediciones de latencia y consumo; una ejecución no define un SLA",
         "Publicar commit final en GitHub y enlazar presentación y manifiestos",
         "Ensayar la defensa: contexto, arquitectura y demo entre los tres integrantes",

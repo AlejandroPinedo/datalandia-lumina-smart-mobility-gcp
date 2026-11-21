@@ -15,6 +15,6 @@ if ($LASTEXITCODE -ne 0) { throw 'No se pudieron instalar las dependencias local
 $env:GCP_PROJECT_ID = 'bigdata-herles-pinedo'
 Push-Location $repoRoot
 try {
-    python -X utf8 P3/demo_e2e.py --backend bigquery --serve
+    python -X utf8 P3/usar_datos_existentes.py --serve
     if ($LASTEXITCODE -ne 0) { throw 'La demo no completó sus verificaciones. Conserva el mensaje de error, sin credenciales.' }
 } finally { Pop-Location }

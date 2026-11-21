@@ -739,15 +739,8 @@ if HAS_FLASK:
         return response
 
     @app.route("/", methods=["GET"])
-    def home() -> str:
-        data = load_gold_dashboard_data()
-        return render_template(
-            "lumina_dashboard.html",
-            csp_nonce=getattr(g, "csp_nonce", ""),
-            project_id=config.GCP_PROJECT_ID,
-            zones=config.DATALANDIA_ZONES,
-            initial_data=data,
-        )
+    def home():
+        return p3_dashboard()
 
     @app.route("/p3", methods=["GET"])
     def p3_dashboard():
@@ -778,24 +771,17 @@ if HAS_FLASK:
 
     @app.route("/api/v1/dashboard-summary", methods=["GET"])
     def api_dashboard_summary() -> Response:
-        data = load_gold_dashboard_data()
-        return jsonify({"status": "ok", "data": data})
+        data = load_olap_report()
+        return jsonify(data), 200 if data["status"] == "ok" else 503
 
     @app.route("/api/v1/iot-telemetry", methods=["GET"])
     def api_iot_telemetry() -> Response:
-        data = load_gold_dashboard_data()
-        return jsonify({
-            "status": "ok",
-            "source": data["data_origin"],
-                "generated_at": data["generated_at"],
-            "active_nodes": data["recent_iot_telemetry"],
-            "dlq_isolated": data["dlq_summary"],
-        })
+        return jsonify({"status":"unavailable","active_nodes":[],
+                        "reason":"No se publican sensores de demostración como mediciones actuales."}), 503
 
     @app.route("/api/v1/route-simulator", methods=["POST"])
     def api_route_simulator() -> tuple[Response, int]:
-        body = request.get_json(silent=True) or {}
-        return jsonify(compute_route_simulation(body)), 200
+        return jsonify({"status":"disabled","reason":"P3 utiliza datos existentes, sin simulación de viajes."}), 410
 
     @app.route("/api/v1/agent-query", methods=["POST"])
     def api_agent_query() -> tuple[Response, int]:
@@ -831,8 +817,7 @@ class StdlibLuminaHandler(BaseHTTPRequestHandler):
             data = load_olap_report()
             self._send_json(data, status=200 if data["status"] == "ok" else 503)
         elif self.path in ("/", "/index.html"):
-            nonce = secrets.token_urlsafe(16)
-            html_bytes = render_standalone_dashboard_html(nonce).encode("utf-8")
+            html_bytes = (Path(__file__).parent / "templates" / "p3_olap.html").read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(html_bytes)))
@@ -852,28 +837,17 @@ class StdlibLuminaHandler(BaseHTTPRequestHandler):
         elif self.path == "/api/v1/maintenance-plan":
             self._send_json(load_operational_plan("maintenance"))
         elif self.path == "/api/v1/dashboard-summary":
-            self._send_json({"status": "ok", "data": load_gold_dashboard_data()})
+            data = load_olap_report()
+            self._send_json(data, status=200 if data["status"] == "ok" else 503)
         elif self.path == "/api/v1/iot-telemetry":
-            data = load_gold_dashboard_data()
-            self._send_json({
-                "status": "ok",
-                "source": data["data_origin"],
-                "generated_at": data["generated_at"],
-                "active_nodes": data["recent_iot_telemetry"],
-                "dlq_isolated": data["dlq_summary"],
-            })
+            self._send_json({"status":"unavailable","active_nodes":[],
+                "reason":"No se publican sensores de demostración como mediciones actuales."},status=503)
         else:
             self._send_json({"status": "not_found", "path": self.path}, status=404)
 
     def do_POST(self) -> None:  # noqa: N802
         if self.path == "/api/v1/route-simulator":
-            length = int(self.headers.get("Content-Length", "0"))
-            raw_body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
-            try:
-                body = json.loads(raw_body)
-            except Exception:
-                body = {}
-            self._send_json(compute_route_simulation(body), status=200)
+            self._send_json({"status":"disabled","reason":"P3 utiliza datos existentes, sin simulación de viajes."},status=410)
         elif self.path == "/api/v1/agent-query":
             length = int(self.headers.get("Content-Length", "0"))
             raw_body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"

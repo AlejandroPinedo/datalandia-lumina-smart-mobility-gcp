@@ -57,7 +57,7 @@ def markdown(text):
     return '\n'.join(result)
 
 
-def build(target, title, documents, include_evidence=True, include_diagrams=True, extra_files=(), cloud_verified=False):
+def build(target, title, documents, include_evidence=True, include_diagrams=True, extra_files=(), cloud_verified=False, code_files=None, status_notice=None):
     parts = []
     for filename in documents:
         parts.append('<section>' + markdown((BASE / filename).read_text(encoding='utf-8')) + '</section>')
@@ -75,7 +75,8 @@ def build(target, title, documents, include_evidence=True, include_diagrams=True
     code_status = ('El ensayo OLAP P3 se ejecutó en BigQuery. Esto no acredita todos los componentes cloud.'
                    if cloud_verified else 'La validación cloud del conjunto de componentes queda pendiente.')
     parts.append('<section><h2>Código y evidencias de la revisión</h2><p>Esta copia incluye los módulos compartidos. ' + code_status + '</p>')
-    for path in sorted(CODE.glob('*.py')) + [BASE / name for name in extra_files]:
+    selected_code = sorted(CODE.glob('*.py')) if code_files is None else [CODE / name for name in code_files]
+    for path in selected_code + [BASE / name for name in extra_files]:
         parts.append(f'<details><summary>{html.escape(path.name)}</summary><pre><code>{html.escape(path.read_text(encoding="utf-8"))}</code></pre></details>')
     parts.append('</section>')
     if include_evidence:
@@ -115,6 +116,10 @@ No se ha desplegado esta versión ni validado sus consultas completas en GCP, Sp
         page = page.replace('código corregido y pruebas locales. Las capturas son históricas.\nNo se ha desplegado esta versión ni validado sus consultas completas en GCP, Spark, Beam o Airflow.',
                             'ensayo OLAP P3 completado en BigQuery con datos sintéticos, job IDs y API contra Gold. '
                             'No se acredita despliegue Cloud Run ni validación de Spark, Beam o Airflow.')
+    if status_notice:
+        page = re.sub(r'<aside class="notice">.*?</aside>',
+                      lambda _: '<aside class="notice">' + html.escape(status_notice) + '</aside>',
+                      page, count=1, flags=re.DOTALL)
     page = '\n'.join(line.rstrip() for line in page.splitlines()) + '\n'
     (BASE / target).write_text(page, encoding='utf-8')
     print(f'Generado {target}: {len(page.encode("utf-8")):,} bytes')

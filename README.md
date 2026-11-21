@@ -5,8 +5,9 @@ Integrantes: Herles Pinedo, David Jimenez y José Nomberto.
 
 La solución integra viajes, velocidades viales, telemetría y demografía. El código incluye
 ingesta incremental, procesamiento Medallion, auditoría SQL, APIs y simulación de viajes.
-La demo OLAP P3 se ejecutó en BigQuery con datos sintéticos y la API consultando Gold.
-Esto no acredita un despliegue de Cloud Run ni la validación cloud de todos los componentes P1/P2.
+La P3 vigente consulta el Gold que ya estaba disponible en BigQuery: 4,998,926 registros.
+No genera ni carga viajes. La API utiliza la consulta identificada de esa fuente; no se presenta
+como un despliegue de Cloud Run ni como validación de todos los componentes P1/P2.
 
 ## Estado y evidencia
 
@@ -18,13 +19,12 @@ Esto no acredita un despliegue de Cloud Run ni la validación cloud de todos los
 | Data Lake | G4 muestra Parquet y capas; el bucket es regional us-central1. No prueba Iceberg ni réplica dual. |
 | Spark | G5 muestra fallo de Java seguido de demo Python de 600 registros. No acredita Spark ni Dataproc. |
 | Componentes P1/P2 | Las pruebas locales pasan; la validación completa de esos pipelines y de Beam, Spark y Airflow en cloud sigue pendiente. La demo P3 se acredita por separado. |
-| Demo OLAP P3 | Ejecución BigQuery p3_20261121_031258_1e7263: 600 viajes únicos, 16 job IDs y API leyendo Gold. Datos sintéticos; API local. |
+| P3 con datos existentes | Consulta de solo lectura a fact_movilidad_multimodal_gold: 4,998,926 registros. API contrastada con la consulta. La prueba sintética anterior está archivada y no se usa. |
 
 ## Entregables
 
 - **[Entrega 3 P3: API, demo OLAP y sustentación](P3/README.md)** · ejecutar `python P3/demo_e2e.py --serve` y abrir `/p3`.
-- [Evidencia de la demo local P3](P3/evidencias/sqlite_latest.json) · datos sintéticos procesados en una ejecución completa.
-- **[Evidencia del ensayo P3 en BigQuery](P3/evidencias/bigquery_latest.json)** · pipeline y API completados contra un dataset aislado.
+- **[Evidencia P3 de los datos existentes](P3/evidencias/datos_existentes_latest.json)** · tabla, esquema, consulta y job ID de solo lectura.
 - [Calculadora del primer año](P3/calculadora_consumo.py) y [contenido de sustentación](P3/diapositivas.json).
 
 - [Informe de procesamiento y trazabilidad](Avance2_P2_Procesamiento_Transformacion_Modelado_DataLandia.md)
@@ -40,31 +40,19 @@ Desde la raíz del repositorio:
 
 ```bash
 python -m unittest discover -s tests -v
-python build_master_html.py
-python build_entrega2_html.py
-cd Avance1_P1_Lumina_Ingesta_Storage
-python 02_ingesta_batch_multifuente.py
-python 06b_pipeline_pyspark_dataproc_silver_gold.py --mode=demo-python
-python 08_app_exposicion_frontend_lumina.py
+python P3/verificar_evidencia.py
+python build_entrega3_html.py
+python P3/demo_e2e.py --serve
 ```
 
-Los dos primeros modos de datos anteriores son locales y explícitamente sintéticos.
-La API sirve en http://127.0.0.1:8080. Sin BigQuery, las consultas devuelven datos no disponibles.
-El dashboard identifica sus indicadores ilustrativos y cachés; el simulador siempre declara sus supuestos.
+Abrir http://127.0.0.1:8080/p3. El tablero muestra la exportación identificada de la consulta
+al Gold existente. Si no hay una consulta válida disponible, responde datos no disponibles;
+no utiliza la antigua muestra sintética como respaldo. Para consultar de nuevo la fuente,
+ejecutar `P3/usar_datos_existentes.ps1` con las credenciales ya guardadas.
 
-Para escribir en GCP se requieren credenciales, dependencias de requirements.txt y los recursos del setup:
-
-```bash
-python 01_setup_infraestructura_lumina.py
-python 02_ingesta_batch_multifuente.py --upload
-python 03_simulador_streaming_iot_aot_pubsub.py --max-messages 50 --interval 0.3
-python 04_pipeline_streaming_beam_bq.py --mode=pull
-python 06_pipeline_medallion_silver_gold_ml.py
-```
-
-La ingesta usa staging y MERGE; no reemplaza Bronze. Puede usar --input-dir con tres CSV canónicos
-existentes para evitar generar una muestra. El script 06 reconstruye Silver/Gold; ejecutar primero
-en datasets de ensayo con una copia de datos. Consultar la guía para staging de Beam y despliegue de Airflow.
+Los scripts de P1/P2 se conservan como material de esas fases. Sus generadores no forman
+parte de la P3 vigente. El recorrido actual utiliza las tablas existentes y solo emite
+consultas SELECT; no ejecuta el setup, no recarga Bronze ni reconstruye Silver/Gold.
 
 ## Cobertura pendiente del taller
 

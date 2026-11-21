@@ -1,126 +1,101 @@
-# Entrega 3 Exposición y demo de Lumina
+# Entrega 3 Exposición de los datos existentes de Lumina
 
-La P3 demuestra un proceso OLAP completo: generar y cargar datos, validar telemetría,
-limpiar/deduplicar, cruzar cuatro fuentes, materializar Gold y consultar sus indicadores desde
-una API y un tablero consumidor. El modo local y el modo BigQuery se ejecutaron y verificaron.
-La ejecución cloud del 20/11/2026 a las 22:14 America/Lima dejó un manifiesto con 16 job IDs,
-600 viajes únicos y la API consultando las tablas de esa misma ejecución.
+P3 consulta exclusivamente la tabla que ya está disponible en el proyecto:
+`bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold`.
+El recorrido es Gold existente → SELECT OLAP → API REST → tablero consumidor.
+No genera viajes, no inserta anomalías y no crea ni reemplaza tablas en Google Cloud.
 
-## Evidencia de ejecución en BigQuery
+## Resultado verificado de la fuente existente
 
-| Verificación | Resultado del ensayo |
+La consulta del 20/11/2026 a las 22:31 America/Lima devolvió:
+
+| Dato de la fuente | Resultado |
 | --- | --- |
-| Dataset aislado | bigdata-herles-pinedo.p3_20261121_031258_1e7263 |
-| Entrada de viajes | 602 filas: 600 de muestra, un duplicado y una distancia negativa |
-| Gold | 600 filas y 600 trip_id únicos |
-| Cobertura de tráfico | 540 de 600 viajes (90%) |
-| Cobertura IoT | 600 de 600 viajes (100%) |
-| Eventos inválidos | 2 aislados en deadletter |
-| API | status=ok, backend=bigquery, run_id coincidente |
-| Tiempo de ejecución | 62.982 segundos en este ensayo; no es un SLA |
-| Alcance | Datos sintéticos; API local contra BigQuery, sin despliegue Cloud Run |
+| Registros consultados | 4,998,926 |
+| Distancia sumada | 45,585,485.89 km |
+| Importes de tarifa, excluyendo PERSONAL_CAR_BENCHMARK | USD 82,534,392.08 |
+| Última modificación registrada de la tabla | 11/11/2026 04:27:08 UTC |
+| Job de consulta | 47635f4c-2483-4d2d-840c-1499dfeba6f5 |
+| Modificación de la fuente por este proceso | Ninguna |
+| API | Coincide con los agregados de esa consulta |
 
-Manifiesto: evidencias/bigquery_latest.json. Incluye hashes de los lotes, huella del SQL,
-job IDs y respuesta de la API. La comprobación HTTP del consumidor no sustituye una
-inspección visual del navegador, que sigue declarada como no realizada.
-Las tablas de la demo tienen expiración de siete días; no son almacenamiento permanente de la entrega.
+Los importes anteriores son sumas de las columnas de la tabla, no facturación auditada
+ni una demostración de ahorro real. Se usa el histórico que el equipo ya tenía; la
+procedencia externa no queda certificada solo por estar almacenado en BigQuery.
+La descripción de la tabla está vacía. Las columnas de cobertura explícita de los cruces
+no están presentes; su valor se conserva como NULL, sin inventar porcentajes.
+
+## Evidencia vigente
+
+- `evidencias/datos_existentes_latest.json`: fuente, esquema, fecha, SQL, job ID y resultado.
+- `evidencias/esquema_fuente_existente.json`: metadatos consultados antes de agregar.
+- `verificar_evidencia.py`: contrasta el SQL y los totales de esa evidencia.
+- `evidencias/archivo_pruebas_sinteticas/`: pruebas anteriores retiradas de la entrega vigente.
+
+La antigua prueba de 600 viajes no se utiliza como fuente, como respaldo de la API
+ni como evidencia de procesamiento del histórico del proyecto. Se conserva archivada
+para no borrar el rastro de lo que se había ejecutado.
+
+## Consultar de nuevo sin iniciar sesión otra vez
+
+Con las credenciales ya guardadas, ejecutar en PowerShell:
+
+```powershell
+.\P3\usar_datos_existentes.ps1
+```
+
+La consulta lee todos los registros de la tabla elegida, sin LIMIT ni tamaño de muestra fijo.
+Registra el esquema, agrega únicamente columnas disponibles y verifica la respuesta HTTP.
+Tiene un máximo de 5 GiB facturables por consulta. No ejecuta ingesta ni recalcula las
+capas Bronze/Silver/Gold del proyecto; utiliza el Gold preexistente como fuente del informe.
+
+La sesión de Codex puede leer la exportación aunque su conexión de red esté restringida.
+Las credenciales permanecen en .runtime y están excluidas de Git.
+
+## Mostrar el tablero con la consulta ya exportada
+
+```bash
+python P3/demo_e2e.py --serve
+```
+
+Abrir http://127.0.0.1:8080/p3 y http://127.0.0.1:8080/api/v1/olap-kpis.
+El modo `project_export` sirve el resultado identificado de la consulta guardada, con tabla,
+job ID y fecha de consulta. No se presenta como una consulta remota en vivo.
+Si falta esa evidencia o corresponde a datos sintéticos, la API responde unavailable;
+el tablero muestra datos no disponibles, sin cifras de respaldo.
+
+Para ejecutar una consulta nueva y después servirla desde una terminal con red:
+
+```bash
+python P3/usar_datos_existentes.py --serve
+```
 
 ## Matriz de la rúbrica UTEC
 
 | Requisito P3 | Entregable y alcance |
 | --- | --- |
-| Consulta, endpoint o API | GET /api/v1/olap-kpis devuelve datos de Gold, procedencia, run_id y fecha de procesamiento. |
-| Aplicación consumidora | GET /p3 sirve un tablero que consulta ese endpoint. No usa cifras fijas como resultados. |
-| Demo de un proceso end-to-end | demo_e2e.py recorre las capas con datos de esa ejecución y comprueba la lectura HTTP. |
-| Repositorio estructurado | Código, pruebas, SQL, calculadora y manifiestos en P3/. La publicación requiere push confirmado. |
-| Sustentación | diapositivas.json contiene 12 diapositivas y notas con los diez apartados de la rúbrica. La presentación final y el enlace se registran cuando se guarden. |
-| Participación individual y grupal | El equipo debe ensayar y sustentar en clase; los archivos no acreditan participación realizada. |
+| Exposición mediante consulta o API | GET /api/v1/olap-kpis expone agregados de la tabla existente y su trazabilidad. |
+| Consumidor | / y /p3 sirven el tablero conectado a la API. |
+| Caso de uso OLAP | Consulta y agregación de todo el Gold existente, exposición HTTP y consumo. No reejecuta la ingesta histórica. |
+| Repositorio | Código, pruebas y evidencia guardados localmente; push pendiente de confirmar. |
+| Slides | Fuente de 12 diapositivas actualizada con los registros existentes; falta guardar y revisar la presentación final. |
+| Defensa individual y grupal | Debe realizarse en clase; los archivos no acreditan esa participación. |
 
-Fuente de requisitos: UTEC - Desarrollo de Proyecto - Seccion 1.pdf, página 3.
-La rúbrica permite demostrar al menos un proceso clave, incluidos informes OLAP; no obliga a ML.
+Fuente: UTEC - Desarrollo de Proyecto - Seccion 1.pdf, página 3. La rúbrica permite
+demostrar un proceso de informes OLAP; no exige introducir datos simulados ni un modelo ML.
 
-## Demo local reproducible
+## Costos y validación
 
-Desde la raíz del repositorio, con Python 3.11 o posterior:
+`python P3/calculadora_consumo.py` mantiene una estimación editable del primer año
+del piloto. Sus consumos son supuestos de planificación, no mediciones ni facturación
+de los viajes de la fuente. Las tarifas están enlazadas a las páginas oficiales en costos.json.
 
 ```bash
 python -m unittest discover -s tests -v
-python P3/demo_e2e.py --serve
+python P3/verificar_evidencia.py
+python build_entrega3_html.py
 ```
 
-Abrir http://127.0.0.1:8080/p3 y http://127.0.0.1:8080/api/v1/olap-kpis.
-El proceso queda sirviendo hasta Ctrl+C. Sin --serve termina tras verificar y escribir el manifiesto.
-No requiere Flask, Google Cloud, Docker ni credenciales. No modifica el Gold histórico ni los CSV
-originales: crea una base y datos de trabajo nuevos en .runtime/p3 por ejecución.
-
-## Resultado esperado y verificaciones
-
-La entrada contiene 602 viajes: 600 de muestra, un duplicado y una distancia negativa.
-Se generan 24 zonas censales, 4,968 velocidades, 240 eventos IoT válidos y dos anomalías.
-Gold debe conservar 600 viajes únicos. El tráfico coincide en 540 (90%); los sensores en 600.
-Las 60 faltantes de tráfico se conservan como ausencia de observación, no velocidad supuesta.
-El ingreso de Lumina excluye el benchmark del automóvil particular.
-
-evidencias/sqlite_latest.json contiene la ejecución real más reciente: hashes, conteos,
-run_id, duración de ensayo y respuesta de API. Es evidencia de ejecución local con datos
-sintéticos, no una medición de movilidad real ni un SLA cloud. La verificación HTTP comprueba
-la conexión del consumidor; la inspección visual del navegador se declara aparte en el manifiesto.
-
-## Ejecutar la demo en GCP
-
-Para minimizar la intervencion, ejecutar `P3/conectar_y_validar_gcp.ps1`: abre un unico
-inicio de sesion, prepara gcloud y ADC con `--update-adc`, instala el cliente en .runtime
-y ejecuta automaticamente la demo BigQuery. Al terminar, Codex puede leer el manifiesto local.
-Este flujo fijo se ejecuta desde la terminal del usuario con red; no habilita acceso de red
-a una sesion de Codex que lo tenga restringido. Las credenciales permanecen excluidas de Git.
-
-La sesión del navegador no equivale a autenticar los clientes locales. Ejecutar personalmente:
-
-```powershell
-.\P3\iniciar_sesion_gcp.ps1
-.\P3\ejecutar_demo_gcp.ps1
-```
-
-Seleccionar una cuenta con permisos para crear datasets y jobs en bigdata-herles-pinedo.
-El segundo script instala el cliente BigQuery en .runtime/python-gcp, carga datos sintéticos
-en un dataset p3_fecha_id nuevo, ejecuta el SQL y verifica la API contra las tablas cloud.
-Las tablas expiran en siete días; los datos históricos de Lumina no se reemplazan.
-Las consultas del pipeline tienen máximo de 1 GiB facturable por job. La ejecución genera
-evidencias/bigquery_latest.json con dataset y job IDs solo si termina correctamente.
-No equivale a desplegar Cloud Run: la API y el consumidor se sirven localmente contra BigQuery.
-
-No pegar contraseñas, tokens ni códigos en el chat. .runtime/ está excluido de Git.
-Los accesos requieren red disponible desde la terminal que ejecute los comandos.
-
-## Calculadora de consumo del primer año
-
-```bash
-python P3/calculadora_consumo.py
-```
-
-Los supuestos editables están en costos.json: 2 TiB consultados al mes, 100 GiB lógicos
-activos, 10,000 solicitudes de API y tiempos facturables declarados. El resultado incluye
-20% de contingencia y no descuenta cuotas gratuitas compartidas. Estima USD 216.81
-para el primer año del piloto; no dimensiona toda la metrópoli ni un carril IoT continuo.
-Fuentes oficiales de tarifas consultadas el 20/11/2026:
-https://cloud.google.com/bigquery/pricing y https://cloud.google.com/run/pricing.
-Excluye impuestos, personal, egreso, logs excedentes, builds, streaming continuo y DRP.
-No es una factura ni un presupuesto aprobado. Revisar tarifas antes de usar el cálculo.
-
-## Guion de sustentación sugerido
-
-1. Contexto y alcance: explicar por qué se eligió OLAP para una demo completa.
-2. Arquitectura y KPI: mostrar el grano de viaje y los cruces espaciotemporales.
-3. Demo: iniciar el pipeline; mostrar limpieza, Gold, API y tablero con el mismo run_id.
-4. Economía: editar un consumo en costos.json y recalcular el primer año.
-5. Conclusiones: distinguir lo ejecutado, lo supuesto y lo pendiente; distribuir las preguntas entre el equipo.
-
-La defensa en vivo sigue a cargo del grupo. No se atribuyen contribuciones personales no verificadas.
-
-## Publicación del repositorio
-
-Comprobar que git status no incluya credenciales ni .runtime. Las correcciones deben estar
-en un commit y el push debe confirmarse contra el remoto conocido:
-https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp.
-Si el acceso de GitHub ha caducado, el propietario/colaborador debe autenticarlo personalmente.
-No usar force-push. El manifiesto de entrega registra el commit y el estado real de publicación.
+Las pruebas verifican, entre otros casos, que P3 no importe generadores, no muestree la
+fuente, no emita SQL de escritura y rechace los manifiestos sintéticos como fuente vigente.
+La comprobación HTTP no equivale a una inspección visual del navegador.

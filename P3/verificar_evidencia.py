@@ -1,45 +1,37 @@
-"""Contrasta el manifiesto cloud con SQL, lotes locales y resultado SQLite.
-
-No consulta de nuevo GCP ni accede al contenido de credenciales.
-"""
+"""Verifica únicamente la evidencia de lectura de tablas existentes."""
 import hashlib
 import json
 from pathlib import Path
-import re
-from olap_sql import statements
+import sys
 
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'Avance1_P1_Lumina_Ingesta_Storage'))
+from existing_project_data import build_query,summarize
 
 
 def verify():
-    cloud=json.loads((ROOT/'P3/evidencias/bigquery_latest.json').read_text(encoding='utf-8'))
-    local=json.loads((ROOT/'P3/evidencias/sqlite_latest.json').read_text(encoding='utf-8'))
-    run_id=cloud['run_id']
-    if not re.fullmatch(r'p3_\d{8}_\d{6}_[a-f0-9]{6}',run_id):
-        raise ValueError('Identificador de ejecución inválido')
-    assert cloud['backend']=='bigquery' and cloud['data_origin']=='synthetic_generated_for_p3'
-    assert cloud['api_report']['status']=='ok'
-    assert cloud['api_report']['backend']=='bigquery' and cloud['api_report']['run_id']==run_id
-    assert cloud['gold_rows']==cloud['unique_trip_ids']==cloud['api_report']['summary']['total_trips']==600
-    assert all(value=='passed' for value in cloud['verification'].values())
-    assert cloud['api_report']['summary']==local['api_report']['summary']
-    assert cloud['api_report']['by_mode']==local['api_report']['by_mode']
-    sql='\n'.join(statements(cloud['dataset'],bigquery=True))
-    assert hashlib.sha256(sql.encode()).hexdigest()==cloud['sql_sha256']
-    inputs=ROOT/'.runtime/p3'/run_id
-    checked=0
-    for filename,digest in cloud['input_sha256'].items():
-        if Path(filename).name!=filename or '/' in filename or '\\' in filename:
-            raise ValueError('Nombre de lote inválido')
-        path=inputs/filename
-        if path.is_file():
-            assert hashlib.sha256(path.read_bytes()).hexdigest()==digest
-            checked+=1
-    return {'status':'passed','run_id':run_id,'gold_rows':cloud['gold_rows'],
-            'job_ids_recorded':len(cloud['job_ids']),'input_files_rechecked':checked,
-            'sql_hash_matches':True,'cloud_local_kpis_match':True,
-            'limitation':'Verificación de artefactos de ejecución; no es una nueva consulta remota ni un benchmark.'}
+    path=ROOT/'P3/evidencias/datos_existentes_latest.json'
+    data=json.loads(path.read_text(encoding='utf-8'))
+    if data.get('status')!='ok' or data.get('data_origin')!='existing_project_data':
+        raise ValueError('No hay evidencia válida de las tablas existentes')
+    if data.get('source_modified_by_this_process') is not False:
+        raise ValueError('Falta verificar que no se modificó la fuente')
+    table=data['source_table']
+    sql,_=build_query(table['table_id'],[field['name'] for field in table['schema']])
+    if hashlib.sha256(sql.encode()).hexdigest()!=data['sql_sha256']:
+        raise ValueError('El SQL no coincide con la evidencia')
+    if summarize(data['by_mode'])!=data['summary']:
+        raise ValueError('Los totales no coinciden con las filas consultadas')
+    verification=data.get('verification',{})
+    if not data.get('job_id') or any(verification.get(key)!='passed' for key in
+            ('api_matches_existing_query','consumer_references_api')):
+        raise ValueError('Falta la consulta o la verificación HTTP')
+    metadata_rows=table.get('num_rows_at_inspection')
+    if metadata_rows is not None and metadata_rows!=data['summary']['total_trips']:
+        raise ValueError('El conteo consultado no coincide con los metadatos registrados')
+    return {'status':'passed','source':data['source'],'source_rows':data['summary']['total_trips'],
+            'job_id':data['job_id'],'generated_data_used':False,
+            'provenance_status':data['provenance_status']}
 
 
-if __name__=='__main__':
-    print(json.dumps(verify(),ensure_ascii=False,indent=2))
+if __name__=='__main__': print(json.dumps(verify(),ensure_ascii=False,indent=2))

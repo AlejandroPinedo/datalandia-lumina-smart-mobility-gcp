@@ -1,0 +1,139 @@
+{
+  "table_id": "bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold",
+  "num_rows_at_inspection": 4998926,
+  "description": null,
+  "schema": [
+    {
+      "name": "trip_id",
+      "type": "STRING"
+    },
+    {
+      "name": "travel_date",
+      "type": "DATE"
+    },
+    {
+      "name": "pickup_datetime",
+      "type": "TIMESTAMP"
+    },
+    {
+      "name": "hod",
+      "type": "INTEGER"
+    },
+    {
+      "name": "origin_zone_id",
+      "type": "STRING"
+    },
+    {
+      "name": "origin_zone_name",
+      "type": "STRING"
+    },
+    {
+      "name": "dest_zone_id",
+      "type": "STRING"
+    },
+    {
+      "name": "county_id",
+      "type": "STRING"
+    },
+    {
+      "name": "county_name",
+      "type": "STRING"
+    },
+    {
+      "name": "agency_id",
+      "type": "STRING"
+    },
+    {
+      "name": "transport_mode",
+      "type": "STRING"
+    },
+    {
+      "name": "connected_oart_station_id",
+      "type": "STRING"
+    },
+    {
+      "name": "passenger_count",
+      "type": "INTEGER"
+    },
+    {
+      "name": "trip_distance_km",
+      "type": "FLOAT"
+    },
+    {
+      "name": "lumina_duration_min",
+      "type": "FLOAT"
+    },
+    {
+      "name": "lumina_speed_kmh",
+      "type": "FLOAT"
+    },
+    {
+      "name": "lumina_total_fare_usd",
+      "type": "FLOAT"
+    },
+    {
+      "name": "lumina_cost_per_km_usd",
+      "type": "FLOAT"
+    },
+    {
+      "name": "street_traffic_speed_kmh",
+      "type": "FLOAT"
+    },
+    {
+      "name": "is_street_congested_24kmh",
+      "type": "BOOLEAN"
+    },
+    {
+      "name": "car_benchmark_duration_min",
+      "type": "FLOAT"
+    },
+    {
+      "name": "car_benchmark_total_cost_usd",
+      "type": "FLOAT"
+    },
+    {
+      "name": "car_benchmark_cost_per_km_usd",
+      "type": "FLOAT"
+    },
+    {
+      "name": "savings_usd_vs_car",
+      "type": "FLOAT"
+    },
+    {
+      "name": "time_saved_min_vs_car",
+      "type": "FLOAT"
+    },
+    {
+      "name": "pct_adulto_mayor_65",
+      "type": "FLOAT"
+    },
+    {
+      "name": "pct_jovenes_18_34",
+      "type": "FLOAT"
+    },
+    {
+      "name": "pct_menos_8km_estacion_oart",
+      "type": "FLOAT"
+    },
+    {
+      "name": "indice_prioridad_primera_milla",
+      "type": "FLOAT"
+    },
+    {
+      "name": "station_oart_load_pct",
+      "type": "FLOAT"
+    },
+    {
+      "name": "station_pdm_alerts",
+      "type": "INTEGER"
+    },
+    {
+      "name": "rider_id_dlp_sha256",
+      "type": "STRING"
+    },
+    {
+      "name": "ts_actualizacion_gold",
+      "type": "TIMESTAMP"
+    }
+  ]
+}
