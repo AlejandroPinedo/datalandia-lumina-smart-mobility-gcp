@@ -9,6 +9,11 @@ La P3 vigente consulta el Gold que ya estaba disponible en BigQuery: 4,998,926 r
 No genera ni carga viajes. La API utiliza la consulta identificada de esa fuente; no se presenta
 como un despliegue de Cloud Run ni como validación de todos los componentes P1/P2.
 
+La validación nueva ejecuta el pipeline completo con las cuatro fuentes existentes,
+en un dataset aislado, y publica sus resultados en **Análisis → Validación integral**.
+Procesó 5.000.000 viajes Bronze y obtuvo 4.996.009 viajes únicos válidos. El Gold
+histórico de 4.998.926 registros se conserva. Véase [implementación y alcance](operations/README.md).
+
 ## Estado y evidencia
 
 | Componente | Estado verificable |
@@ -18,7 +23,7 @@ como un despliegue de Cloud Run ni como validación de todos los componentes P1/
 | Pub/Sub | C3 muestra tópico y suscripción. No acredita continuidad, throughput ni latencia. |
 | Data Lake | G4 muestra Parquet y capas; el bucket es regional us-central1. No prueba Iceberg ni réplica dual. |
 | Spark | G5 muestra fallo de Java seguido de demo Python de 600 registros. No acredita Spark ni Dataproc. |
-| Componentes P1/P2 | Las pruebas locales pasan; la validación completa de esos pipelines y de Beam, Spark y Airflow en cloud sigue pendiente. La demo P3 se acredita por separado. |
+| Pipeline actual | Bronze → Silver → DQ → Gold aislado ejecutado en BigQuery. Eventos históricos procesados incrementalmente con deduplicación y restauración SQLite. Esto no acredita despliegue de Beam, Spark ni Airflow en cloud. |
 | P3 con datos existentes | Consulta de solo lectura a fact_movilidad_multimodal_gold: 4,998,926 registros. API contrastada con la consulta. La prueba sintética anterior está archivada y no se usa. |
 
 ## Entregables
@@ -56,7 +61,9 @@ consultas SELECT; no ejecuta el setup, no recarga Bronze ni reconstruye Silver/G
 
 ## Cobertura pendiente del taller
 
-La arquitectura todavía requiere fuentes operativas de solicitudes, GPS, flota/personal, horarios,
-eventos y accesibilidad para asignación real de viajes. Los planes y el mantenimiento tienen baselines
-exploratorios; faltan backtesting, validación de operaciones y datos de fallas. No se implementan pagos.
+La arquitectura requiere fuentes operativas de solicitudes, GPS, flota/personal, horarios,
+eventos y accesibilidad para asignación real de viajes. El planificador con restricciones
+está implementado y probado como contrato, sin inventar flota. La demanda tiene backtesting
+temporal de 32 series; el mantenimiento detecta falta de historial y frescura. No hay etiquetas
+para validar una probabilidad de falla. No se implementan pagos.
 La portabilidad estricta de código abierto, el DRP multirregión, IAM/CMEK y pruebas de carga son diseño objetivo.

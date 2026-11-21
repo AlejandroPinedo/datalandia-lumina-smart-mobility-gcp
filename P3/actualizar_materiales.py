@@ -23,7 +23,8 @@ def main():
     s[9]['body']=['Consultar con P3/usar_datos_existentes.ps1 sin generar ni cargar registros',
                  f'Mostrar el Gold existente: {rows:,} filas y su esquema',
                  'Abrir /api/v1/olap-kpis y contrastar tabla fuente, fecha y job ID',
-                 'Abrir /p3: muestra los mismos agregados o datos no disponibles']
+                 'Abrir /p3: filtrar fecha, condado, hora y modos; inspeccionar una barra',
+                 'Comparar dos modos, consultar la selección y exportar el CSV con trazabilidad']
     s[9]['notes']=f'Evidencia vigente: P3/evidencias/datos_existentes_latest.json. API y consumidor verificados. La fuente no fue modificada por este proceso. Job {report["job_id"]}. La exportación local se identifica y no se confunde con una consulta remota en vivo.'
     s[10]['body']=['P3 consulta los registros que ya estaban disponibles en el proyecto',
                   f'La API y el tablero usan los agregados de {rows:,} registros',

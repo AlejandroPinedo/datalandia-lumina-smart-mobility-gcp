@@ -7,6 +7,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'Avance1_P1_Lumina_Ingesta_Storage'))
 from existing_project_data import build_query,summarize
+from exploration_data import build_exploration_query, DIMENSIONS, METRICS
 
 
 def verify():
@@ -29,6 +30,16 @@ def verify():
     metadata_rows=table.get('num_rows_at_inspection')
     if metadata_rows is not None and metadata_rows!=data['summary']['total_trips']:
         raise ValueError('El conteo consultado no coincide con los metadatos registrados')
+    exploration=data.get('exploration',{})
+    if exploration.get('status')=='ok':
+        sql=build_exploration_query(table['table_id'],[field['name'] for field in table['schema']])
+        if exploration.get('sql_sha256')!=hashlib.sha256(sql.encode()).hexdigest():
+            raise ValueError('El SQL del desglose no coincide con la evidencia')
+        if exploration.get('columns')!=DIMENSIONS+METRICS or not exploration.get('job_id'):
+            raise ValueError('El desglose no identifica sus columnas o consulta')
+        index=exploration['columns'].index('total_trips')
+        if sum(row[index] for row in exploration['rows'])!=data['summary']['total_trips']:
+            raise ValueError('El desglose no conserva los registros de Gold')
     return {'status':'passed','source':data['source'],'source_rows':data['summary']['total_trips'],
             'job_id':data['job_id'],'generated_data_used':False,
             'provenance_status':data['provenance_status']}

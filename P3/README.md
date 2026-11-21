@@ -7,7 +7,7 @@ No genera viajes, no inserta anomalías y no crea ni reemplaza tablas en Google 
 
 ## Resultado verificado de la fuente existente
 
-La consulta del 20/11/2026 a las 22:31 America/Lima devolvió:
+La consulta del 20/11/2026 a las 23:00 America/Lima devolvió:
 
 | Dato de la fuente | Resultado |
 | --- | --- |
@@ -15,7 +15,8 @@ La consulta del 20/11/2026 a las 22:31 America/Lima devolvió:
 | Distancia sumada | 45,585,485.89 km |
 | Importes de tarifa, excluyendo PERSONAL_CAR_BENCHMARK | USD 82,534,392.08 |
 | Última modificación registrada de la tabla | 11/11/2026 04:27:08 UTC |
-| Job de consulta | 47635f4c-2483-4d2d-840c-1499dfeba6f5 |
+| Job de consulta | e03f867a-64fa-44b7-90dd-752b97c3546c |
+| Job del desglose multidimensional | bdf94307-1c83-4735-833c-c2b5288666c9 |
 | Modificación de la fuente por este proceso | Ninguna |
 | API | Coincide con los agregados de esa consulta |
 
@@ -54,6 +55,59 @@ Las credenciales permanecen en .runtime y están excluidas de Git.
 
 ## Mostrar el tablero con la consulta ya exportada
 
+La web vuelve a incluir una entrada para el pasajero. En `/p3` se abre el buscador
+de trayectos; **Análisis** conserva el tablero de indicadores. Para habilitar origen,
+destino y registros individuales ejecutar una vez `P3/recuperar_web_pasajero.ps1`.
+Lee el mismo Gold y exporta alternativas históricas y hasta los tres últimos
+registros de cada grupo origen/destino/condado/modo. La interfaz declara este alcance;
+no lo presenta como historial personal, reservas ni disponibilidad en vivo.
+
+La web del pasajero incluye comparación por duración/tarifa/distancia, conexiones
+OART de la fuente, consultas calculadas del trayecto, guardados en el navegador y
+detalle/CSV de registros. `/api/v1/passenger-data` sirve la evidencia identificada
+`evidencias/movilidad_pasajero_latest.json`. No hay coordenadas o rutas inventadas.
+
+La consulta del pasajero del 21/11/2026 a las 00:03 America/Lima fue verificada:
+8 zonas de origen/destino, 320 grupos de trayecto por modo y condado, 960 registros
+individuales de detalle y 4.998.926 registros agregados. Job de BigQuery:
+`065beb66-6272-4132-9338-57f0709fda24`. Las API Node (3000) y Python (8080)
+devuelven la misma exportación; los enlaces de trayecto con origen/destino responden
+HTTP 200. Pasaron las 33 pruebas Python y 15 pruebas Node, sin omisiones.
+
+El centro de control conserva la identidad visual de Lumina y permite:
+
+- Combinar fecha inicial/final, condado, hora y selección de modos.
+- Explorar registros, distancia, duración y tarifa/km, con fichas por modo.
+- Seleccionar barras de fecha, hora o condado para profundizar en el resultado.
+- Comparar dos modos con los mismos filtros territoriales y temporales.
+- Ordenar y buscar en la tabla; descargar CSV con filtros, fuente y job ID.
+- Resolver consultas guiadas de resumen, viajes, duración, tarifa y calidad.
+- Revisar nulos, distancias negativas, esquema y SQL ejecutado.
+
+El desglose contiene 56.220 grupos observados, 59 fechas, 8 condados, 5 modos y
+24 horas. Sus recuentos suman los 4.998.926 registros de la consulta de resumen.
+Las medias filtradas se calculan mediante SUM/COUNT de valores no nulos; los
+importes excluyen el auto de referencia en las tarjetas de totales. El costo/km
+es el cociente de sumas, no una media de cocientes.
+
+Las interacciones operan sobre la exportación identificada de BigQuery.
+«Actualizar datos» vuelve a leer la API; para consultar nuevamente BigQuery se
+ejecuta `P3/usar_datos_existentes.ps1`. No hay telemetría en vivo, coordenadas
+observadas ni un motor de rutas conectado. No se simulan esas funcionalidades.
+
+La interfaz vigente usa React y Node.js; sus recursos editables están en
+`frontend/src/`. Instalar dependencias una vez con `npm.cmd --prefix frontend install`.
+Después de modificarlos ejecutar `python P3/build_web.py` para compilar React y
+actualizar la plantilla autocontenida. Abrir el
+tablero mediante el servidor permite acceder a la API; abrir el HTML como archivo
+no establece esa conexión.
+
+También se puede ejecutar `npm.cmd --prefix frontend start` después de compilar,
+y abrir http://127.0.0.1:3000/p3. El servidor Node lee la misma evidencia existente
+y expone la API en el mismo origen; no requiere ejecutar Python para servir esta
+exportación. El código anterior de `P3/web/dashboard.*` queda como referencia;
+la compilación vigente usa exclusivamente `frontend/src`.
+
 ```bash
 python P3/demo_e2e.py --serve
 ```
@@ -71,6 +125,13 @@ python P3/usar_datos_existentes.py --serve
 ```
 
 ## Matriz de la rúbrica UTEC
+
+La implementación y evidencia nuevas del fondo están en [operations/README.md](../operations/README.md).
+`P3/completar_validacion_fondo.ps1` ejecuta el pipeline completo sobre Bronze existente,
+en un dataset aislado. `P3/verificar_fondo.py` reconcilia sus resultados y restauración.
+La web en `#operations` consume esos resultados por `/api/v1/operations`.
+El Gold nuevo contiene 4.996.009 registros válidos; el histórico de 4.998.926 que usa
+el explorador del pasajero se conserva y se identifica por separado.
 
 | Requisito P3 | Entregable y alcance |
 | --- | --- |

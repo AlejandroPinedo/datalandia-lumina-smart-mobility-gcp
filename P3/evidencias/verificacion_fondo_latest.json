@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checked_at": "2026-11-21T06:32:05.448490+00:00",
+  "run_id": "20261121_061102_f4eb33",
+  "gold_validated_rows": 4996009,
+  "raw_trip_rows": 5000000,
+  "excluded_during_cleaning": 3991,
+  "temporal_coverage": {
+    "traffic_matches": 0,
+    "iot_matches": 0,
+    "census_matches": 4996009
+  },
+  "forecast_series": 32,
+  "generated_business_records": 0,
+  "scope": "Pipeline OLAP end-to-end, streaming histórico, backtesting y recuperación locales; no operación metropolitana"
+}

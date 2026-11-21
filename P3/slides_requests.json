@@ -2342,7 +2342,7 @@
         }
       }
     ],
-    "speaker_notes": "Consulta de solo lectura. Tabla: bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold. Job: 47635f4c-2483-4d2d-840c-1499dfeba6f5. Consulta: 2026-11-21T03:31:07.982726+00:00. Los importes son agregados de las columnas existentes, no facturación auditada. La procedencia externa sigue sin verificación independiente."
+    "speaker_notes": "Consulta de solo lectura. Tabla: bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold. Job: e03f867a-64fa-44b7-90dd-752b97c3546c. Consulta: 2026-11-21T04:00:23.995912+00:00. Los importes son agregados de las columnas existentes, no facturación auditada. La procedencia externa sigue sin verificación independiente."
   },
   {
     "slide_id": "p3_slide_05",
@@ -7134,7 +7134,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_10_text_3",
-          "text": "Consultar con P3/usar_datos_existentes.ps1 sin generar ni cargar registros\nMostrar el Gold existente: 4,998,926 filas y su esquema\nAbrir /api/v1/olap-kpis y contrastar tabla fuente, fecha y job ID\nAbrir /p3: muestra los mismos agregados o datos no disponibles",
+          "text": "Consultar con P3/usar_datos_existentes.ps1 sin generar ni cargar registros\nMostrar el Gold existente: 4,998,926 filas y su esquema\nAbrir /api/v1/olap-kpis y contrastar tabla fuente, fecha y job ID\nAbrir /p3: filtrar fecha, condado, hora y modos; inspeccionar una barra\nComparar dos modos, consultar la selección y exportar el CSV con trazabilidad",
           "insertionIndex": 0
         }
       },
@@ -7275,7 +7275,7 @@
         }
       }
     ],
-    "speaker_notes": "Evidencia vigente: P3/evidencias/datos_existentes_latest.json. API y consumidor verificados. La fuente no fue modificada por este proceso. Job 47635f4c-2483-4d2d-840c-1499dfeba6f5. La exportación local se identifica y no se confunde con una consulta remota en vivo."
+    "speaker_notes": "Evidencia vigente: P3/evidencias/datos_existentes_latest.json. API y consumidor verificados. La fuente no fue modificada por este proceso. Job e03f867a-64fa-44b7-90dd-752b97c3546c. La exportación local se identifica y no se confunde con una consulta remota en vivo."
   },
   {
     "slide_id": "p3_slide_11",

@@ -1,0 +1,2494 @@
+{
+  "status": "validated_olap_pipeline",
+  "run_id": "20261121_061102_f4eb33",
+  "started_at": "2026-11-21T06:11:02.441018+00:00",
+  "source_data_origin": "existing_project_data",
+  "generated_records_used": false,
+  "historical_sources_modified": false,
+  "target_dataset": "lumina_validacion_20261121_061102_f4eb33",
+  "stages": [
+    {
+      "name": "Bronze existente → Silver aislado",
+      "status": "passed",
+      "job_id": "c6d9c4c3-9730-4954-92cf-c87a8a65d089",
+      "sql_sha256": "556d9ce4d7682e189f093a6e4ddacfe73444d08e5ddd074e2c996932f2f6c0eb",
+      "total_bytes_processed": 1334959606,
+      "elapsed_seconds": 12.232
+    },
+    {
+      "name": "Auditoría de cuatro reglas",
+      "status": "passed",
+      "job_id": "e84f140e-3420-41a4-8c48-9bc32be4c668",
+      "sql_sha256": "7b63a586f2549420c758cc31069f246d9373787349934749e3945b805287f179",
+      "total_bytes_processed": 384924738,
+      "elapsed_seconds": 2.654
+    },
+    {
+      "name": "Resultados DQ",
+      "status": "passed",
+      "job_id": "f1c2607e-a581-4a61-8eaa-59669ec3f9a3",
+      "sql_sha256": "37885426e53dbe5fa65151253cbecbead36461950ea8216111c1df0ca15d8cd7",
+      "total_bytes_processed": 419,
+      "elapsed_seconds": 1.375
+    },
+    {
+      "name": "Compuerta de calidad ≥95%",
+      "status": "passed",
+      "job_id": "c15b3166-219b-4e5e-93fd-1e01be351bf6",
+      "sql_sha256": "09f56784982f8a112b7f4f535301d2e58bfaa0b00dd8df0e71aae6f9987b304f",
+      "total_bytes_processed": 96,
+      "elapsed_seconds": 1.041
+    },
+    {
+      "name": "Silver → Gold observado",
+      "status": "passed",
+      "job_id": "a4039fe7-980c-4627-b523-4e5bf16ce332",
+      "sql_sha256": "d37804f7c600f773559a7f365bac25a0aac127352c0a9de9fd5ac57cc660aee4",
+      "total_bytes_processed": 674392678,
+      "elapsed_seconds": 5.639
+    },
+    {
+      "name": "Cobertura y cardinalidad",
+      "status": "passed",
+      "job_id": "a0822ba5-e84d-4584-b0b6-2df0fee1616a",
+      "sql_sha256": "341847d9968d974d13feaeab62a676e3f1afaf61761ee787d12f2863b7c7fa50",
+      "total_bytes_processed": 349388228,
+      "elapsed_seconds": 2.178
+    },
+    {
+      "name": "Reconciliación Silver",
+      "status": "passed",
+      "job_id": "9132fab9-f1cf-48e1-aed7-aec129512c83",
+      "sql_sha256": "bc14386c9bbd1ba30f3ccfe390f133a1a572fd32187afc11116e1049e67a5cb2",
+      "total_bytes_processed": 0,
+      "elapsed_seconds": 1.372
+    },
+    {
+      "name": "Consumo OLAP del Gold nuevo",
+      "status": "passed",
+      "job_id": "b7c63aa8-3d43-4880-b883-196951c13a25",
+      "sql_sha256": "8af15fbc306865ab368825739b81d22015ea599a5f22d6ec6368d31930603ece",
+      "total_bytes_processed": 274273690,
+      "elapsed_seconds": 1.792
+    },
+    {
+      "name": "Demanda diaria observada",
+      "status": "passed",
+      "job_id": "a4267860-5d22-41ae-8ff6-bcd18d97ad25",
+      "sql_sha256": "fd5b5e9f1e0f49721e18c32ebeac1ec7fa056275623d942151b83a32afed6891",
+      "total_bytes_processed": 199736347,
+      "elapsed_seconds": 1.751
+    },
+    {
+      "name": "Censo existente",
+      "status": "passed",
+      "job_id": "bbbf2038-6d09-45ff-bc4e-f68159523990",
+      "sql_sha256": "cdfceeb8e3e19c9baf38cc165e4fc9d9c8427fa6f6dca9fbae3c76366cd7dfc6",
+      "total_bytes_processed": 1870,
+      "elapsed_seconds": 1.39
+    },
+    {
+      "name": "Tráfico existente",
+      "status": "passed",
+      "job_id": "903af395-e3ed-4510-add5-614651f87427",
+      "sql_sha256": "b9c105c0b7b79e3e401d120c6aa17812d0de2b3cae4b34fc9b128d6e584e1bdb",
+      "total_bytes_processed": 60816,
+      "elapsed_seconds": 1.368
+    },
+    {
+      "name": "Telemetría existente",
+      "status": "passed",
+      "job_id": "2ade3d15-14de-4799-8b5b-8ab5f2e99e84",
+      "sql_sha256": "2087e30e4fafae06177c7ec692021e277ca9297cc7c3d6bbd1180ba86181d576",
+      "total_bytes_processed": 1860,
+      "elapsed_seconds": 1.371
+    },
+    {
+      "name": "Registros existentes para motor abierto",
+      "status": "passed",
+      "job_id": "ffcbc295-1758-4f17-94ab-8ad0c6ebf355",
+      "sql_sha256": "23eed92b7f4fe046da7c3e621cdb67176f90d25f69c14f7f855814b511a19b41",
+      "total_bytes_processed": 284772513,
+      "elapsed_seconds": 1.835
+    }
+  ],
+  "limitations": [
+    "No certifica procedencia externa de las tablas existentes",
+    "Replay de 11 eventos no acredita throughput de sensores metropolitanos",
+    "Los pronósticos con histórico antiguo no se publican como demanda actual",
+    "La arquitectura cubre cuatro verticales; la demo end-to-end acreditada es OLAP"
+  ],
+  "requirements_scope": "Arquitectura para cuatro verticales; demostración funcional end-to-end de OLAP",
+  "source_tables": {
+    "trips": {
+      "table_id": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.tlc_trips_raw",
+      "rows": 5000000,
+      "modified": "2026-11-21T06:10:31.906000+00:00"
+    },
+    "traffic": {
+      "table_id": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.uber_movement_speeds_raw",
+      "rows": 504,
+      "modified": "2026-11-21T06:10:43.203000+00:00"
+    },
+    "iot": {
+      "table_id": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.iot_aot_telemetry_raw",
+      "rows": 11,
+      "modified": "2026-11-21T06:10:49.644000+00:00"
+    },
+    "census": {
+      "table_id": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.censo_demografia_raw",
+      "rows": 8,
+      "modified": "2026-11-21T06:10:58.505000+00:00"
+    }
+  },
+  "quality": [
+    {
+      "dimension_calidad": "3. Validez fisica de telemetria",
+      "tabla_evaluada": "BRONZE_IOT",
+      "registros_evaluados": 11,
+      "registros_validos": 11,
+      "pct_cumplimiento": 100.0,
+      "sla_minimo_pct": 95.0,
+      "estado_gobernanza": "CUMPLE SLA (>= 95%)",
+      "ts_auditoria": "2026-11-21T06:11:20.542299+00:00"
+    },
+    {
+      "dimension_calidad": "4. Unicidad de viajes Silver",
+      "tabla_evaluada": "SILVER_TRIPS",
+      "registros_evaluados": 4996009,
+      "registros_validos": 4996009,
+      "pct_cumplimiento": 100.0,
+      "sla_minimo_pct": 95.0,
+      "estado_gobernanza": "CUMPLE SLA (>= 95%)",
+      "ts_auditoria": "2026-11-21T06:11:20.542299+00:00"
+    },
+    {
+      "dimension_calidad": "1. Integridad espacial",
+      "tabla_evaluada": "BRONZE_TRIPS",
+      "registros_evaluados": 5000000,
+      "registros_validos": 5000000,
+      "pct_cumplimiento": 100.0,
+      "sla_minimo_pct": 95.0,
+      "estado_gobernanza": "CUMPLE SLA (>= 95%)",
+      "ts_auditoria": "2026-11-21T06:11:20.542299+00:00"
+    },
+    {
+      "dimension_calidad": "2. Validez temporal y financiera",
+      "tabla_evaluada": "BRONZE_TRIPS",
+      "registros_evaluados": 5000000,
+      "registros_validos": 4996009,
+      "pct_cumplimiento": 99.92018,
+      "sla_minimo_pct": 95.0,
+      "estado_gobernanza": "CUMPLE SLA (>= 95%)",
+      "ts_auditoria": "2026-11-21T06:11:20.542299+00:00"
+    }
+  ],
+  "coverage": {
+    "total_rows": 4996009,
+    "unique_trips": 4996009,
+    "census_matches": 4996009,
+    "traffic_matches": 0,
+    "iot_matches": 0,
+    "observed_car_reference_matches": 4945660,
+    "first_date": "2026-01-01",
+    "last_date": "2026-02-28"
+  },
+  "olap": [
+    {
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "trips": 700097,
+      "distance_km": 6680236.6999999955,
+      "fare_usd": 13535232.719999554,
+      "fare_per_km_usd": 2.026160647870391,
+      "avg_duration_min": 15.161121787409456,
+      "avg_difference_vs_observed_car_usd": -0.026536169133448258
+    },
+    {
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "trips": 449720,
+      "distance_km": 4513133.0,
+      "fare_usd": 8682142.630000142,
+      "fare_per_km_usd": 1.9237506694352111,
+      "avg_duration_min": 15.179418149070539,
+      "avg_difference_vs_observed_car_usd": 0.0006117430039002966
+    },
+    {
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "trips": 1198611,
+      "distance_km": 13350285.679999935,
+      "fare_usd": 23190804.769997295,
+      "fare_per_km_usd": 1.7371017614057087,
+      "avg_duration_min": 15.08028830037435,
+      "avg_difference_vs_observed_car_usd": -0.023449424521447645
+    },
+    {
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "trips": 1897728,
+      "distance_km": 14728258.499999892,
+      "fare_usd": 37044550.8599987,
+      "fare_per_km_usd": 2.5152023818701292,
+      "avg_duration_min": 15.088952558006207,
+      "avg_difference_vs_observed_car_usd": -0.20727070175288737
+    },
+    {
+      "transport_mode": "PERSONAL_CAR_BENCHMARK",
+      "trips": 749853,
+      "distance_km": 6273892.069999998,
+      "fare_usd": 14477220.81999936,
+      "fare_per_km_usd": 2.307534248034867,
+      "avg_duration_min": 15.11374152000459,
+      "avg_difference_vs_observed_car_usd": -4.497167012203506e-16
+    }
+  ],
+  "forecasts": [
+    {
+      "zone_id": "ZDL-001",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 36.857142857142854,
+          "wape_pct": 7.766405779650813,
+          "bias": 6.285714285714286
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 89.35714285714286,
+          "wape_pct": 18.82901866345575,
+          "bias": -80.35714285714286
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 62.0,
+          "wape_pct": 13.064419024683927,
+          "bias": 32.0
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 50.0,
+        "wape_pct": 9.749303621169917,
+        "bias": -38.285714285714285
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 50.0,
+        "wape_pct": 9.749303621169917,
+        "bias": -38.285714285714285
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 539.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-001",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 70.57142857142857,
+          "wape_pct": 9.382716049382717,
+          "bias": -13.428571428571429
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 156.53571428571428,
+          "wape_pct": 20.811965811965813,
+          "bias": -139.03571428571428
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 91.28571428571429,
+          "wape_pct": 12.136752136752136,
+          "bias": -3.0
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 89.85714285714286,
+        "wape_pct": 11.678425547716301,
+        "bias": -17.285714285714285
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 89.85714285714286,
+        "wape_pct": 11.678425547716301,
+        "bias": -17.285714285714285
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 761.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-001",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 119.0,
+          "wape_pct": 9.552752293577981,
+          "bias": 20.428571428571427
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 239.07142857142858,
+          "wape_pct": 19.191513761467892,
+          "bias": -187.57142857142858
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 162.85714285714286,
+          "wape_pct": 13.073394495412844,
+          "bias": 97.71428571428571
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 134.28571428571428,
+        "wape_pct": 9.900990099009901,
+        "bias": -110.57142857142857
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 134.28571428571428,
+        "wape_pct": 9.900990099009901,
+        "bias": -110.57142857142857
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1326.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-001",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 173.28571428571428,
+          "wape_pct": 8.624244578741557,
+          "bias": -11.571428571428571
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 402.5357142857143,
+          "wape_pct": 20.03377177390686,
+          "bias": -350.39285714285717
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 277.57142857142856,
+          "wape_pct": 13.814432989690722,
+          "bias": 165.85714285714286
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 200.28571428571428,
+        "wape_pct": 9.513469498541086,
+        "bias": -96.0
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 200.28571428571428,
+        "wape_pct": 9.513469498541086,
+        "bias": -96.0
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2103.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-002",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 55.714285714285715,
+          "wape_pct": 5.545286506469501,
+          "bias": -43.714285714285715
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 174.03571428571428,
+          "wape_pct": 17.32191099104223,
+          "bias": -174.03571428571428
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 69.28571428571429,
+          "wape_pct": 6.896061424712071,
+          "bias": -32.42857142857143
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 92.42857142857143,
+        "wape_pct": 8.424479166666666,
+        "bias": -92.42857142857143
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 92.42857142857143,
+        "wape_pct": 8.424479166666666,
+        "bias": -92.42857142857143
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1035.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-002",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "median_recent_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 107.42857142857143,
+          "wape_pct": 6.806661839246922,
+          "bias": -68.57142857142857
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 267.25,
+          "wape_pct": 16.93292903692976,
+          "bias": -267.25
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 83.85714285714286,
+          "wape_pct": 5.313178855901521,
+          "bias": -25.857142857142858
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 136.42857142857142,
+        "wape_pct": 8.000335092569323,
+        "bias": -96.71428571428571
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 127.0,
+        "wape_pct": 7.447432353187568,
+        "bias": -127.0
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1734.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-002",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 138.14285714285714,
+          "wape_pct": 5.064152919612464,
+          "bias": -127.85714285714286
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 483.7857142857143,
+          "wape_pct": 17.735009164702802,
+          "bias": -483.7857142857143
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 157.0,
+          "wape_pct": 5.755433359518198,
+          "bias": -59.285714285714285
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 233.14285714285714,
+        "wape_pct": 7.8913011943329625,
+        "bias": -226.57142857142858
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 233.14285714285714,
+        "wape_pct": 7.8913011943329625,
+        "bias": -226.57142857142858
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2805.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-002",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "median_recent_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 225.0,
+          "wape_pct": 5.210228588441563,
+          "bias": -201.28571428571428
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 760.7142857142857,
+          "wape_pct": 17.615534751397664,
+          "bias": -760.7142857142857
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 212.28571428571428,
+          "wape_pct": 4.915809322174072,
+          "bias": -162.28571428571428
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 296.14285714285717,
+        "wape_pct": 6.354607320213352,
+        "bias": -209.28571428571428
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 341.85714285714283,
+        "wape_pct": 7.335540432836736,
+        "bias": -341.85714285714283
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 4637.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-003",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 90.42857142857143,
+          "wape_pct": 8.999147000284333,
+          "bias": 90.42857142857143
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 99.64285714285714,
+          "wape_pct": 9.916121694626103,
+          "bias": -41.785714285714285
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 100.57142857142857,
+          "wape_pct": 10.008529997156668,
+          "bias": 86.0
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 128.85714285714286,
+        "wape_pct": 11.793933054393307,
+        "bias": -87.71428571428571
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 128.85714285714286,
+        "wape_pct": 11.793933054393307,
+        "bias": -87.71428571428571
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 923.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-003",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 140.85714285714286,
+          "wape_pct": 8.897310954701318,
+          "bias": 131.71428571428572
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 156.75,
+          "wape_pct": 9.901191120736328,
+          "bias": -93.25
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 177.57142857142858,
+          "wape_pct": 11.216386933766469,
+          "bias": 169.0
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 150.71428571428572,
+        "wape_pct": 8.830668787143216,
+        "bias": -123.57142857142857
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 150.71428571428572,
+        "wape_pct": 8.830668787143216,
+        "bias": -123.57142857142857
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1568.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-003",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 243.0,
+          "wape_pct": 8.900167434072834,
+          "bias": 217.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 301.5357142857143,
+          "wape_pct": 11.04410841356216,
+          "bias": -167.89285714285714
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 287.2857142857143,
+          "wape_pct": 10.522185014650482,
+          "bias": 256.7142857142857
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 253.0,
+        "wape_pct": 8.715122287289011,
+        "bias": -172.71428571428572
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 253.0,
+        "wape_pct": 8.715122287289011,
+        "bias": -172.71428571428572
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2652.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-003",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 445.14285714285717,
+          "wape_pct": 10.260125123477115,
+          "bias": 333.42857142857144
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 528.3928571428571,
+          "wape_pct": 12.17895949950609,
+          "bias": -276.60714285714283
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 507.42857142857144,
+          "wape_pct": 11.695752387224234,
+          "bias": 507.42857142857144
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 513.0,
+        "wape_pct": 11.175427130986835,
+        "bias": -251.85714285714286
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 513.0,
+        "wape_pct": 11.175427130986835,
+        "bias": -251.85714285714286
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 4020.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-004",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 135.85714285714286,
+          "wape_pct": 6.418736501079914,
+          "bias": 77.85714285714286
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 239.64285714285714,
+          "wape_pct": 11.322219222462202,
+          "bias": -228.64285714285714
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 170.28571428571428,
+          "wape_pct": 8.04535637149028,
+          "bias": 29.714285714285715
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 166.42857142857142,
+        "wape_pct": 7.602949814005091,
+        "bias": -72.42857142857143
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 166.42857142857142,
+        "wape_pct": 7.602949814005091,
+        "bias": -72.42857142857143
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1854.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-004",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 265.7142857142857,
+          "wape_pct": 8.025543665861235,
+          "bias": 87.42857142857143
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 408.60714285714283,
+          "wape_pct": 12.341430790472902,
+          "bias": -376.9642857142857
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 279.42857142857144,
+          "wape_pct": 8.439765274421816,
+          "bias": 50.285714285714285
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 202.42857142857142,
+        "wape_pct": 5.888708806050783,
+        "bias": -126.71428571428571
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 202.42857142857142,
+        "wape_pct": 5.888708806050783,
+        "bias": -126.71428571428571
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2905.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-004",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 409.7142857142857,
+          "wape_pct": 7.233656174334141,
+          "bias": 114.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 735.0357142857143,
+          "wape_pct": 12.977325464083938,
+          "bias": -660.5357142857143
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 472.42857142857144,
+          "wape_pct": 8.34089991928975,
+          "bias": 31.285714285714285
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 423.2857142857143,
+        "wape_pct": 7.280992750952206,
+        "bias": -149.57142857142858
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 423.2857142857143,
+        "wape_pct": 7.280992750952206,
+        "bias": -149.57142857142858
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 4783.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-004",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 607.4285714285714,
+          "wape_pct": 6.7872364199402995,
+          "bias": 298.85714285714283
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 1079.142857142857,
+          "wape_pct": 12.058039491116892,
+          "bias": -995.2857142857143
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 708.2857142857143,
+          "wape_pct": 7.914185834916276,
+          "bias": 82.28571428571429
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 596.0,
+        "wape_pct": 6.478965104902707,
+        "bias": -249.42857142857142
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 596.0,
+        "wape_pct": 6.478965104902707,
+        "bias": -249.42857142857142
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 7676.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-005",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "median_recent_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 71.71428571428571,
+          "wape_pct": 13.983286908077993,
+          "bias": 21.714285714285715
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 69.96428571428571,
+          "wape_pct": 13.642061281337048,
+          "bias": -60.535714285714285
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 50.714285714285715,
+          "wape_pct": 9.88857938718663,
+          "bias": 29.857142857142858
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 56.857142857142854,
+        "wape_pct": 11.000552791597567,
+        "bias": 21.428571428571427
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 47.42857142857143,
+        "wape_pct": 9.176340519624102,
+        "bias": -4.0
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 528.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-005",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 65.28571428571429,
+          "wape_pct": 8.173850831693793,
+          "bias": 18.142857142857142
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 107.39285714285714,
+          "wape_pct": 13.445716329815777,
+          "bias": -93.96428571428571
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 74.28571428571429,
+          "wape_pct": 9.30066177785727,
+          "bias": 31.142857142857142
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 57.857142857142854,
+        "wape_pct": 7.178305565402339,
+        "bias": -7.285714285714286
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 57.857142857142854,
+        "wape_pct": 7.178305565402339,
+        "bias": -7.285714285714286
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 741.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-005",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 107.14285714285714,
+          "wape_pct": 7.884777123633305,
+          "bias": 42.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 178.46428571428572,
+          "wape_pct": 13.133410428931874,
+          "bias": -149.89285714285714
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 125.28571428571429,
+          "wape_pct": 9.219932716568545,
+          "bias": 2.4285714285714284
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 85.0,
+        "wape_pct": 6.048592050421877,
+        "bias": -46.42857142857143
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 85.0,
+        "wape_pct": 6.048592050421877,
+        "bias": -46.42857142857143
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1227.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-005",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 163.0,
+          "wape_pct": 7.651555793991416,
+          "bias": 86.71428571428571
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 272.0,
+          "wape_pct": 12.768240343347639,
+          "bias": -217.92857142857142
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 205.57142857142858,
+          "wape_pct": 9.64994635193133,
+          "bias": 92.14285714285714
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 155.0,
+        "wape_pct": 7.1077628562070085,
+        "bias": -50.42857142857143
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 155.0,
+        "wape_pct": 7.1077628562070085,
+        "bias": -50.42857142857143
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1946.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-006",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 84.85714285714286,
+          "wape_pct": 5.706600057642425,
+          "bias": 19.142857142857142
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 201.92857142857142,
+          "wape_pct": 13.579594581612067,
+          "bias": -189.71428571428572
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 117.0,
+          "wape_pct": 7.868190988567586,
+          "bias": 62.714285714285715
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 70.0,
+        "wape_pct": 4.554326610279766,
+        "bias": -50.0
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 70.0,
+        "wape_pct": 4.554326610279766,
+        "bias": -50.0
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1477.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-006",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 141.0,
+          "wape_pct": 6.071604330708662,
+          "bias": 13.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 323.89285714285717,
+          "wape_pct": 13.947157972440946,
+          "bias": -313.67857142857144
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 160.14285714285714,
+          "wape_pct": 6.895915354330709,
+          "bias": 61.57142857142857
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 149.14285714285714,
+        "wape_pct": 6.112412177985949,
+        "bias": -117.71428571428571
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 149.14285714285714,
+        "wape_pct": 6.112412177985949,
+        "bias": -117.71428571428571
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2259.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-006",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "median_recent_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 249.57142857142858,
+          "wape_pct": 6.284850883188834,
+          "bias": 35.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 554.5357142857143,
+          "wape_pct": 13.964636471561679,
+          "bias": -549.75
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 248.57142857142858,
+          "wape_pct": 6.259668309529805,
+          "bias": 109.71428571428571
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 383.42857142857144,
+        "wape_pct": 9.170738374278198,
+        "bias": 49.142857142857146
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 302.85714285714283,
+        "wape_pct": 7.243653261352375,
+        "bias": -210.0
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 4379.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-006",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 355.57142857142856,
+          "wape_pct": 5.68018439489719,
+          "bias": 100.14285714285714
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 818.3928571428571,
+          "wape_pct": 13.073666674273717,
+          "bias": -818.3928571428571
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 392.14285714285717,
+          "wape_pct": 6.2644058513430245,
+          "bias": 209.28571428571428
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 356.42857142857144,
+        "wape_pct": 5.4556984168634655,
+        "bias": -273.2857142857143
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 356.42857142857144,
+        "wape_pct": 5.4556984168634655,
+        "bias": -273.2857142857143
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 6188.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-007",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 72.85714285714286,
+          "wape_pct": 6.1773255813953485,
+          "bias": 26.857142857142858
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 152.46428571428572,
+          "wape_pct": 12.926962209302326,
+          "bias": -133.39285714285714
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 97.57142857142857,
+          "wape_pct": 8.272771317829458,
+          "bias": 83.28571428571429
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 59.714285714285715,
+        "wape_pct": 4.831252889505317,
+        "bias": -56.57142857142857
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 59.714285714285715,
+        "wape_pct": 4.831252889505317,
+        "bias": -56.57142857142857
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1292.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-007",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 147.0,
+          "wape_pct": 7.903832859666641,
+          "bias": 7.571428571428571
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 235.03571428571428,
+          "wape_pct": 12.637299331745911,
+          "bias": -220.25
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 168.0,
+          "wape_pct": 9.032951839619018,
+          "bias": 122.85714285714286
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 102.28571428571429,
+        "wape_pct": 5.369328833895763,
+        "bias": -45.142857142857146
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 102.28571428571429,
+        "wape_pct": 5.369328833895763,
+        "bias": -45.142857142857146
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1951.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-007",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 219.0,
+          "wape_pct": 6.830028959679216,
+          "bias": -10.142857142857142
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 440.35714285714283,
+          "wape_pct": 13.73357095121408,
+          "bias": -415.0
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 340.57142857142856,
+          "wape_pct": 10.621519269325017,
+          "bias": 169.71428571428572
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 209.28571428571428,
+        "wape_pct": 6.405771753388718,
+        "bias": -60.714285714285715
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 209.28571428571428,
+        "wape_pct": 6.405771753388718,
+        "bias": -60.714285714285715
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 3215.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-007",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 261.85714285714283,
+          "wape_pct": 5.205316067473164,
+          "bias": 85.0
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 640.6071428571429,
+          "wape_pct": 12.73428181973079,
+          "bias": -603.9642857142857
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 483.0,
+          "wape_pct": 9.601294939512693,
+          "bias": 363.2857142857143
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 296.42857142857144,
+        "wape_pct": 5.66676680230494,
+        "bias": -200.42857142857142
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 296.42857142857144,
+        "wape_pct": 5.66676680230494,
+        "bias": -200.42857142857142
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 5243.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-008",
+      "transport_mode": "LUMINA_BIKE_AND_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 106.28571428571429,
+          "wape_pct": 10.712742980561556,
+          "bias": 50.57142857142857
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 114.71428571428571,
+          "wape_pct": 11.56227501799856,
+          "bias": -69.78571428571429
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 107.0,
+          "wape_pct": 10.784737221022318,
+          "bias": 82.42857142857143
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 100.14285714285714,
+        "wape_pct": 9.76051239209134,
+        "bias": -33.857142857142854
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 100.14285714285714,
+        "wape_pct": 9.76051239209134,
+        "bias": -33.857142857142854
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 919.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-008",
+      "transport_mode": "LUMINA_BUS_RAPID",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "median_recent_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 173.28571428571428,
+          "wape_pct": 11.213830082277894,
+          "bias": 101.85714285714286
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 165.64285714285714,
+          "wape_pct": 10.719238236109826,
+          "bias": -101.78571428571429
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 152.57142857142858,
+          "wape_pct": 9.873347508551355,
+          "bias": 128.85714285714286
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 174.57142857142858,
+        "wape_pct": 11.129326047358834,
+        "bias": 18.857142857142858
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 127.85714285714286,
+        "wape_pct": 8.151183970856103,
+        "bias": -23.285714285714285
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 1562.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-008",
+      "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 255.57142857142858,
+          "wape_pct": 9.75357103914513,
+          "bias": 162.14285714285714
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 269.57142857142856,
+          "wape_pct": 10.287863918874713,
+          "bias": -137.85714285714286
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 275.42857142857144,
+          "wape_pct": 10.511394613455458,
+          "bias": 155.71428571428572
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 218.28571428571428,
+        "wape_pct": 8.070990914853159,
+        "bias": -84.28571428571429
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 218.28571428571428,
+        "wape_pct": 8.070990914853159,
+        "bias": -84.28571428571429
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 2441.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    },
+    {
+      "zone_id": "ZDL-008",
+      "transport_mode": "LUMINA_MULTIMODAL_OART",
+      "status": "historical_evaluation_only",
+      "observed_days": 59,
+      "first_observation": "2026-01-01",
+      "last_observation": "2026-02-28",
+      "data_age_days": 266,
+      "training_end": "2026-02-14",
+      "validation_start": "2026-02-15",
+      "validation_end": "2026-02-21",
+      "test_start": "2026-02-22",
+      "test_end": "2026-02-28",
+      "selected_model": "seasonal_naive_7",
+      "validation_metrics": {
+        "seasonal_naive_7": {
+          "n": 7,
+          "mae": 353.57142857142856,
+          "wape_pct": 8.487072217269048,
+          "bias": 218.71428571428572
+        },
+        "same_weekday_28": {
+          "n": 7,
+          "mae": 450.92857142857144,
+          "wape_pct": 10.82401755709485,
+          "bias": -263.2142857142857
+        },
+        "median_recent_7": {
+          "n": 7,
+          "mae": 451.85714285714283,
+          "wape_pct": 10.846306837665455,
+          "bias": 281.0
+        }
+      },
+      "test_metrics": {
+        "n": 7,
+        "mae": 280.2857142857143,
+        "wape_pct": 6.639144558743909,
+        "bias": -55.714285714285715
+      },
+      "seasonal_baseline_test_metrics": {
+        "n": 7,
+        "mae": 280.2857142857143,
+        "wape_pct": 6.639144558743909,
+        "bias": -55.714285714285715
+      },
+      "forecast_date": "2026-03-01",
+      "forecast_trips": 3753.0,
+      "operational_forecast_for_tomorrow": null,
+      "resource_assignment": null,
+      "resource_reason": "No hay inventario operativo de flota, turnos y conductores",
+      "missing_days_assumed_zero": false,
+      "method": "Selección en validación de 7 días; evaluación separada de 7 días con origen rodante"
+    }
+  ],
+  "streaming": {
+    "mode": "historical_event_time_replay",
+    "input_events": 11,
+    "outcomes": {
+      "accepted": 11
+    },
+    "redelivery_outcomes": {
+      "duplicate": 11
+    },
+    "durable_counts": {
+      "events": 11,
+      "deadletter": 0,
+      "latest": 11
+    },
+    "idempotency": "passed",
+    "recovery": "passed",
+    "integrity": "ok",
+    "original_timestamps_preserved": true,
+    "latency_ms_p95": 28.18729999125935,
+    "measurement_scope": "Procesamiento local de eventos históricos; no latencia de Pub/Sub o Dataflow"
+  },
+  "maintenance": [
+    {
+      "node_id": "NODE-ZDL-001-139",
+      "station_id": "OART-ST-01",
+      "zone_id": "ZDL-001",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93606043999998,
+      "last_observation": "2026-11-11T03:15:32.689876+00:00",
+      "latest_vibration_mms": 6.4,
+      "latest_temperature_c": 63.22,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-001-164",
+      "station_id": "OART-ST-01",
+      "zone_id": "ZDL-001",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.9362787722222,
+      "last_observation": "2026-11-11T03:15:31.903880+00:00",
+      "latest_vibration_mms": 2.16,
+      "latest_temperature_c": 62.18,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-002-539",
+      "station_id": "OART-ST-04",
+      "zone_id": "ZDL-002",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93508949888889,
+      "last_observation": "2026-11-11T03:15:36.185264+00:00",
+      "latest_vibration_mms": 12.61,
+      "latest_temperature_c": 100.14,
+      "recorded_alert": true,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-002-639",
+      "station_id": "OART-ST-04",
+      "zone_id": "ZDL-002",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93639008138888,
+      "last_observation": "2026-11-11T03:15:31.503167+00:00",
+      "latest_vibration_mms": 3.42,
+      "latest_temperature_c": 31.09,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-003-477",
+      "station_id": "OART-ST-09",
+      "zone_id": "ZDL-003",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93663276333334,
+      "last_observation": "2026-11-11T03:15:30.629512+00:00",
+      "latest_vibration_mms": 4.63,
+      "latest_temperature_c": 67.41,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-003-866",
+      "station_id": "OART-ST-09",
+      "zone_id": "ZDL-003",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93562831999998,
+      "last_observation": "2026-11-11T03:15:34.245508+00:00",
+      "latest_vibration_mms": 10.08,
+      "latest_temperature_c": 94.9,
+      "recorded_alert": true,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-004-480",
+      "station_id": "OART-ST-15",
+      "zone_id": "ZDL-004",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93476849055554,
+      "last_observation": "2026-11-11T03:15:37.340894+00:00",
+      "latest_vibration_mms": 1.75,
+      "latest_temperature_c": 24.23,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-008-253",
+      "station_id": "OART-ST-40",
+      "zone_id": "ZDL-008",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93530484527776,
+      "last_observation": "2026-11-11T03:15:35.410017+00:00",
+      "latest_vibration_mms": 8.89,
+      "latest_temperature_c": 90.94,
+      "recorded_alert": true,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-008-310",
+      "station_id": "OART-ST-40",
+      "zone_id": "ZDL-008",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93595233444444,
+      "last_observation": "2026-11-11T03:15:33.079056+00:00",
+      "latest_vibration_mms": 2.81,
+      "latest_temperature_c": 26.0,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-008-504",
+      "station_id": "OART-ST-40",
+      "zone_id": "ZDL-008",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93367664444443,
+      "last_observation": "2026-11-11T03:15:41.271540+00:00",
+      "latest_vibration_mms": 10.11,
+      "latest_temperature_c": 103.56,
+      "recorded_alert": true,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    },
+    {
+      "node_id": "NODE-ZDL-008-666",
+      "station_id": "OART-ST-40",
+      "zone_id": "ZDL-008",
+      "observations": 1,
+      "span_hours": 0.0,
+      "age_hours": 242.93455526833333,
+      "last_observation": "2026-11-11T03:15:38.108494+00:00",
+      "latest_vibration_mms": 4.64,
+      "latest_temperature_c": 59.11,
+      "recorded_alert": false,
+      "status": "stale_sensor",
+      "slopes_per_hour": {},
+      "failure_probability": null,
+      "failure_model_status": "requires_observed_failure_labels_and_temporal_validation",
+      "engineering_approved_limits": null,
+      "action": "Revisar frescura y disponibilidad del sensor"
+    }
+  ],
+  "portable_join": {
+    "status": "passed",
+    "engine": "SQLite",
+    "input_records": 960,
+    "output_records": 960,
+    "census_matches": 960,
+    "traffic_matches": 0,
+    "iot_matches": 0,
+    "scope": "Registros existentes exportados; no prueba de escala metropolitana",
+    "integrity_check": "ok"
+  },
+  "source_temporal_profiles": {
+    "trips": {
+      "start": "2026-01-01",
+      "end": "2026-02-28"
+    },
+    "traffic": {
+      "start": "2026-11-10",
+      "end": "2026-11-10"
+    },
+    "iot": {
+      "start": "2026-11-11T03:15:30.629512+00:00",
+      "end": "2026-11-11T03:15:41.271540+00:00"
+    }
+  },
+  "coverage_interpretation": "Los viajes son de enero/febrero de 2026; tráfico e IoT son de noviembre. No se atribuyen esas mediciones a viajes de otro período.",
+  "territorial_context": [
+    {
+      "zone_id": "ZDL-008",
+      "zone_name": "Mirador Turístico y Globos Aerostáticos",
+      "county_name": "Condado Mirador Sur",
+      "population_in_source": 1060000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 30.984444444444446,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 4,
+      "iot_last_observation": "2026-11-11T03:15:41.271540+00:00",
+      "last_recorded_alert": true,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-005",
+      "zone_name": "Puerto Multimodal y Ferry Bahía",
+      "county_name": "Condado Bahía Oeste",
+      "population_in_source": 1050000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 31.417460317460318,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 0,
+      "iot_last_observation": null,
+      "last_recorded_alert": null,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-002",
+      "zone_name": "Distrito Tecnológico Norte",
+      "county_name": "Condado Silicon Norte",
+      "population_in_source": 1280000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 31.656666666666666,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 2,
+      "iot_last_observation": "2026-11-11T03:15:36.185264+00:00",
+      "last_recorded_alert": true,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-006",
+      "zone_name": "Parque Industrial y Logístico",
+      "county_name": "Condado Ribera Industrial",
+      "population_in_source": 1190000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 30.61857142857143,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 0,
+      "iot_last_observation": null,
+      "last_recorded_alert": null,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-003",
+      "zone_name": "Suburbio Residencial Colinas Verdes",
+      "county_name": "Condado Altos del Este",
+      "population_in_source": 980000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 31.21,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 2,
+      "iot_last_observation": "2026-11-11T03:15:34.245508+00:00",
+      "last_recorded_alert": true,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-007",
+      "zone_name": "Residencial Lago Sereno (Retiro)",
+      "county_name": "Condado Comarca del Lago",
+      "population_in_source": 920000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 30.595714285714287,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 0,
+      "iot_last_observation": null,
+      "last_recorded_alert": null,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-004",
+      "zone_name": "Corredor Universitario Sur",
+      "county_name": "Condado Valle Joven",
+      "population_in_source": 1320000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 31.365396825396825,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 1,
+      "iot_last_observation": "2026-11-11T03:15:37.340894+00:00",
+      "last_recorded_alert": false,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    },
+    {
+      "zone_id": "ZDL-001",
+      "zone_name": "Centro Financiero Metropolitano",
+      "county_name": "Condado Central (Core)",
+      "population_in_source": 1450000,
+      "exported_trip_examples": 120,
+      "traffic_observations": 63,
+      "traffic_mean_speed_kmh": 31.604920634920635,
+      "traffic_observed_date": "2026-11-10",
+      "iot_observations": 2,
+      "iot_last_observation": "2026-11-11T03:15:32.689876+00:00",
+      "last_recorded_alert": false,
+      "context_scope": "Referencias por zona con fechas distintas; no condiciones simultáneas del viaje"
+    }
+  ],
+  "privacy_verification": {
+    "rider_identifiers_in_portable_export": false,
+    "credentials_in_report": false,
+    "scope": "Verificación de campos del export portable; no certificación legal de anonimización"
+  },
+  "realtime_readiness": {
+    "status": "requires_operational_sources",
+    "missing": [
+      "active_requests",
+      "fleet_and_driver_availability",
+      "live_gps_traffic",
+      "oart_schedules",
+      "accessibility_preferences",
+      "operational_events"
+    ],
+    "historical_query_available": true,
+    "dispatch_claimed": false
+  },
+  "unavailable_metrics": {
+    "waiting_time": "No request_timestamp y pickup asociado",
+    "fleet_utilization": "No capacidad y tiempo disponible de flota",
+    "operating_cost_per_km": "No costos de operación de flota",
+    "failure_probability": "No etiquetas observadas de fallas"
+  },
+  "source_immutability_verification": "passed",
+  "security": {
+    "public_exports_contain_rider_identifiers": false,
+    "historical_datasets_are_write_targets": false,
+    "open_components": [
+      "Python",
+      "SQLite",
+      "React",
+      "Node.js",
+      "JSON",
+      "SQL"
+    ],
+    "cloud_specific_components": [
+      "BigQuery execution and metadata client"
+    ],
+    "iam_cmek_deployment_claimed": false
+  },
+  "finished_at": "2026-11-21T06:11:46.683062+00:00",
+  "elapsed_seconds": 44.242,
+  "ingestion": {
+    "status": "passed",
+    "run_id": "20261121_061019_63e802",
+    "target_dataset": "lumina_ingesta_20261121_061019_63e802",
+    "tables": [
+      {
+        "source": "bigdata-herles-pinedo.lumina_bronze_raw.tlc_trips_raw",
+        "destination": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.tlc_trips_raw",
+        "source_rows": 5000000,
+        "source_modified_at": "2026-11-11T04:25:11.288000+00:00",
+        "uri": "gs://bigdata-herles-pinedo-lumina-datalake/lumina-cierre/20261121_061019_63e802/tlc_trips_raw/part-*.parquet",
+        "status": "passed",
+        "extract_job_id": "61be094e-a3bc-4e53-80ed-bcff70f69332",
+        "file_counts": [
+          84
+        ],
+        "load_job_id": "2a38c22c-9a5d-43d2-a05a-3ae1d67cf1dc",
+        "loaded_rows": 5000000,
+        "checksum_job_id": "2ec5b45f-0a0b-46b1-8d3f-148094164a9d",
+        "checksums": [
+          {
+            "origin": "source",
+            "total_rows": 5000000,
+            "fingerprint_xor": -3020810471918335686
+          },
+          {
+            "origin": "loaded",
+            "total_rows": 5000000,
+            "fingerprint_xor": -3020810471918335686
+          }
+        ]
+      },
+      {
+        "source": "bigdata-herles-pinedo.lumina_bronze_raw.uber_movement_speeds_raw",
+        "destination": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.uber_movement_speeds_raw",
+        "source_rows": 504,
+        "source_modified_at": "2026-11-11T03:15:06.560000+00:00",
+        "uri": "gs://bigdata-herles-pinedo-lumina-datalake/lumina-cierre/20261121_061019_63e802/uber_movement_speeds_raw/part-*.parquet",
+        "status": "passed",
+        "extract_job_id": "119043b8-6b43-4ebb-b872-9cee022ef9c1",
+        "file_counts": [
+          2
+        ],
+        "load_job_id": "9c733e47-f808-40ec-bc12-0757de46b036",
+        "loaded_rows": 504,
+        "checksum_job_id": "6a9c8356-3dad-4af1-b61f-1aba272df0d7",
+        "checksums": [
+          {
+            "origin": "source",
+            "total_rows": 504,
+            "fingerprint_xor": 249496263888302804
+          },
+          {
+            "origin": "loaded",
+            "total_rows": 504,
+            "fingerprint_xor": 249496263888302804
+          }
+        ]
+      },
+      {
+        "source": "bigdata-herles-pinedo.lumina_bronze_raw.iot_aot_telemetry_raw",
+        "destination": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.iot_aot_telemetry_raw",
+        "source_rows": 11,
+        "source_modified_at": "2026-11-11T04:17:15.036000+00:00",
+        "uri": "gs://bigdata-herles-pinedo-lumina-datalake/lumina-cierre/20261121_061019_63e802/iot_aot_telemetry_raw/part-*.parquet",
+        "status": "passed",
+        "extract_job_id": "666a1082-381b-40d6-9147-ce800a4aa282",
+        "file_counts": [
+          1
+        ],
+        "load_job_id": "3cf5bda3-b0b4-4127-bdeb-b1b480574c4f",
+        "loaded_rows": 11,
+        "checksum_job_id": "bd1b8b72-51a4-44b4-a74e-1c0cce6ca200",
+        "checksums": [
+          {
+            "origin": "source",
+            "total_rows": 11,
+            "fingerprint_xor": 9210091281611359832
+          },
+          {
+            "origin": "loaded",
+            "total_rows": 11,
+            "fingerprint_xor": 9210091281611359832
+          }
+        ]
+      },
+      {
+        "source": "bigdata-herles-pinedo.lumina_bronze_raw.censo_demografia_raw",
+        "destination": "bigdata-herles-pinedo.lumina_ingesta_20261121_061019_63e802.censo_demografia_raw",
+        "source_rows": 8,
+        "source_modified_at": "2026-11-11T03:14:55.403000+00:00",
+        "uri": "gs://bigdata-herles-pinedo-lumina-datalake/lumina-cierre/20261121_061019_63e802/censo_demografia_raw/part-*.parquet",
+        "status": "passed",
+        "extract_job_id": "826a6206-7046-47f2-b8d2-e7bb549d77c8",
+        "file_counts": [
+          1
+        ],
+        "load_job_id": "8898cfe7-92b1-4a7b-b7ef-56d11d71f7a8",
+        "loaded_rows": 8,
+        "checksum_job_id": "0b7af73c-4e7e-4028-9745-9620a808de7f",
+        "checksums": [
+          {
+            "origin": "source",
+            "total_rows": 8,
+            "fingerprint_xor": 8122750883699174093
+          },
+          {
+            "origin": "loaded",
+            "total_rows": 8,
+            "fingerprint_xor": 8122750883699174093
+          }
+        ]
+      }
+    ],
+    "format": "PARQUET",
+    "scope": "Reingesta verificable de los datos existentes; no descarga externa nueva"
+  }
+}

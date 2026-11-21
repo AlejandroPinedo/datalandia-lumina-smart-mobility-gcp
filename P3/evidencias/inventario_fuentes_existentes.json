@@ -1,0 +1,1292 @@
+{
+  "project": "bigdata-herles-pinedo",
+  "checked_at": "2026-11-21T05:22:59.845091+00:00",
+  "operation": "metadata_read_only",
+  "datasets": [
+    {
+      "dataset_id": "lumina_audit_dq",
+      "location": "US",
+      "description": "Lumina Capa de Auditoria: Reglas Dataplex Data Quality y hallazgos Sensitive Data Protection (DLP)",
+      "tables": [
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_audit_dq.auditoria_calidad_knowledge_catalog",
+          "table_type": "TABLE",
+          "num_rows": 3,
+          "num_bytes": 423,
+          "description": null,
+          "modified": "2026-11-11T04:27:00.640000+00:00",
+          "schema": [
+            {
+              "name": "dimension_calidad",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "tabla_evaluada",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "registros_evaluados",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "registros_validos",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_cumplimiento",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sla_minimo_pct",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "estado_gobernanza",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_auditoria",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "lumina_bronze_raw",
+      "location": "US",
+      "description": "Lumina Capa Bronze: Ingesta multifuente cruda (NYC TLC, Uber Movement, Array of Things IoT, Censo INE)",
+      "tables": [
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_bronze_raw.censo_demografia_raw",
+          "table_type": "TABLE",
+          "num_rows": 8,
+          "num_bytes": 1550,
+          "description": "Fuente F4 (Batch Estático): Censo de Poblacion y Vivienda (INE) mapeado a los 8 condados de DataLandia",
+          "modified": "2026-11-11T03:14:55.403000+00:00",
+          "schema": [
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "zone_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "county_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "nearest_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "poblacion_residente",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "viviendas_totales",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_adulto_mayor_65",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_jovenes_18_34",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ingreso_medio_hogar_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_hogares_sin_auto",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_menos_8km_estacion_oart",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "indice_prioridad_primera_milla",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lat",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lon",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_ingesta_bq",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_bronze_raw.ingesta_deadletter_raw",
+          "table_type": "TABLE",
+          "num_rows": 2,
+          "num_bytes": 680,
+          "description": "Dead-Letter Queue (DLQ) para garantizar cero perdida de datos ante fallos de sensores OART",
+          "modified": "2026-11-11T04:17:14.272000+00:00",
+          "schema": [
+            {
+              "name": "payload_crudo",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origen_fuente",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "motivo_error",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_error",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_bronze_raw.iot_aot_telemetry_raw",
+          "table_type": "TABLE",
+          "num_rows": 11,
+          "num_bytes": 1860,
+          "description": "Fuente F3 (Streaming): Telemetria de sensores urbanos Array of Things y red ferroviaria OART",
+          "modified": "2026-11-11T04:17:15.036000+00:00",
+          "schema": [
+            {
+              "name": "event_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "timestamp_evento",
+              "type": "TIMESTAMP",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "node_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "asset_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lat",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lon",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "vibration_mms",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "temperature_c",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sound_db",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pm25_ugm3",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "passenger_load_pct",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sensor_status",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "requiere_mantenimiento_pdm",
+              "type": "BOOLEAN",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_ingesta_bq",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_bronze_raw.tlc_trips_raw",
+          "table_type": "TABLE",
+          "num_rows": 5000000,
+          "num_bytes": 1494895812,
+          "description": "NYC TLC Trip Record Data adaptado a la red multimodal de DataLandia",
+          "modified": "2026-11-11T04:25:11.288000+00:00",
+          "schema": [
+            {
+              "name": "trip_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pickup_datetime",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dropoff_datetime",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "hod",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pulocation_id",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dolocation_id",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dest_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "agency_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "transport_mode",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "connected_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "passenger_count",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "trip_distance_km",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "duration_minutes",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "effective_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "base_fare_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "total_fare_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "cost_per_km_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "payment_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "rider_id_hash",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "payment_token_masked",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_ingesta_bq",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_bronze_raw.uber_movement_speeds_raw",
+          "table_type": "TABLE",
+          "num_rows": 504,
+          "num_bytes": 68880,
+          "description": "Fuente F2 (Batch): Tiempos de viaje y velocidades urbanas basados en SF Caltrain / Uber Movement",
+          "modified": "2026-11-11T03:15:06.560000+00:00",
+          "schema": [
+            {
+              "name": "movement_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "travel_date",
+              "type": "DATE",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "hod",
+              "type": "INTEGER",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "time_period",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sourceid",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dstid",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "dest_zone_id",
+              "type": "STRING",
+              "mode": "REQUIRED"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "distance_corridor_km",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "mean_travel_time_sec",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "stddev_travel_time_sec",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "avg_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "is_severe_congestion",
+              "type": "BOOLEAN",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_ingesta_bq",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "lumina_gold_governed",
+      "location": "US",
+      "description": "Lumina Capa Gold: Modelo Estrella para las 4 Verticales (Tiempo Real, Planes Diarios, Informes OLAP, PdM)",
+      "tables": [
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_gold_governed.dim_zonas_condados_gold",
+          "table_type": "TABLE",
+          "num_rows": 8,
+          "num_bytes": 1870,
+          "description": null,
+          "modified": "2026-11-11T04:27:03.090000+00:00",
+          "schema": [
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "nearest_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "poblacion_residente",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "viviendas_totales",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_adulto_mayor_65",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_jovenes_18_34",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ingreso_medio_hogar_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_hogares_sin_auto",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_menos_8km_estacion_oart",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "indice_prioridad_primera_milla",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lat",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lon",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_centroid_geo",
+              "type": "GEOGRAPHY",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_procesamiento_silver",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold",
+          "table_type": "TABLE",
+          "num_rows": 4998926,
+          "num_bytes": 1931902533,
+          "description": null,
+          "modified": "2026-11-11T04:27:08.500000+00:00",
+          "schema": [
+            {
+              "name": "trip_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "travel_date",
+              "type": "DATE",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pickup_datetime",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "hod",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dest_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "agency_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "transport_mode",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "connected_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "passenger_count",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "trip_distance_km",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lumina_duration_min",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lumina_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lumina_total_fare_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lumina_cost_per_km_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "street_traffic_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "is_street_congested_24kmh",
+              "type": "BOOLEAN",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "car_benchmark_duration_min",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "car_benchmark_total_cost_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "car_benchmark_cost_per_km_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "savings_usd_vs_car",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "time_saved_min_vs_car",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_adulto_mayor_65",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_jovenes_18_34",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_menos_8km_estacion_oart",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "indice_prioridad_primera_milla",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "station_oart_load_pct",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "station_pdm_alerts",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "rider_id_dlp_sha256",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_actualizacion_gold",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_gold_governed.kpi_ejecutivo_condados_gold",
+          "table_type": "TABLE",
+          "num_rows": 8,
+          "num_bytes": 2084,
+          "description": null,
+          "modified": "2026-11-11T04:27:10.855000+00:00",
+          "schema": [
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "nearest_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "poblacion_residente",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_adulto_mayor_65",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_jovenes_18_34",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_menos_8km_estacion_oart",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "indice_prioridad_primera_milla",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "total_viajes_procesados",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "costo_km_lumina_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "costo_km_auto_particular_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "velocidad_media_lumina_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "velocidad_calle_uber_24kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "minutos_ahorrados_por_viaje",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ocupacion_oart_pct",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "alertas_mantenimiento_pdm",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "plan_diario_recursos_recomendado",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "lumina_silver_clean",
+      "location": "US",
+      "description": "Lumina Capa Silver: Datos limpios, deduplicados y homologados por zone_id, county_id y station_id OART",
+      "tables": [
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_silver_clean.dim_geografia_censo_silver",
+          "table_type": "TABLE",
+          "num_rows": 8,
+          "num_bytes": 1870,
+          "description": null,
+          "modified": "2026-11-11T04:26:45.040000+00:00",
+          "schema": [
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_name",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "nearest_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "poblacion_residente",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "viviendas_totales",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_adulto_mayor_65",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_jovenes_18_34",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ingreso_medio_hogar_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_hogares_sin_auto",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pct_menos_8km_estacion_oart",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "indice_prioridad_primera_milla",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lat",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "center_lon",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_centroid_geo",
+              "type": "GEOGRAPHY",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_procesamiento_silver",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_silver_clean.iot_aot_telemetry_silver",
+          "table_type": "TABLE",
+          "num_rows": 11,
+          "num_bytes": 2300,
+          "description": null,
+          "modified": "2026-11-11T04:26:57.314000+00:00",
+          "schema": [
+            {
+              "name": "event_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "timestamp_evento",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "node_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "asset_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lat",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "lon",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sensor_point_geo",
+              "type": "GEOGRAPHY",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "vibration_mms",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "temperature_c",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sound_db",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pm25_ugm3",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "passenger_load_pct",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "sensor_status",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "requiere_mantenimiento_pdm",
+              "type": "BOOLEAN",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_procesamiento_silver",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_silver_clean.tlc_trips_silver",
+          "table_type": "TABLE",
+          "num_rows": 4998926,
+          "num_bytes": 1414591914,
+          "description": null,
+          "modified": "2026-11-11T04:26:52.724000+00:00",
+          "schema": [
+            {
+              "name": "trip_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "pickup_datetime",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dropoff_datetime",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "hod",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dest_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "agency_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "transport_mode",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "connected_oart_station_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "passenger_count",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "trip_distance_km",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "duration_minutes",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "effective_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "base_fare_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "total_fare_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "cost_per_km_usd",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "payment_type",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "rider_id_dlp_sha256",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "payment_token_masked",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_procesamiento_silver",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        },
+        {
+          "table_id": "bigdata-herles-pinedo.lumina_silver_clean.uber_movement_silver",
+          "table_type": "TABLE",
+          "num_rows": 504,
+          "num_bytes": 60816,
+          "description": null,
+          "modified": "2026-11-11T04:26:47.294000+00:00",
+          "schema": [
+            {
+              "name": "movement_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "travel_date",
+              "type": "DATE",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "hod",
+              "type": "INTEGER",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "time_period",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "origin_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "dest_zone_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "county_id",
+              "type": "STRING",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "distance_corridor_km",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "mean_travel_time_sec",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "stddev_travel_time_sec",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "avg_speed_kmh",
+              "type": "FLOAT",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "is_severe_congestion_24kmh",
+              "type": "BOOLEAN",
+              "mode": "NULLABLE"
+            },
+            {
+              "name": "ts_procesamiento_silver",
+              "type": "TIMESTAMP",
+              "mode": "NULLABLE"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "scope": "Metadatos exclusivos de Lumina; sin datos de otros proyectos ni pruebas sintéticas"
+}

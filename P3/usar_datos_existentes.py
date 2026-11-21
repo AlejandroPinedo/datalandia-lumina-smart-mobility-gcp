@@ -14,6 +14,7 @@ ROOT=Path(__file__).resolve().parents[1]
 CODE=ROOT/'Avance1_P1_Lumina_Ingesta_Storage'
 sys.path.insert(0,str(CODE))
 from existing_project_data import read_existing,validate_table_id
+from exploration_data import read_exploration
 import config
 
 
@@ -23,6 +24,22 @@ def configure_credentials():
     credentials=ROOT/'.runtime/gcloud/application_default_credentials.json'
     if credentials.is_file(): os.environ.setdefault('GOOGLE_APPLICATION_CREDENTIALS',str(credentials))
     os.environ.setdefault('CLOUDSDK_CONFIG',str(ROOT/'.runtime/gcloud'))
+
+
+def save_report(output,report):
+    # Cada grupo ocupa una línea; evita cientos de miles de líneas de sangría.
+    value=dict(report)
+    exploration=dict(value.get('exploration',{}))
+    rows=exploration.pop('rows',None)
+    if rows is not None:
+        exploration['rows']='__PACKED_EXPLORATION_ROWS__'
+        value['exploration']=exploration
+    text=json.dumps(value,ensure_ascii=False,indent=2,default=str)
+    if rows is not None:
+        packed='[\n'+',\n'.join(json.dumps(row,ensure_ascii=False,separators=(',',':'),default=str)
+                                  for row in rows)+'\n]'
+        text=text.replace('"__PACKED_EXPLORATION_ROWS__"',packed)
+    output.write_text(text,encoding='utf-8')
 
 
 def verify_http(expected):
@@ -65,6 +82,11 @@ def export_existing(source):
             (evidence_dir/'esquema_fuente_existente.json').write_text(
                 json.dumps(source_info,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
             report=read_existing(client,source,bigquery.QueryJobConfig(maximum_bytes_billed=5*1024**3))
+            try:
+                report['exploration']=read_exploration(client,table,report['summary']['total_trips'],
+                    bigquery.QueryJobConfig(maximum_bytes_billed=5*1024**3))
+            except Exception as exc:
+                report['exploration']={'status':'unavailable','reason':str(exc)}
     except Exception as exc:
         diagnostic={'status':'not_completed','source':source,'error_type':type(exc).__name__,
                     'message':str(exc),'source_info':source_info,
@@ -75,11 +97,11 @@ def export_existing(source):
             json.dumps(diagnostic,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
         raise
     output=evidence_dir/'datos_existentes_latest.json'
-    output.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
+    save_report(output,report)
     os.environ['LUMINA_DATA_BACKEND']='project_export'
     os.environ['LUMINA_PROJECT_REPORT']=str(output)
     report['verification']=verify_http(json.loads(output.read_text(encoding='utf-8')))
-    output.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
+    save_report(output,report)
     return report
 
 
@@ -93,6 +115,7 @@ def main():
     print(json.dumps({'status':report['status'],'source':report['source'],'summary':report['summary'],
                       'job_id':report['job_id'],'verification':report['verification'],
                       'source_modified_by_this_process':False},ensure_ascii=False,indent=2))
+    print('Exploración: '+report.get('exploration',{}).get('status','unavailable'))
     if args.serve:
         api=importlib.import_module('08_app_exposicion_frontend_lumina')
         print(f'Abrir http://127.0.0.1:{config.FLASK_PORT}/p3')

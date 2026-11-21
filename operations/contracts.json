@@ -1,0 +1,57 @@
+{
+  "scope": "Contratos de la arquitectura Lumina; no contiene registros de demostración",
+  "source_of_truth": "Tablas existentes de Lumina. Los datasets de pruebas anteriores no son fuentes.",
+  "active_requests": {
+    "required": ["request_id", "origin", "destination", "requested_at", "passengers"],
+    "optional": ["wheelchair_required", "objective", "max_wait_min"],
+    "time": "ISO 8601 con zona horaria",
+    "identity": "No se necesitan nombres, documentos, correos ni tokens de pago para planificar",
+    "missing_behavior": "requires_sources; sin asignación inventada"
+  },
+  "fleet": {
+    "required": ["vehicle_id", "driver_id", "zone_id", "status", "observed_at", "capacity", "occupied_seats", "transport_mode"],
+    "optional": ["wheelchair_accessible"],
+    "rules": ["capacidad entera positiva", "0 <= ocupación <= capacidad", "heartbeat vigente", "una asignación por vehículo por ciclo"]
+  },
+  "drivers": {
+    "required": ["driver_id", "status", "observed_at", "shift_start", "shift_end"],
+    "rules": ["turno vigente y suficiente para completar la asignación", "una asignación por conductor por ciclo"]
+  },
+  "live_connections": {
+    "required": ["origin", "destination", "duration_min", "fare_usd", "transport_mode", "observed_at"],
+    "optional": ["wheelchair_accessible"],
+    "rules": ["mediciones finitas", "duración positiva", "tarifa no negativa", "frescura comprobada"],
+    "historical_substitution": "Los promedios históricos no se presentan como tráfico actual"
+  },
+  "oart_schedules": {
+    "required": ["station_id", "service_id", "departure_at", "arrival_at", "capacity_available", "observed_at"],
+    "missing_behavior": "No se promete una conexión ni un horario de salida"
+  },
+  "events": {
+    "required": ["kind", "origin", "destination", "starts_at", "ends_at"],
+    "implemented": ["exclusión de conexiones cerradas en el intervalo de vigencia"]
+  },
+  "telemetry": {
+    "required": ["event_id", "node_id", "zone_id", "station_id", "timestamp_evento", "vibration_mms", "temperature_c", "passenger_load_pct"],
+    "delivery": "Al menos una vez con deduplicación durable por event_id y contenido",
+    "late_events": "Se conservan; no sustituyen un estado más reciente",
+    "invalid_events": "Cuarentena identificada por digest; ACK después de persistir",
+    "historical_replay": "Conserva identificadores y timestamps originales"
+  },
+  "failure_labels": {
+    "required": ["asset_id", "failure_at", "failure_type", "confirmed_by"],
+    "rules": ["No convertir alertas de sensores en fallas confirmadas", "validación temporal antes de publicar probabilidad de falla"]
+  },
+  "business_metrics": {
+    "waiting_time": "pickup_at menos requested_at del mismo servicio",
+    "fleet_utilization": "tiempo ocupado sobre tiempo operativo disponible",
+    "operating_cost_per_km": "costos de operación observados sobre kilómetros operados",
+    "fare_per_km": "importe tarifario sobre kilómetros; no equivale al costo operativo",
+    "missing_measurement": null
+  },
+  "verification": {
+    "demonstrated_process": "OLAP: Bronze existente → Silver → calidad → Gold → API → aplicación",
+    "contract_tests": "Fixtures unitarias aisladas; no se publican como datos operativos",
+    "not_claimed": ["despacho real de vehículos", "operación metropolitana", "pagos", "probabilidades de falla sin etiquetas"]
+  }
+}

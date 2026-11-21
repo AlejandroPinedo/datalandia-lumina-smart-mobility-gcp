@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "measured_at": "2026-11-21T05:48:00.674220+00:00",
+  "scope": "Lectura HTTP local; no acredita carga metropolitana ni SLA de GCP",
+  "requests": 48,
+  "concurrency": 6,
+  "errors": 0,
+  "elapsed_seconds": 0.4412888000078965,
+  "requests_per_second": 108.77230511887245,
+  "p50_ms": 39.58270000293851,
+  "p95_ms": 148.52139999857172,
+  "p99_ms": 160.72119999444112,
+  "source_jobs": [
+    "065beb66-6272-4132-9338-57f0709fda24"
+  ],
+  "generated_business_records": 0
+}

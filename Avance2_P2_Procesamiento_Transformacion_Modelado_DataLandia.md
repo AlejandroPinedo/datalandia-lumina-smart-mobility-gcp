@@ -1,5 +1,14 @@
 # Procesamiento y modelado de DataLandia Lumina
 
+**Actualización verificada del 21/11/2026:** el pipeline de esta versión ya se ejecutó
+en BigQuery en un dataset aislado: 5.000.000 registros Bronze → 4.996.009 viajes únicos
+válidos, cuatro reglas de calidad aprobadas y publicación OLAP consumida por API/React.
+Se evaluaron 32 series con separación temporal y se comprobaron reentrega y recuperación
+de los 11 eventos existentes. El cruce temporal de tráfico/IoT tiene cobertura cero por
+fechas incompatibles; no se fuerza el resultado. Véase [implementación vigente](operations/README.md).
+Las descripciones de ejecución local y limitaciones del código anterior que siguen
+se conservan como contexto histórico, no como el estado de esta validación nueva.
+
 El pipeline cruza cuatro fuentes canónicas y construye estructuras analíticas. Esta revisión corrige
 el grano temporal, el control de calidad, la persistencia IoT y la reproducibilidad. Hay evidencia histórica
 de materialización en BigQuery; la nueva versión solo tiene validación local.

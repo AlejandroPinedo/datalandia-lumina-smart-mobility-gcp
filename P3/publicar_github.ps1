@@ -4,8 +4,10 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $env:GH_CONFIG_DIR = Join-Path $repoRoot '.runtime/gh'
 New-Item -ItemType Directory -Force $env:GH_CONFIG_DIR | Out-Null
-gh auth login --hostname github.com --git-protocol https --web
-if ($LASTEXITCODE -ne 0) { throw 'No se completó el acceso de GitHub' }
+gh auth status --hostname github.com *> $null
+if ($LASTEXITCODE -ne 0) {
+    throw 'No se pudo verificar la sesion guardada de GitHub. Revisa la conexion y el acceso de escritura al repositorio.'
+}
 $originUrl = git -C $repoRoot remote get-url origin
 if ($originUrl -ne 'https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp.git') {
     throw 'El remoto no coincide con el repositorio del proyecto; revisar antes de publicar.'

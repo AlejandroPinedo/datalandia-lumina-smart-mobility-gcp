@@ -15,6 +15,7 @@ from pathlib import Path
 import secrets
 import time
 from typing import Any, Dict, Optional
+from urllib.parse import urlsplit
 
 try:
     from flask import Flask, Response, g, jsonify, render_template, request
@@ -32,6 +33,8 @@ except ImportError:
 
 import config
 from olap_service import load_olap_report
+from passenger_service import load_passenger_report
+from operational_report_service import load_validation_report
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("lumina_smart_mobility_api")
@@ -752,6 +755,16 @@ if HAS_FLASK:
         data = load_olap_report()
         return jsonify(data), 200 if data["status"] == "ok" else 503
 
+    @app.route("/api/v1/passenger-data", methods=["GET"])
+    def passenger_data():
+        data = load_passenger_report()
+        return jsonify(data), 200 if data["status"] == "ok" else 503
+
+    @app.route("/api/v1/operations", methods=["GET"])
+    def operations_validation():
+        data=load_validation_report()
+        return jsonify(data), 503 if data['status']=='unavailable' else 200
+
     @app.route("/api/v1/health", methods=["GET"])
     def api_health() -> Response:
         return jsonify({
@@ -806,17 +819,24 @@ class StdlibLuminaHandler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path == "/p3":
+        path = urlsplit(self.path).path
+        if path in ("/p3", "/p3/"):
             content = (Path(__file__).parent / "templates" / "p3_olap.html").read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(content)))
             self.end_headers()
             self.wfile.write(content)
-        elif self.path == "/api/v1/olap-kpis":
+        elif path == "/api/v1/olap-kpis":
             data = load_olap_report()
             self._send_json(data, status=200 if data["status"] == "ok" else 503)
-        elif self.path in ("/", "/index.html"):
+        elif path == "/api/v1/passenger-data":
+            data = load_passenger_report()
+            self._send_json(data, status=200 if data["status"] == "ok" else 503)
+        elif path == "/api/v1/operations":
+            data=load_validation_report()
+            self._send_json(data,status=503 if data['status']=='unavailable' else 200)
+        elif path in ("/", "/index.html"):
             html_bytes = (Path(__file__).parent / "templates" / "p3_olap.html").read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -825,21 +845,21 @@ class StdlibLuminaHandler(BaseHTTPRequestHandler):
             self.send_header("X-Frame-Options", "DENY")
             self.end_headers()
             self.wfile.write(html_bytes)
-        elif self.path == "/api/v1/health":
+        elif path == "/api/v1/health":
             self._send_json({
                 "status": "healthy",
                 "service": "lumina-smart-mobility-bff-api",
                 "gcp_project": config.GCP_PROJECT_ID,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
-        elif self.path == "/api/v1/daily-plan":
+        elif path == "/api/v1/daily-plan":
             self._send_json(load_operational_plan("daily"))
-        elif self.path == "/api/v1/maintenance-plan":
+        elif path == "/api/v1/maintenance-plan":
             self._send_json(load_operational_plan("maintenance"))
-        elif self.path == "/api/v1/dashboard-summary":
+        elif path == "/api/v1/dashboard-summary":
             data = load_olap_report()
             self._send_json(data, status=200 if data["status"] == "ok" else 503)
-        elif self.path == "/api/v1/iot-telemetry":
+        elif path == "/api/v1/iot-telemetry":
             self._send_json({"status":"unavailable","active_nodes":[],
                 "reason":"No se publican sensores de demostración como mediciones actuales."},status=503)
         else:
@@ -847,6 +867,17 @@ class StdlibLuminaHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         if self.path == "/api/v1/route-simulator":
+            # Drenar el cuerpo antes de cerrar evita RST/WinError 10053 en Windows.
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+            except ValueError:
+                self._send_json({"status":"invalid_request"},status=400)
+                return
+            if not 0 <= length <= 1048576:
+                self._send_json({"status":"payload_too_large"},status=413)
+                return
+            if length:
+                self.rfile.read(length)
             self._send_json({"status":"disabled","reason":"P3 utiliza datos existentes, sin simulación de viajes."},status=410)
         elif self.path == "/api/v1/agent-query":
             length = int(self.headers.get("Content-Length", "0"))
