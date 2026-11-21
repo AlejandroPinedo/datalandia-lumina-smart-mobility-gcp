@@ -4,19 +4,26 @@ export function zonesFrom(routes) {
   const zones = new Map();
   for (const route of routes) {
     if (route.origin_zone_id != null) {
-      const existing = zones.get(route.origin_zone_id) || { id: route.origin_zone_id, names: new Set(), counties: new Set() };
-      if (route.origin_zone_name) existing.names.add(route.origin_zone_name);
+      const existing = zones.get(route.origin_zone_id) || { id: route.origin_zone_id, nameWeights: new Map(), counties: new Set() };
+      if (route.origin_zone_name) {
+        existing.nameWeights.set(route.origin_zone_name, (existing.nameWeights.get(route.origin_zone_name) || 0) + Number(route.total_trips || 1));
+      }
       if (route.county_name) existing.counties.add(route.county_name);
       zones.set(existing.id, existing);
     }
   }
   for (const route of routes) if (route.dest_zone_id != null && !zones.has(route.dest_zone_id)) {
-    zones.set(route.dest_zone_id, { id: route.dest_zone_id, names: new Set(), counties: new Set() });
+    zones.set(route.dest_zone_id, { id: route.dest_zone_id, nameWeights: new Map(), counties: new Set() });
   }
-  return [...zones.values()].map(zone => ({ id: zone.id,
-    name: zone.names.size === 1 ? [...zone.names][0] : zone.id,
-    counties: [...zone.counties], origin: routes.some(r => r.origin_zone_id === zone.id),
-    destination: routes.some(r => r.dest_zone_id === zone.id) })).sort((a, b) => a.name.localeCompare(b.name));
+  return [...zones.values()].map(zone => {
+    const bestName = [...zone.nameWeights.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    return {
+      id: zone.id,
+      name: bestName || zone.id,
+      counties: [...zone.counties], origin: routes.some(r => r.origin_zone_id === zone.id),
+      destination: routes.some(r => r.dest_zone_id === zone.id),
+    };
+  }).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export function alternativesFor(routes, origin, destination) {

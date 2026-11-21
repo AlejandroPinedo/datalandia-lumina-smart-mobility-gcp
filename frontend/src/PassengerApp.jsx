@@ -27,10 +27,98 @@ function saveCsv(records, report) {
   document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function RouteScheme({ origin, destination, stations = [], zoneName }) {
-  return <section className="p-scheme"><div className="p-section-heading"><div><h2>Tu trayecto, de un vistazo</h2><p>Conexión registrada entre las zonas seleccionadas</p></div><span className="p-label">Esquema</span></div>
-    <div className="p-route-line"><div className="p-endpoint"><span className="p-point origin"><MapPin size={19} /></span><small>ORIGEN</small><strong>{zoneName(origin)}</strong><span>{origin}</span></div><div className="p-connection"><span /><Route size={24} strokeWidth={1.5} /><span /></div><div className="p-endpoint"><span className="p-point destination"><MapPin size={19} /></span><small>DESTINO</small><strong>{zoneName(destination)}</strong><span>{destination}</span></div></div>
-    {stations.length > 0 && <div className="p-station-associations"><span><TramFront size={16} />Conexiones OART vinculadas</span><div>{stations.map(station => <span className="p-station" key={station}>{station}</span>)}</div><p>La fuente vincula estas estaciones al trayecto; no especifica una secuencia de paradas.</p></div>}
+const ZONE_PRIMARY_OART = {
+  'ZDL-001': 'OART-ST-01', 'ZDL-002': 'OART-ST-02', 'ZDL-003': 'OART-ST-03', 'ZDL-004': 'OART-ST-04',
+  'ZDL-005': 'OART-ST-05', 'ZDL-006': 'OART-ST-06', 'ZDL-007': 'OART-ST-09', 'ZDL-008': 'OART-ST-10',
+  'ZDL-009': 'OART-ST-11', 'ZDL-010': 'OART-ST-15', 'ZDL-011': 'OART-ST-16', 'ZDL-012': 'OART-ST-17',
+  'ZDL-013': 'OART-ST-21', 'ZDL-014': 'OART-ST-22', 'ZDL-015': 'OART-ST-23', 'ZDL-016': 'OART-ST-28',
+  'ZDL-017': 'OART-ST-29', 'ZDL-018': 'OART-ST-30', 'ZDL-019': 'OART-ST-33', 'ZDL-020': 'OART-ST-34',
+  'ZDL-021': 'OART-ST-35', 'ZDL-022': 'OART-ST-40', 'ZDL-023': 'OART-ST-41', 'ZDL-024': 'OART-ST-42',
+};
+function describeModeStages(mode, originLabel, destLabel, originStation, destStation) {
+  const oSt = originStation || 'estación OART de origen';
+  const dSt = destStation || 'estación OART de destino';
+  switch (mode) {
+    case 'LUMINA_BIKE_AND_OART':
+      return {
+        title: 'Bicicleta + Tren OART (Primera y última milla)',
+        summary: 'Combina bicicleta compartida en los extremos con el tren metropolitano OART para evitar la congestión vial.',
+        steps: [
+          ['1. Primera milla (Bici)', `Recorrido en bicicleta desde ${originLabel} hasta ${oSt}.`],
+          ['2. Tramo troncal (OART)', oSt === dSt ? `Conexión ferroviaria local en ${oSt}.` : `Viaje en tren rápido OART de ${oSt} a ${dSt}.`],
+          ['3. Última milla', `Tramo final en bici o caminata desde ${dSt} hasta ${destLabel}.`],
+        ],
+      };
+    case 'LUMINA_BUS_RAPID':
+      return {
+        title: 'Bus Rápido (BRT con carril exclusivo)',
+        summary: 'Corredor de autobús de alta capacidad con prioridad semafórica y alimentación directa a la red OART.',
+        steps: [
+          ['1. Abordaje BRT', `Subida en paradero troncal de ${originLabel}.`],
+          ['2. Corredor expreso', `Recorrido por carril segregado con enlace en ${dSt}.`],
+          ['3. Llegada', `Descenso en zona de destino: ${destLabel}.`],
+        ],
+      };
+    case 'LUMINA_EV_MINIVAN_POOL':
+      return {
+        title: 'Minivan Eléctrica Compartida (Ride-Pooling)',
+        summary: 'Vehículo eléctrico de baja emisión compartido entre pasajeros con rutas similares, sin depender de auto propio.',
+        steps: [
+          ['1. Recojo compartido', `Punto de encuentro en ${originLabel}.`],
+          ['2. Traslado directo / alimentador', `Ruta optimizada hacia ${destLabel} (conexión opcional en ${dSt}).`],
+        ],
+      };
+    case 'LUMINA_MULTIMODAL_OART':
+      return {
+        title: 'Multimodal OART (Tarifa integrada)',
+        summary: 'Integra transporte alimentador urbano + tren OART + transferencia final bajo un solo viaje y tarifa unificada.',
+        steps: [
+          ['1. Alimentador de origen', `Bus/micromovilidad desde ${originLabel} hacia ${oSt}.`],
+          ['2. Tren metropolitano OART', oSt === dSt ? `Operación en nodo ${oSt}.` : `Tramo principal de alta velocidad ${oSt} → ${dSt}.`],
+          ['3. Transferencia de destino', `Enlace integrado hasta ${destLabel}.`],
+        ],
+      };
+    case 'PERSONAL_CAR_BENCHMARK':
+      return {
+        title: 'Auto Particular (Referencia vial)',
+        summary: 'Línea base en automóvil propio por red vial urbana (sujeto a congestión y costo fijo + variable por km).',
+        steps: [
+          ['1. Trayecto directo vial', `Conducción continua de ${originLabel} a ${destLabel} sin integración OART.`],
+        ],
+      };
+    default:
+      return null;
+  }
+}
+
+function RouteScheme({ origin, destination, stations = [], alternatives = [], activeAlternative, zoneName }) {
+  const sameZone = origin === destination;
+  const totalTrips = alternatives.reduce((sum, item) => sum + item.totalTrips, 0);
+  const durations = alternatives.map(item => item.avgDuration).filter(v => v != null);
+  const distances = alternatives.map(item => item.avgDistance).filter(v => v != null);
+  const fares = alternatives.map(item => item.avgFare).filter(v => v != null);
+  const fastest = sortAlternatives(alternatives.filter(item => item.avgDuration != null), 'duration')[0];
+  const cheapest = sortAlternatives(alternatives.filter(item => item.avgFare != null), 'fare')[0];
+  const counties = [...new Set(alternatives.flatMap(item => item.counties))].filter(Boolean);
+  const originStation = ZONE_PRIMARY_OART[origin];
+  const destStation = ZONE_PRIMARY_OART[destination];
+  const primaryStations = [...new Set([originStation, destStation].filter(Boolean))];
+  const extraStations = stations.filter(s => !primaryStations.includes(s));
+  const modeInfo = activeAlternative ? describeModeStages(activeAlternative.mode, zoneName(origin), zoneName(destination), originStation, destStation) : null;
+
+  return <section className="p-scheme"><div className="p-section-heading"><div><h2>Tu trayecto, de un vistazo</h2><p>{sameZone ? 'Desplazamiento dentro de la misma zona' : 'Conexión entre distintas zonas'} · {counties.join(', ') || 'DataLandia'}</p></div><span className="p-label">{sameZone ? 'Misma zona' : 'Entre zonas'}</span></div>
+    <div className="p-route-line"><div className="p-endpoint"><span className="p-point origin"><MapPin size={19} /></span><small>ORIGEN</small><strong>{zoneName(origin)}</strong><span>{origin}{originStation ? ` · ${originStation}` : ''}</span></div><div className="p-connection"><span /><div className="p-connection-pill"><Route size={16} strokeWidth={1.6} />{durations.length > 0 && <strong>{format(Math.min(...durations), 1)}–{format(Math.max(...durations), 1)} min</strong>}{distances.length > 0 && <small>{format(Math.min(...distances), 1)}–{format(Math.max(...distances), 1)} km</small>}</div><span /></div><div className="p-endpoint"><span className="p-point destination"><MapPin size={19} /></span><small>DESTINO</small><strong>{zoneName(destination)}</strong><span>{destination}{destStation ? ` · ${destStation}` : ''}</span></div></div>
+    {alternatives.length > 0 && <div className="p-scheme-highlights">
+      {fastest && <div><small>Más rápido</small><strong>{nameOf(fastest.mode)}</strong><span>{format(fastest.avgDuration, 1)} min</span></div>}
+      {cheapest && <div><small>Menor tarifa</small><strong>{nameOf(cheapest.mode)}</strong><span>USD {format(cheapest.avgFare)}</span></div>}
+      <div><small>Volumen observado</small><strong>{format(totalTrips, 0)} viajes</strong><span>{fares.length > 0 ? `USD ${format(Math.min(...fares))} – ${format(Math.max(...fares))}` : 'N/D'}</span></div>
+    </div>}
+    {modeInfo && <div className="p-mode-breakdown">
+      <div className="p-mode-breakdown-head"><strong>{modeInfo.title}</strong><span>{format(activeAlternative.avgDuration, 1)} min · USD {format(activeAlternative.avgFare)} · {format(activeAlternative.avgDistance)} km</span></div>
+      <p>{modeInfo.summary}</p>
+      <ul>{modeInfo.steps.map(([label, text]) => <li key={label}><b>{label}:</b> {text}</li>)}</ul>
+    </div>}
+    {stations.length > 0 && <div className="p-station-associations"><span><TramFront size={16} />Conexiones OART vinculadas</span><div>{primaryStations.map(station => <span className="p-station p-station-primary" key={station}>{station} {station === originStation && station === destStation ? '(Origen/Destino)' : station === originStation ? '(Origen)' : '(Destino)'}</span>)}{extraStations.map(station => <span className="p-station" key={station}>{station}</span>)}</div><p>La fuente vincula estas estaciones al trayecto; no especifica una secuencia de paradas.</p></div>}
     <p className="p-fine-print">Diagrama sin escala geográfica. No representa navegación ni ubicación de vehículos en vivo.</p>
   </section>;
 }
@@ -142,7 +230,7 @@ export default function PassengerApp() {
       {view === 'viajar' && <><div className="p-search-layout"><section className="p-search-card"><div className="p-search-title"><span className="p-tile-icon"><Route size={21} /></span><div><h2>¿De dónde a dónde?</h2><p>Busca por las zonas disponibles en el histórico.</p></div></div><form onSubmit={e => { e.preventDefault(); if (origin && destination) searchRoute(origin, destination); }}><div className="p-route-fields"><OptionSelect id="journey-origin" label="Origen" value={origin} onChange={setOrigin}><option value="">Selecciona tu punto de partida</option>{zones.filter(zone => zone.origin).map(zone => <option key={zone.id} value={zone.id}>{zone.name}</option>)}</OptionSelect><button className="p-swap" type="button" title="Invertir origen y destino" aria-label="Invertir origen y destino" onClick={() => { setOrigin(destination); setDestination(origin); }}><ArrowDownUp size={18} /></button><OptionSelect id="journey-destination" label="Destino" value={destination} onChange={setDestination}><option value="">Selecciona a dónde quieres ir</option>{zones.filter(zone => zone.destination).map(zone => <option key={zone.id} value={zone.id}>{zone.name}</option>)}</OptionSelect></div><button className="button primary p-search-submit" disabled={!origin || !destination || loading}><Search size={17} />Buscar alternativas</button></form><p className="p-search-note"><Info size={14} />Compararás promedios históricos. No son cotizaciones, horarios ni disponibilidad en tiempo real.</p></section><aside className="p-welcome-panel"><span className="p-eyebrow">UNA FORMA MÁS CLARA DE COMPARAR</span><h2>Tu trayecto.<br />Tus prioridades.</h2><p>Compara duración, tarifa y distancia para conocer mejor las alternativas registradas.</p><div className="p-welcome-modes"><span><Bike size={21} />Bici</span><span><BusFront size={21} />Bus</span><span><CarFront size={21} />Minivan</span><span><TramFront size={21} />OART</span></div><div className="p-welcome-caption">Cada resultado se calcula con registros existentes de Gold.</div></aside></div>
       {query && <div className="p-results" ref={resultsRef}><div className="p-results-heading"><div><span className="p-eyebrow">RESULTADOS DEL TRAYECTO</span><h2>{zoneName(query.origin)}<ChevronRight size={20} />{zoneName(query.destination)}</h2><p>{alternatives.length} alternativas observadas · {format(totalRecords, 0)} registros históricos</p></div>{alternatives.length > 0 && <button className="button" onClick={shareRoute}><Share2 size={15} />Compartir</button>}</div>
       {!alternatives.length ? <Blank title="No hay alternativas registradas para este trayecto">Prueba otra combinación de origen y destino. No se calculan rutas o tarifas de respaldo.</Blank> : <><div className="p-preferences" aria-label="Ordenar alternativas"><span>Ordenar por</span>{[['duration', 'Menor duración', Clock3], ['fare', 'Menor tarifa', Coins], ['distance', 'Menor distancia', Route]].map(([value, title, Icon]) => <button key={value} className={preference === value ? 'active' : ''} aria-pressed={preference === value} onClick={() => setPreference(value)}><Icon size={15} />{title}</button>)}</div><div className="p-alternative-grid">{sorted.map((item, index) => <article className={`p-alternative ${activeAlternative?.mode === item.mode ? 'is-selected' : ''}`} key={item.mode}><div className="p-alternative-top"><ModeSymbol mode={item.mode} /><button className={`icon-button ${saved.some(value => savedKey(value) === savedKey({ ...query, mode: item.mode })) ? 'p-bookmarked' : ''}`} aria-label={`Guardar ${nameOf(item.mode)}`} onClick={() => saveRoute(item.mode)}><Bookmark size={18} /></button></div><div className="p-alternative-title"><h3>{nameOf(item.mode)}</h3>{item.mode === 'PERSONAL_CAR_BENCHMARK' ? <span className="p-label">Referencia</span> : index === 0 && item[preference === 'fare' ? 'avgFare' : preference === 'distance' ? 'avgDistance' : 'avgDuration'] != null && <span className="p-best">Menor {preference === 'fare' ? 'tarifa' : preference === 'distance' ? 'distancia' : 'duración'}</span>}</div><div className="p-alt-duration"><strong>{format(item.avgDuration, 1)}</strong><span>min de media</span></div><dl className="p-alternative-metrics"><div><dt>Tarifa media</dt><dd>USD {format(item.avgFare)}</dd></div><div><dt>Distancia media</dt><dd>{format(item.avgDistance)} km</dd></div></dl><p className="p-observation-count">Basado en {format(item.totalTrips, 0)} registros</p><button className="button p-alt-select" onClick={() => setSelectedMode(item.mode)}>{activeAlternative?.mode === item.mode ? <><Check size={15} />Detalle seleccionado</> : <>Ver detalle<ChevronRight size={15} /></>}</button></article>)}</div>
-      {activeAlternative && <div className="p-route-details"><RouteScheme origin={query.origin} destination={query.destination} stations={activeAlternative.stations} zoneName={zoneName} /><section className="p-alternative-detail"><div className="p-section-heading"><div><h2>{nameOf(activeAlternative.mode)}</h2><p>Datos utilizados para esta alternativa</p></div><GitCompareArrows size={20} /></div><dl><div><dt>Período observado</dt><dd>{dateLabel(activeAlternative.firstDate)} – {dateLabel(activeAlternative.lastDate)}</dd></div><div><dt>Mediciones de duración</dt><dd>{format(activeAlternative.durationCount, 0)}</dd></div><div><dt>Mediciones de tarifa</dt><dd>{format(activeAlternative.fareCount, 0)}</dd></div><div><dt>Condados de origen</dt><dd>{activeAlternative.counties.join(', ') || 'Sin dato'}</dd></div></dl><button className="button" onClick={() => navigate('registros')}><Clock3 size={15} />Consultar registros del trayecto</button><p className="p-fine-print">Los promedios conservan los valores ausentes y se calculan con las mediciones disponibles, no promediando promedios.</p></section></div>}
+      {activeAlternative && <div className="p-route-details"><RouteScheme origin={query.origin} destination={query.destination} stations={activeAlternative.stations} alternatives={alternatives} activeAlternative={activeAlternative} zoneName={zoneName} /><section className="p-alternative-detail"><div className="p-section-heading"><div><h2>{nameOf(activeAlternative.mode)}</h2><p>Datos utilizados para esta alternativa</p></div><GitCompareArrows size={20} /></div><dl><div><dt>Período observado</dt><dd>{dateLabel(activeAlternative.firstDate)} – {dateLabel(activeAlternative.lastDate)}</dd></div><div><dt>Mediciones de duración</dt><dd>{format(activeAlternative.durationCount, 0)}</dd></div><div><dt>Mediciones de tarifa</dt><dd>{format(activeAlternative.fareCount, 0)}</dd></div><div><dt>Condados de origen</dt><dd>{activeAlternative.counties.join(', ') || 'Sin dato'}</dd></div></dl><button className="button" onClick={() => navigate('registros')}><Clock3 size={15} />Consultar registros del trayecto</button><p className="p-fine-print">Los promedios conservan los valores ausentes y se calculan con las mediciones disponibles, no promediando promedios.</p></section></div>}
       <section className="p-route-questions"><div className="p-section-heading"><div><h2>Consulta este trayecto</h2><p>Respuestas calculadas a partir de las alternativas seleccionadas.</p></div><MessageSquareText size={21} /></div><div className="p-quick-questions">{['¿Cuál tiene menor duración?', '¿Cuál tiene menor tarifa?', '¿Qué conexiones OART hay?'].map(value => <button key={value} onClick={() => { setQuestion(value); setAsked(value); }}>{value}</button>)}</div><form onSubmit={e => { e.preventDefault(); setAsked(question); }}><input aria-label="Pregunta sobre el trayecto" placeholder="Pregunta por duración, tarifa, modos o conexiones…" value={question} onChange={e => setQuestion(e.target.value)} required /><button className="button primary">Consultar</button></form>{asked && <div className="p-route-answer" role="status">{routeAnswer(asked, alternatives)}</div>}</section></>}
       </div>}
       {!query && <section className="p-how-it-works"><div><span className="p-how-icon"><MapPin size={20} /></span><h3>Elige tus zonas</h3><p>Selecciona un origen y un destino presentes en los datos.</p></div><div><span className="p-how-icon"><GitCompareArrows size={20} /></span><h3>Compara alternativas</h3><p>Revisa el tiempo, la tarifa y la distancia registrados.</p></div><div><span className="p-how-icon"><Bookmark size={20} /></span><h3>Guarda tu trayecto</h3><p>Ten tus consultas frecuentes a mano en este navegador.</p></div></section>}
