@@ -2,8 +2,28 @@
 
 La P3 demuestra un proceso OLAP completo: generar y cargar datos, validar telemetría,
 limpiar/deduplicar, cruzar cuatro fuentes, materializar Gold y consultar sus indicadores desde
-una API y un tablero consumidor. El modo local se ejecutó y verificó. El modo BigQuery
-requiere el acceso del proyecto y una ejecución independiente; no se presenta como realizado.
+una API y un tablero consumidor. El modo local y el modo BigQuery se ejecutaron y verificaron.
+La ejecución cloud del 20/11/2026 a las 22:14 America/Lima dejó un manifiesto con 16 job IDs,
+600 viajes únicos y la API consultando las tablas de esa misma ejecución.
+
+## Evidencia de ejecución en BigQuery
+
+| Verificación | Resultado del ensayo |
+| --- | --- |
+| Dataset aislado | bigdata-herles-pinedo.p3_20261121_031258_1e7263 |
+| Entrada de viajes | 602 filas: 600 de muestra, un duplicado y una distancia negativa |
+| Gold | 600 filas y 600 trip_id únicos |
+| Cobertura de tráfico | 540 de 600 viajes (90%) |
+| Cobertura IoT | 600 de 600 viajes (100%) |
+| Eventos inválidos | 2 aislados en deadletter |
+| API | status=ok, backend=bigquery, run_id coincidente |
+| Tiempo de ejecución | 62.982 segundos en este ensayo; no es un SLA |
+| Alcance | Datos sintéticos; API local contra BigQuery, sin despliegue Cloud Run |
+
+Manifiesto: evidencias/bigquery_latest.json. Incluye hashes de los lotes, huella del SQL,
+job IDs y respuesta de la API. La comprobación HTTP del consumidor no sustituye una
+inspección visual del navegador, que sigue declarada como no realizada.
+Las tablas de la demo tienen expiración de siete días; no son almacenamiento permanente de la entrega.
 
 ## Matriz de la rúbrica UTEC
 

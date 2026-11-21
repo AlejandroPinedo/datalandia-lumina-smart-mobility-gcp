@@ -1,0 +1,122 @@
+{
+  "run_id": "p3_20261121_031258_1e7263",
+  "backend": "bigquery",
+  "data_origin": "synthetic_generated_for_p3",
+  "completed_at": "2026-11-21T03:14:01.040709+00:00",
+  "elapsed_seconds": 62.982,
+  "input_sha256": {
+    "censo_demografia_ine_datalandia.csv": "91f9257e16bc0815afbbdfe0da92a4e56f3ffc38e0132393e67e4ba5aed85c66",
+    "uber_movement_speeds_datalandia.csv": "3a832c6450c937747f2b582172ed14ab34cd125d0f79d13a73334de558fe7532",
+    "nyc_tlc_trips_lumina_multimodal.csv": "e742b4033b7f1ad53ab703869df0c5ae8c4f5f269f6b04d2fdd669c92040cf90"
+  },
+  "bronze_counts": {
+    "p3_bronze_census": 24,
+    "p3_bronze_speeds": 4968,
+    "p3_bronze_trips": 602,
+    "p3_bronze_iot": 240,
+    "p3_deadletter": 2
+  },
+  "gold_rows": 600,
+  "unique_trip_ids": 600,
+  "traffic_matched_trips": 540,
+  "iot_matched_trips": 600,
+  "dataset": "bigdata-herles-pinedo.p3_20261121_031258_1e7263",
+  "job_ids": [
+    "8520e7c0-986b-490b-bc50-1d95a63d467f",
+    "1cf9f104-4d38-4119-8c17-99930b4fb862",
+    "eb142461-f2a4-4fac-9980-8ba278f5812e",
+    "848d0379-59af-4235-acdf-8024e182af97",
+    "40372c2b-9722-4aae-876c-d0e059c431dd",
+    "bd3e987a-5190-4779-a3ca-6026fd7417df",
+    "4def0d21-2b68-4459-8969-a90c8311b2cb",
+    "a44451ba-ad27-428b-8028-9f3691d0e734",
+    "94bd9a8a-18e1-4604-b49a-af7bf71a2ae9",
+    "62045775-41fd-4b51-bee7-dcc745185139",
+    "43efbfbc-5045-467e-8912-d0b8535b5453",
+    "62d6810b-1411-4256-aac5-09076558c968",
+    "ad96f141-2009-4171-bd83-71e10b212191",
+    "d4c0a577-913e-4f0a-b80d-dcb939615c82",
+    "89b8fe6a-8de3-404d-937f-358257129e99",
+    "8d5de61a-bcb7-4733-bc5b-1f38fe2f7ec1"
+  ],
+  "sql_sha256": "ab7f0756dfd13f36689f239303604e949db6575f7ac9516e861e3e2de8dc7995",
+  "api_report": {
+    "status": "ok",
+    "backend": "bigquery",
+    "source": "bigquery:bigdata-herles-pinedo.p3_20261121_031258_1e7263.p3_gold_kpi",
+    "data_origin": "synthetic_generated_for_p3",
+    "run_id": "p3_20261121_031258_1e7263",
+    "processed_at": "2026-11-21T03:13:52.873754+00:00",
+    "queried_at": "2026-11-21T03:14:01.009618+00:00",
+    "summary": {
+      "total_trips": 600,
+      "total_km": 9549.81,
+      "total_revenue_usd": 4295.94
+    },
+    "by_mode": [
+      {
+        "transport_mode": "LUMINA_BIKE_AND_OART",
+        "total_trips": 58,
+        "total_km": 962.84,
+        "total_revenue_usd": 356.9,
+        "revenue_per_km_usd": 0.3707,
+        "avg_duration_min": 26.86,
+        "avg_passengers": 3.81,
+        "traffic_matched_trips": 52,
+        "iot_matched_trips": 58
+      },
+      {
+        "transport_mode": "LUMINA_BUS_RAPID",
+        "total_trips": 91,
+        "total_km": 1428.28,
+        "total_revenue_usd": 635.79,
+        "revenue_per_km_usd": 0.4451,
+        "avg_duration_min": 31.42,
+        "avg_passengers": 4.07,
+        "traffic_matched_trips": 80,
+        "iot_matched_trips": 91
+      },
+      {
+        "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+        "total_trips": 134,
+        "total_km": 2146.45,
+        "total_revenue_usd": 1452.02,
+        "revenue_per_km_usd": 0.6765,
+        "avg_duration_min": 29.49,
+        "avg_passengers": 3.79,
+        "traffic_matched_trips": 123,
+        "iot_matched_trips": 134
+      },
+      {
+        "transport_mode": "LUMINA_MULTIMODAL_OART",
+        "total_trips": 226,
+        "total_km": 3598.67,
+        "total_revenue_usd": 1851.23,
+        "revenue_per_km_usd": 0.5144,
+        "avg_duration_min": 22.32,
+        "avg_passengers": 4.02,
+        "traffic_matched_trips": 206,
+        "iot_matched_trips": 226
+      },
+      {
+        "transport_mode": "PERSONAL_CAR_BENCHMARK",
+        "total_trips": 91,
+        "total_km": 1413.57,
+        "total_revenue_usd": 1952.83,
+        "revenue_per_km_usd": 1.3815,
+        "avg_duration_min": 37.75,
+        "avg_passengers": 1.0,
+        "traffic_matched_trips": 79,
+        "iot_matched_trips": 91
+      }
+    ],
+    "latency_ms": 3701.85
+  },
+  "verification": {
+    "trip_grain": "passed",
+    "api_reads_gold": "passed",
+    "consumer_references_api": "passed",
+    "legacy_template_resolved": "passed"
+  },
+  "browser_visual_review": "not_performed"
+}

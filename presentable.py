@@ -57,7 +57,7 @@ def markdown(text):
     return '\n'.join(result)
 
 
-def build(target, title, documents, include_evidence=True, include_diagrams=True, extra_files=()):
+def build(target, title, documents, include_evidence=True, include_diagrams=True, extra_files=(), cloud_verified=False):
     parts = []
     for filename in documents:
         parts.append('<section>' + markdown((BASE / filename).read_text(encoding='utf-8')) + '</section>')
@@ -72,7 +72,9 @@ def build(target, title, documents, include_evidence=True, include_diagrams=True
         parts.append(f'<details><summary>{label} · diseño objetivo</summary><iframe sandbox="allow-scripts" title="{label}" src="data:text/html;base64,{encoded}"></iframe></details>')
     if include_diagrams:
         parts.append('</section>')
-    parts.append('<section><h2>Código y evidencias de la revisión</h2><p>Esta copia incluye los módulos compartidos. La validación cloud queda pendiente.</p>')
+    code_status = ('El ensayo OLAP P3 se ejecutó en BigQuery. Esto no acredita todos los componentes cloud.'
+                   if cloud_verified else 'La validación cloud del conjunto de componentes queda pendiente.')
+    parts.append('<section><h2>Código y evidencias de la revisión</h2><p>Esta copia incluye los módulos compartidos. ' + code_status + '</p>')
     for path in sorted(CODE.glob('*.py')) + [BASE / name for name in extra_files]:
         parts.append(f'<details><summary>{html.escape(path.name)}</summary><pre><code>{html.escape(path.read_text(encoding="utf-8"))}</code></pre></details>')
     parts.append('</section>')
@@ -109,6 +111,10 @@ button{border:1px solid #a4c8bd;background:#e9f8f2;color:#164c43;padding:10px 16
 <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true);window.print()">Imprimir o guardar PDF</button></header>
 <main><aside class="notice"><strong>Estado de la revisión:</strong> código corregido y pruebas locales. Las capturas son históricas.
 No se ha desplegado esta versión ni validado sus consultas completas en GCP, Spark, Beam o Airflow.</aside>''' + ''.join(parts) + '</main></body></html>'
+    if cloud_verified:
+        page = page.replace('código corregido y pruebas locales. Las capturas son históricas.\nNo se ha desplegado esta versión ni validado sus consultas completas en GCP, Spark, Beam o Airflow.',
+                            'ensayo OLAP P3 completado en BigQuery con datos sintéticos, job IDs y API contra Gold. '
+                            'No se acredita despliegue Cloud Run ni validación de Spark, Beam o Airflow.')
     page = '\n'.join(line.rstrip() for line in page.splitlines()) + '\n'
     (BASE / target).write_text(page, encoding='utf-8')
     print(f'Generado {target}: {len(page.encode("utf-8")):,} bytes')

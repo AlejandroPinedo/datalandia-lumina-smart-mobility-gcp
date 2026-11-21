@@ -2,17 +2,266 @@
   "title": "Lumina DataLandia · Entrega 3 · Sustentación final",
   "authors": "Herles Pinedo · David Jimenez · José Nomberto",
   "slides": [
-    {"title":"Lumina conecta los datos de movilidad","subtitle":"Entrega 3 · Exposición de datos y demo OLAP","body":["UTEC · Big Data · Grupo 7","Herles Pinedo · David Jimenez · José Nomberto","Sustentación final · 21 de noviembre de 2026"],"notes":"Presentar el proceso OLAP como alcance comprobable de P3. Fuente: UTEC - Desarrollo de Proyecto - Seccion 1.pdf, página 3."},
-    {"title":"Un proceso completo para informar la operación","section":"Resumen ejecutivo y alcance","body":["Integrar viajes, tráfico, demografía y telemetría bajo llaves comunes","Limpiar y deduplicar antes de publicar indicadores Gold","Exponer datos procesados mediante una API y un tablero consumidor","Demo académica con datos sintéticos identificados; no prueba ahorro real"],"notes":"La rúbrica exige al menos un proceso clave end-to-end. OLAP permite demostrar las capas completas sin fingir un despacho de vehículos. Fuentes: P3/demo_e2e.py, P3/olap_sql.py, olap_service.py."},
-    {"title":"La fragmentación impide una visión metropolitana","section":"Situación actual","body":["Caso DataLandia: 9.25 millones de habitantes, 8 condados y 12 agencias","Congestión de referencia: 24 km/h; OART requiere primera y última milla","Fuentes heterogéneas con identificadores y fechas distintos","Existe evidencia histórica de 4,998,926 filas Gold; no acredita esta nueva ejecución"],"notes":"Las magnitudes son del caso académico y del dimensionamiento del proyecto. La captura C1 es histórica. No extrapolar la muestra de 600 viajes a toda la población."},
-    {"title":"La demo conserva 600 viajes únicos","section":"Criterios de éxito y KPI","table":{"headers":["Indicador","Resultado local","Criterio"],"rows":[["Grano de Gold","600 filas / 600 IDs","Una fila por viaje"],["Limpieza","602 entradas → 600 únicas","Retirar duplicado y distancia negativa"],["Cruce con tráfico","540 / 600 = 90%","Declarar faltantes"],["Cruce con sensores","600 / 600 = 100%","Fecha, hora, zona y estación"],["Anomalías IoT","2 eventos aislados","No interrumpir válidos"],["Lectura del consumidor","API consulta Gold","Sin valores de respaldo"]]},"notes":"Resultados de P3/evidencias/sqlite_latest.json. Se miden en SQLite local; no son SLAs cloud ni indicadores observados de transporte."},
-    {"title":"Cada componente tiene una responsabilidad concreta","section":"Productos tecnológicos","table":{"headers":["Capa","Implementación","Función"],"rows":[["Ingesta","Python / CSV / validador IoT","Cargar fuentes y aislar anomalías"],["Cómputo","SQL portable / BigQuery","Deduplicar y cruzar"],["Storage","BigQuery; SQLite local","Separar Bronze, Silver y Gold"],["Exposición","Python HTTP / Flask","API de solo lectura"],["Consumo","HTML y JavaScript","Consultar indicadores Gold"]]},"notes":"SQLite es la ejecución local comprobada. El modo --backend=bigquery usa un dataset aislado y requiere autenticación. No se presenta un despliegue Cloud Run como realizado."},
-    {"title":"El alcance termina en el informe operativo","section":"Dependencias supuestos y fuera de alcance","body":["Datos sintéticos: 24 zonas, 600 viajes y 4,968 velocidades; sensores de demo","UTC común para los cruces; ninguna coincidencia temporal se inventa","GCP requiere cuenta con permisos y autenticación local; GitHub requiere acceso válido","Fuera de alcance: despacho real, cobros, accesibilidad personalizada y mantenimiento de seguridad"],"notes":"Las credenciales se guardan en .runtime, excluido de Git. Los costos y las tarifas de simulación son supuestos, no datos observados. Las preferencias de accesibilidad reales todavía no están integradas."},
-    {"title":"Gold conecta el procesamiento con el consumidor","section":"Arquitectura final","diagram":["CSV + IoT","Bronze","Silver SQL","Gold OLAP","API REST","Tablero /p3"],"body":["Llaves de cruce: origen, destino, fecha y hora; sensores por estación y zona","La API consulta tablas materializadas en modo de solo lectura","GCP: dataset aislado por ejecución; tablas de demo con expiración de 7 días","Local: mismo proceso SQL con adaptaciones explícitas de dialecto"],"notes":"Fuentes: P3/olap_sql.py, P3/demo_e2e.py y olap_service.py. En GCP se prioriza BigQuery para el piloto; Pub/Sub y Beam siguen siendo parte del diseño más amplio y no son necesarios para la prueba OLAP de P3."},
-    {"title":"El primer año se estima para un piloto OLAP","section":"Supuestos de consumo","table":{"headers":["Recurso","Supuesto mensual","Modelo"],"rows":[["Consultas BigQuery","2 TiB escaneados","On-demand"],["Storage BigQuery","100 GiB lógicos activos","Promedio mensual"],["API Cloud Run","10,000 solicitudes","1 vCPU, 0.5 GiB"],["CPU / memoria facturable","10,000 vCPU-s / 5,000 GiB-s","Tiempo activo supuesto"],["Horizonte","12 meses + 20% contingencia","Sin descontar free tier"]]},"notes":"P3/costos.json. No dimensiona 15,000 eventos/s, toda la metrópoli, DRP ni el carril streaming continuo. Fuentes de tarifas: https://cloud.google.com/bigquery/pricing y https://cloud.google.com/run/pricing, consultadas 20/11/2026."},
-    {"title":"El escenario base estima USD 216.81 al año","section":"Calculadora de consumo","table":{"headers":["Concepto","USD por mes"],"rows":[["BigQuery consultas","12.5000"],["BigQuery storage","2.3000"],["Cloud Run CPU, memoria y solicitudes","0.2565"],["Subtotal","15.0565"],["Total con 20% de contingencia","18.0678"],["Primer año","216.81"]]},"body":["Recalcular: python P3/calculadora_consumo.py","Editar volúmenes y precios en P3/costos.json","Excluye impuestos, personal, egreso, logs excedentes, builds y streaming/DRP"],"notes":"Fórmulas en P3/calculadora_consumo.py. Total anual = subtotal mensual × 1.20 × 12, redondeado al final. Estimación de escenario, no factura ni presupuesto aprobado. Tarifas consultadas en páginas oficiales Google Cloud, 20/11/2026."},
-    {"title":"La demo permite seguir cada cambio de los datos","section":"Demo end-to-end de implementación","body":["Ejecutar: python P3/demo_e2e.py --serve","Mostrar 602 viajes Bronze y las dos anomalías IoT de entrada","Mostrar Gold: 600 viajes únicos y cobertura explícita de los cruces","Abrir /api/v1/olap-kpis y /p3; contrastar run_id y totales","Repetir la consulta; comprobar que el tablero consume esa API"],"notes":"Cada ejecución genera una base aislada y un manifiesto con hashes, conteos y verificaciones. La demo en vivo debe ejecutarse durante la sustentación; la evidencia del ensayo no equivale a asistencia ni defensa individual realizada."},
-    {"title":"El prototipo demuestra exposición de datos procesados","section":"Conclusiones","body":["El informe OLAP conecta ingesta, SQL, almacenamiento, API y consumidor","La deduplicación conserva el grano de viaje y los faltantes siguen visibles","La demostración local no depende de una caché Gold antigua","La factibilidad económica depende del consumo; se presenta una calculadora editable"],"notes":"No afirmar que está desplegado o medido en GCP si no existe evidencia bigquery_latest.json de esta versión. La rúbrica también requiere entrega del repositorio y participación individual."},
-    {"title":"Cerrar accesos y publicar la versión validada","section":"Next Steps","body":["Validar el modo BigQuery con la cuenta autorizada del proyecto","Medir latencia y consumo cloud con job IDs y datos aislados","Publicar commit final en GitHub y enlazar presentación y manifiestos","Ensayar la defensa: contexto, arquitectura y demo entre los tres integrantes","Después de P3: integrar solicitudes, flota, horarios y datos observados"],"notes":"Los pasos externos deben actualizarse cuando se completen; no se presentan como hechos. Repositorio conocido: https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp."}
+    {
+      "title": "Lumina conecta los datos de movilidad",
+      "subtitle": "Entrega 3 · Exposición de datos y demo OLAP",
+      "body": [
+        "UTEC · Big Data · Grupo 7",
+        "Herles Pinedo · David Jimenez · José Nomberto",
+        "Sustentación final · 21 de noviembre de 2026"
+      ],
+      "notes": "Presentar el proceso OLAP como alcance comprobable de P3. Fuente: UTEC - Desarrollo de Proyecto - Seccion 1.pdf, página 3."
+    },
+    {
+      "title": "Un proceso completo para informar la operación",
+      "section": "Resumen ejecutivo y alcance",
+      "body": [
+        "Integrar viajes, tráfico, demografía y telemetría bajo llaves comunes",
+        "Limpiar y deduplicar antes de publicar indicadores Gold",
+        "Exponer datos procesados mediante una API y un tablero consumidor",
+        "Demo académica con datos sintéticos identificados; no prueba ahorro real"
+      ],
+      "notes": "La rúbrica exige al menos un proceso clave end-to-end. OLAP permite demostrar las capas completas sin fingir un despacho de vehículos. Fuentes: P3/demo_e2e.py, P3/olap_sql.py, olap_service.py."
+    },
+    {
+      "title": "La fragmentación impide una visión metropolitana",
+      "section": "Situación actual",
+      "body": [
+        "Caso DataLandia: 9.25 millones de habitantes, 8 condados y 12 agencias",
+        "Congestión de referencia: 24 km/h; OART requiere primera y última milla",
+        "Fuentes heterogéneas con identificadores y fechas distintos",
+        "Existe evidencia histórica de 4,998,926 filas Gold; no acredita esta nueva ejecución"
+      ],
+      "notes": "Las magnitudes son del caso académico y del dimensionamiento del proyecto. La captura C1 es histórica. No extrapolar la muestra de 600 viajes a toda la población."
+    },
+    {
+      "title": "La demo conserva 600 viajes únicos",
+      "section": "Criterios de éxito y KPI",
+      "table": {
+        "headers": [
+          "Indicador",
+          "Resultado local y BigQuery",
+          "Criterio"
+        ],
+        "rows": [
+          [
+            "Grano de Gold",
+            "600 filas / 600 IDs",
+            "Una fila por viaje"
+          ],
+          [
+            "Limpieza",
+            "602 entradas → 600 únicas",
+            "Retirar duplicado y distancia negativa"
+          ],
+          [
+            "Cruce con tráfico",
+            "540 / 600 = 90%",
+            "Declarar faltantes"
+          ],
+          [
+            "Cruce con sensores",
+            "600 / 600 = 100%",
+            "Fecha, hora, zona y estación"
+          ],
+          [
+            "Anomalías IoT",
+            "2 eventos aislados",
+            "No interrumpir válidos"
+          ],
+          [
+            "Lectura del consumidor",
+            "API consulta Gold",
+            "Sin valores de respaldo"
+          ]
+        ]
+      },
+      "notes": "Resultados coincidentes en P3/evidencias/sqlite_latest.json y bigquery_latest.json. BigQuery: dataset p3_20261121_031258_1e7263, 16 job IDs, 600 viajes únicos. Datos sintéticos: no son SLAs ni mediciones reales de transporte."
+    },
+    {
+      "title": "Cada componente tiene una responsabilidad concreta",
+      "section": "Productos tecnológicos",
+      "table": {
+        "headers": [
+          "Capa",
+          "Implementación",
+          "Función"
+        ],
+        "rows": [
+          [
+            "Ingesta",
+            "Python / CSV / validador IoT",
+            "Cargar fuentes y aislar anomalías"
+          ],
+          [
+            "Cómputo",
+            "SQL portable / BigQuery",
+            "Deduplicar y cruzar"
+          ],
+          [
+            "Storage",
+            "BigQuery; SQLite local",
+            "Separar Bronze, Silver y Gold"
+          ],
+          [
+            "Exposición",
+            "Python HTTP / Flask",
+            "API de solo lectura"
+          ],
+          [
+            "Consumo",
+            "HTML y JavaScript",
+            "Consultar indicadores Gold"
+          ]
+        ]
+      },
+      "notes": "Los dos modos fueron ejecutados. BigQuery usa un dataset aislado y la API de lectura fue verificada contra su Gold. No se desplegó Cloud Run."
+    },
+    {
+      "title": "El alcance termina en el informe operativo",
+      "section": "Dependencias supuestos y fuera de alcance",
+      "body": [
+        "Datos sintéticos: 24 zonas, 600 viajes y 4,968 velocidades; sensores de demo",
+        "UTC común para los cruces; ninguna coincidencia temporal se inventa",
+        "Acceso GCP validado en la demo; GitHub todavía requiere permiso de escritura",
+        "Fuera de alcance: despacho real, cobros, accesibilidad personalizada y mantenimiento de seguridad"
+      ],
+      "notes": "Las credenciales se guardan en .runtime, excluido de Git. Los costos y las tarifas de simulación son supuestos, no datos observados. Las preferencias de accesibilidad reales todavía no están integradas."
+    },
+    {
+      "title": "Gold conecta el procesamiento con el consumidor",
+      "section": "Arquitectura final",
+      "diagram": [
+        "CSV + IoT",
+        "Bronze",
+        "Silver SQL",
+        "Gold OLAP",
+        "API REST",
+        "Tablero /p3"
+      ],
+      "body": [
+        "Llaves de cruce: origen, destino, fecha y hora; sensores por estación y zona",
+        "La API consulta tablas materializadas en modo de solo lectura",
+        "GCP: dataset aislado por ejecución; tablas de demo con expiración de 7 días",
+        "Local: mismo proceso SQL con adaptaciones explícitas de dialecto"
+      ],
+      "notes": "Fuentes: P3/olap_sql.py, P3/demo_e2e.py y olap_service.py. En GCP se prioriza BigQuery para el piloto; Pub/Sub y Beam siguen siendo parte del diseño más amplio y no son necesarios para la prueba OLAP de P3."
+    },
+    {
+      "title": "El primer año se estima para un piloto OLAP",
+      "section": "Supuestos de consumo",
+      "table": {
+        "headers": [
+          "Recurso",
+          "Supuesto mensual",
+          "Modelo"
+        ],
+        "rows": [
+          [
+            "Consultas BigQuery",
+            "2 TiB escaneados",
+            "On-demand"
+          ],
+          [
+            "Storage BigQuery",
+            "100 GiB lógicos activos",
+            "Promedio mensual"
+          ],
+          [
+            "API Cloud Run",
+            "10,000 solicitudes",
+            "1 vCPU, 0.5 GiB"
+          ],
+          [
+            "CPU / memoria facturable",
+            "10,000 vCPU-s / 5,000 GiB-s",
+            "Tiempo activo supuesto"
+          ],
+          [
+            "Horizonte",
+            "12 meses + 20% contingencia",
+            "Sin descontar free tier"
+          ]
+        ]
+      },
+      "notes": "P3/costos.json. No dimensiona 15,000 eventos/s, toda la metrópoli, DRP ni el carril streaming continuo. Fuentes de tarifas: https://cloud.google.com/bigquery/pricing y https://cloud.google.com/run/pricing, consultadas 20/11/2026."
+    },
+    {
+      "title": "El escenario base estima USD 216.81 al año",
+      "section": "Calculadora de consumo",
+      "table": {
+        "headers": [
+          "Concepto",
+          "USD por mes"
+        ],
+        "rows": [
+          [
+            "BigQuery consultas",
+            "12.5000"
+          ],
+          [
+            "BigQuery storage",
+            "2.3000"
+          ],
+          [
+            "Cloud Run CPU, memoria y solicitudes",
+            "0.2565"
+          ],
+          [
+            "Subtotal",
+            "15.0565"
+          ],
+          [
+            "Total con 20% de contingencia",
+            "18.0678"
+          ],
+          [
+            "Primer año",
+            "216.81"
+          ]
+        ]
+      },
+      "body": [
+        "Recalcular: python P3/calculadora_consumo.py",
+        "Editar volúmenes y precios en P3/costos.json",
+        "Excluye impuestos, personal, egreso, logs excedentes, builds y streaming/DRP"
+      ],
+      "notes": "Fórmulas en P3/calculadora_consumo.py. Total anual = subtotal mensual × 1.20 × 12, redondeado al final. Estimación de escenario, no factura ni presupuesto aprobado. Tarifas consultadas en páginas oficiales Google Cloud, 20/11/2026."
+    },
+    {
+      "title": "La demo permite seguir cada cambio de los datos",
+      "section": "Demo end-to-end de implementación",
+      "body": [
+        "Ensayo cloud completado: 16 job IDs, 62.982 s y datos sintéticos",
+        "Mostrar 602 viajes Bronze y las dos anomalías IoT de entrada",
+        "Mostrar Gold: 600 viajes únicos y cobertura explícita de los cruces",
+        "Abrir /api/v1/olap-kpis y /p3; contrastar run_id y totales",
+        "Repetir la consulta; comprobar que el tablero consume esa API"
+      ],
+      "notes": "El ensayo BigQuery terminó el 21/11/2026 a las 03:14 UTC (20/11/2026 22:14 Lima). API status=ok y run_id coincidente; consulta de muestra 3701.85 ms, sin inferir SLA. Para repetir: python P3/demo_e2e.py --backend bigquery --serve desde una terminal autenticada con red. La sustentación en clase sigue pendiente."
+    },
+    {
+      "title": "El prototipo demuestra exposición de datos procesados",
+      "section": "Conclusiones",
+      "body": [
+        "El informe OLAP conecta ingesta, SQL, almacenamiento, API y consumidor",
+        "La deduplicación conserva el grano de viaje y los faltantes siguen visibles",
+        "La demo en BigQuery consulta el Gold de esa ejecución, sin caché histórica",
+        "La factibilidad económica depende del consumo; se presenta una calculadora editable"
+      ],
+      "notes": "Evidencia cloud registrada y contrastada con SQLite: 600 viajes únicos, 540 con tráfico y 600 con IoT. No acredita todos los componentes P1/P2 ni despliegue Cloud Run."
+    },
+    {
+      "title": "Publicar la evidencia y ensayar la defensa",
+      "section": "Next Steps",
+      "body": [
+        "Conservar manifiesto y job IDs del ensayo BigQuery completado",
+        "Ampliar las mediciones de latencia y consumo; una ejecución no define un SLA",
+        "Publicar commit final en GitHub y enlazar presentación y manifiestos",
+        "Ensayar la defensa: contexto, arquitectura y demo entre los tres integrantes",
+        "Después de P3: integrar solicitudes, flota, horarios y datos observados"
+      ],
+      "notes": "Los pasos externos deben actualizarse cuando se completen; no se presentan como hechos. Repositorio conocido: https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp."
+    }
   ]
 }

@@ -1561,7 +1561,7 @@
             "rowIndex": 0,
             "columnIndex": 1
           },
-          "text": "Resultado local",
+          "text": "Resultado local y BigQuery",
           "insertionIndex": 0
         }
       },
@@ -2465,7 +2465,7 @@
         }
       }
     ],
-    "speaker_notes": "Resultados de P3/evidencias/sqlite_latest.json. Se miden en SQLite local; no son SLAs cloud ni indicadores observados de transporte."
+    "speaker_notes": "Resultados coincidentes en P3/evidencias/sqlite_latest.json y bigquery_latest.json. BigQuery: dataset p3_20261121_031258_1e7263, 16 job IDs, 600 viajes únicos. Datos sintéticos: no son SLAs ni mediciones reales de transporte."
   },
   {
     "slide_id": "p3_slide_05",
@@ -3535,7 +3535,7 @@
         }
       }
     ],
-    "speaker_notes": "SQLite es la ejecución local comprobada. El modo --backend=bigquery usa un dataset aislado y requiere autenticación. No se presenta un despliegue Cloud Run como realizado."
+    "speaker_notes": "Los dos modos fueron ejecutados. BigQuery usa un dataset aislado y la API de lectura fue verificada contra su Gold. No se desplegó Cloud Run."
   },
   {
     "slide_id": "p3_slide_06",
@@ -3789,7 +3789,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_06_text_3",
-          "text": "Datos sintéticos: 24 zonas, 600 viajes y 4,968 velocidades; sensores de demo\nUTC común para los cruces; ninguna coincidencia temporal se inventa\nGCP requiere cuenta con permisos y autenticación local; GitHub requiere acceso válido\nFuera de alcance: despacho real, cobros, accesibilidad personalizada y mantenimiento de seguridad",
+          "text": "Datos sintéticos: 24 zonas, 600 viajes y 4,968 velocidades; sensores de demo\nUTC común para los cruces; ninguna coincidencia temporal se inventa\nAcceso GCP validado en la demo; GitHub todavía requiere permiso de escritura\nFuera de alcance: despacho real, cobros, accesibilidad personalizada y mantenimiento de seguridad",
           "insertionIndex": 0
         }
       },
@@ -7257,7 +7257,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_10_text_3",
-          "text": "Ejecutar: python P3/demo_e2e.py --serve\nMostrar 602 viajes Bronze y las dos anomalías IoT de entrada\nMostrar Gold: 600 viajes únicos y cobertura explícita de los cruces\nAbrir /api/v1/olap-kpis y /p3; contrastar run_id y totales\nRepetir la consulta; comprobar que el tablero consume esa API",
+          "text": "Ensayo cloud completado: 16 job IDs, 62.982 s y datos sintéticos\nMostrar 602 viajes Bronze y las dos anomalías IoT de entrada\nMostrar Gold: 600 viajes únicos y cobertura explícita de los cruces\nAbrir /api/v1/olap-kpis y /p3; contrastar run_id y totales\nRepetir la consulta; comprobar que el tablero consume esa API",
           "insertionIndex": 0
         }
       },
@@ -7398,7 +7398,7 @@
         }
       }
     ],
-    "speaker_notes": "Cada ejecución genera una base aislada y un manifiesto con hashes, conteos y verificaciones. La demo en vivo debe ejecutarse durante la sustentación; la evidencia del ensayo no equivale a asistencia ni defensa individual realizada."
+    "speaker_notes": "El ensayo BigQuery terminó el 21/11/2026 a las 03:14 UTC (20/11/2026 22:14 Lima). API status=ok y run_id coincidente; consulta de muestra 3701.85 ms, sin inferir SLA. Para repetir: python P3/demo_e2e.py --backend bigquery --serve desde una terminal autenticada con red. La sustentación en clase sigue pendiente."
   },
   {
     "slide_id": "p3_slide_11",
@@ -7652,7 +7652,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_11_text_3",
-          "text": "El informe OLAP conecta ingesta, SQL, almacenamiento, API y consumidor\nLa deduplicación conserva el grano de viaje y los faltantes siguen visibles\nLa demostración local no depende de una caché Gold antigua\nLa factibilidad económica depende del consumo; se presenta una calculadora editable",
+          "text": "El informe OLAP conecta ingesta, SQL, almacenamiento, API y consumidor\nLa deduplicación conserva el grano de viaje y los faltantes siguen visibles\nLa demo en BigQuery consulta el Gold de esa ejecución, sin caché histórica\nLa factibilidad económica depende del consumo; se presenta una calculadora editable",
           "insertionIndex": 0
         }
       },
@@ -7793,11 +7793,11 @@
         }
       }
     ],
-    "speaker_notes": "No afirmar que está desplegado o medido en GCP si no existe evidencia bigquery_latest.json de esta versión. La rúbrica también requiere entrega del repositorio y participación individual."
+    "speaker_notes": "Evidencia cloud registrada y contrastada con SQLite: 600 viajes únicos, 540 con tráfico y 600 con IoT. No acredita todos los componentes P1/P2 ni despliegue Cloud Run."
   },
   {
     "slide_id": "p3_slide_12",
-    "title": "Cerrar accesos y publicar la versión validada",
+    "title": "Publicar la evidencia y ensayar la defensa",
     "requests": [
       {
         "createSlide": {
@@ -7957,7 +7957,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_12_text_2",
-          "text": "Cerrar accesos y publicar la versión validada",
+          "text": "Publicar la evidencia y ensayar la defensa",
           "insertionIndex": 0
         }
       },
@@ -8047,7 +8047,7 @@
       {
         "insertText": {
           "objectId": "p3_slide_12_text_3",
-          "text": "Validar el modo BigQuery con la cuenta autorizada del proyecto\nMedir latencia y consumo cloud con job IDs y datos aislados\nPublicar commit final en GitHub y enlazar presentación y manifiestos\nEnsayar la defensa: contexto, arquitectura y demo entre los tres integrantes\nDespués de P3: integrar solicitudes, flota, horarios y datos observados",
+          "text": "Conservar manifiesto y job IDs del ensayo BigQuery completado\nAmpliar las mediciones de latencia y consumo; una ejecución no define un SLA\nPublicar commit final en GitHub y enlazar presentación y manifiestos\nEnsayar la defensa: contexto, arquitectura y demo entre los tres integrantes\nDespués de P3: integrar solicitudes, flota, horarios y datos observados",
           "insertionIndex": 0
         }
       },
