@@ -1,0 +1,163 @@
+GUION DE SUSTENTACIÓN DE LUMINA
+Presentación Lumina-P3.pptx
+Duración orientativa de 10 a 12 minutos, más el tiempo de la demo
+
+1. Lumina — Movilidad urbana en DataLandia
+
+Buenos días. Somos Herles Pinedo, David Jimenez y José Nomberto, y presentamos Lumina, nuestra implementación para el caso de movilidad urbana de DataLandia.
+
+El proyecto integra los datos disponibles en una plataforma que permite consultar alternativas de transporte y analizar patrones históricos. Durante la presentación explicaremos cómo ingresan los datos, cómo los transformamos y validamos, y cómo llegan hasta la aplicación que utiliza el pasajero.
+
+2. Resumen ejecutivo — Un trayecto, varias alternativas
+
+Partimos de una pregunta concreta del pasajero. Si quiero trasladarme entre dos zonas, ¿qué alternativas existen y qué tiempos y tarifas registraron?
+
+Para responderla, integramos cuatro fuentes del proyecto y construimos un recorrido completo hasta una aplicación web. El alcance que demostramos es el análisis histórico de movilidad, también llamado OLAP.
+
+Esto permite comparar alternativas observadas para un trayecto y consultar los registros que respaldan los indicadores.
+
+3. Situación actual — Las fuentes tienen fechas distintas
+
+Trabajamos con cinco millones de registros de viajes, quinientos cuatro registros de tráfico, once observaciones de sensores y ocho zonas censales.
+
+Durante la revisión encontramos una característica que condiciona los cruces. Los viajes corresponden a enero y febrero de 2026, mientras que el tráfico y la telemetría corresponden a noviembre.
+
+Por eso conservamos las fechas originales y distinguimos las coincidencias temporales del contexto territorial. Esta decisión permite interpretar correctamente los resultados.
+
+4. Criterios de éxito — Calidad, integridad y rendimiento
+
+Definimos indicadores para comprobar que el procesamiento funcionara.
+
+Primero, verificamos que las cuatro tablas conservaran su conteo y su huella de contenido después de la carga. Segundo, establecimos un umbral mínimo de noventa y cinco por ciento para cada regla de calidad. El menor cumplimiento observado fue de noventa y nueve coma noventa y dos por ciento.
+
+También comprobamos que Gold mantuviera una fila por viaje. Finalmente, en una prueba local de cuarenta y ocho solicitudes, obtuvimos cero errores y una latencia p95 de aproximadamente ciento cuarenta y nueve milisegundos.
+
+5. Productos tecnológicos — Cada herramienta cumple una función
+
+La selección tecnológica responde a las etapas del procesamiento.
+
+Cloud Storage y Parquet permiten conservar y transferir archivos por fuente. BigQuery ejecuta la depuración, los controles de calidad y las agregaciones mediante SQL.
+
+Python y SQLite permiten reproducir eventos y conservar el estado de cada sensor. Para la exposición utilizamos Node.js como API y React como interfaz web.
+
+Además, el proyecto cuenta con un tópico de Pub/Sub configurado. Cloud Run forma parte del diseño previsto para alojar la API en producción.
+
+6. Dependencias y supuestos — Qué requiere el siguiente nivel operativo
+
+Para avanzar hacia una operación actual necesitamos fuentes adicionales.
+
+La asignación de vehículos requiere conocer la flota disponible, los turnos y las solicitudes vigentes. El mantenimiento predictivo requiere observaciones sucesivas de cada activo y un historial de fallas etiquetadas.
+
+En el presupuesto asumimos un consumo mensual constante durante doce meses. La estimación presentada cubre el escenario del piloto OLAP. El almacenamiento en Cloud Storage, el streaming continuo y la recuperación multirregional requieren un cálculo adicional.
+
+7. Arquitectura final — Del archivo a la decisión del pasajero
+
+Este diagrama muestra el recorrido principal.
+
+La reingesta conserva las fuentes en archivos Parquet y las carga en Bronze. Después, Silver depura los registros y aplica los controles de calidad. Gold organiza los resultados para las consultas analíticas.
+
+La API expone las exportaciones verificadas y React permite consultar las alternativas.
+
+En paralelo, el carril de telemetría procesa los eventos históricos y mantiene un estado durable en SQLite. Para estimar el consumo anual consideramos el procesamiento y almacenamiento de BigQuery y un escenario de exposición en Cloud Run.
+
+[Indicación para el expositor] Señala cada etapa del diagrama mientras explicas el recorrido.
+
+8. Procesamiento — La depuración conserva una fila por viaje
+
+El procesamiento empieza con cinco millones de filas de viajes. Durante la limpieza excluimos tres mil novecientas noventa y una filas, y obtenemos cuatro millones novecientos noventa y seis mil nueve viajes únicos en Gold.
+
+La publicación depende de cuatro controles de calidad. Cada uno debe alcanzar al menos el noventa y cinco por ciento.
+
+Esta compuerta permite comprobar el estado de los datos antes de construir los indicadores. Los manifiestos guardan los resultados y los identificadores de los trabajos ejecutados en BigQuery.
+
+9. Resultados OLAP — Multimodal OART concentra el 38 %
+
+El gráfico presenta la distribución de los viajes validados.
+
+El modo multimodal OART concentra aproximadamente el treinta y ocho por ciento, seguido de la minivan eléctrica, con cerca del veinticuatro por ciento.
+
+Después aparecen el automóvil de referencia, el bus rápido y la combinación de bicicleta con OART.
+
+Este resultado describe el volumen observado en el histórico. Para evaluar qué alternativa conviene en un trayecto, la aplicación permite comparar también su duración, distancia y tarifa.
+
+[Indicación para el expositor] Señala las dos primeras barras y después conecta el resultado con la consulta por trayecto.
+
+10. Calculadora de consumo — USD 216,81 para el primer año
+
+Construimos una calculadora con parámetros editables para relacionar la arquitectura con su consumo.
+
+El escenario mensual considera dos tebibytes consultados en BigQuery, cien gibibytes almacenados y diez mil solicitudes a la API prevista en Cloud Run.
+
+Las consultas de BigQuery representan la mayor parte del costo. El subtotal mensual es de aproximadamente quince dólares con seis centavos. Al proyectarlo durante doce meses y añadir veinte por ciento de contingencia, obtenemos doscientos dieciséis dólares con ochenta y un centavos.
+
+Los parámetros están guardados en el repositorio para recalcular otros escenarios.
+
+11. Demo de extremo a extremo — Del manifiesto al trayecto
+
+La demostración conecta cuatro momentos.
+
+Primero, comprobamos la reingesta mediante los conteos y las huellas de las cuatro tablas. Después revisamos la calidad y el total de viajes únicos.
+
+Luego pasamos a la consulta del pasajero, donde elegimos un origen y un destino. Finalmente, consultamos los registros disponibles para examinar trayectos, duraciones y tarifas.
+
+Así podemos seguir el recorrido desde las fuentes hasta una consulta concreta de negocio.
+
+12. Demo — Consulta del pasajero
+
+En esta pantalla seleccionamos como origen el Centro Financiero Metropolitano y como destino el Distrito Tecnológico Norte.
+
+La aplicación encuentra cinco alternativas observadas en veintisiete mil trescientos cuarenta registros históricos para ese trayecto.
+
+El usuario puede ordenarlas según menor duración, menor tarifa o menor distancia. Esto permite comparar opciones de acuerdo con su prioridad y abrir el detalle de la alternativa que le interese.
+
+[Indicación para el expositor] En la demo en vivo, baja hasta las alternativas y cambia el orden de duración a tarifa.
+
+13. Demo — Viajes registrados
+
+Esta vista permite examinar los viajes exportados con mayor detalle.
+
+Disponemos de novecientos sesenta ejemplos, seleccionados como hasta los tres últimos registros de cada combinación de origen, destino, condado y modo.
+
+Cada fila presenta el identificador, el trayecto, el transporte, la duración y la tarifa. Los filtros permiten localizar registros por origen, destino, modo o fecha, y también podemos descargarlos en CSV.
+
+[Indicación para el expositor] Selecciona un modo de transporte y abre una fila para mostrar su detalle.
+
+14. Demo — Resumen de movilidad
+
+El tablero permite explorar el comportamiento del histórico mediante indicadores y gráficos.
+
+Aquí observamos el volumen de viajes, la distancia acumulada, los importes de tarifa y la distribución por día y por modo. Los filtros permiten cambiar el período y el ámbito de la consulta.
+
+Esta vista utiliza la exportación del Gold histórico, con cuatro millones novecientos noventa y ocho mil novecientos veintiséis registros. La siguiente pantalla presenta el resultado de la ejecución final depurada.
+
+15. Demo — Validación integral
+
+Esta pantalla reúne la evidencia de la ejecución de cierre.
+
+Aquí confirmamos cuatro millones novecientos noventa y seis mil nueve viajes únicos, treinta y dos series de demanda evaluadas y once eventos procesados.
+
+La diferencia respecto al tablero anterior se debe a que cada vista identifica una ejecución y una tabla de origen distintas.
+
+Al desplazarnos hacia abajo podemos revisar las reglas de calidad, la cobertura de los cruces y los identificadores de los trabajos. Esta información permite rastrear cómo se obtuvieron los resultados.
+
+[Indicación para el expositor] Señala los tres indicadores y desplázate hasta la tabla de calidad.
+
+16. Conclusiones — Qué demuestra la implementación
+
+Con la implementación conseguimos una consulta histórica funcional y un procesamiento trazable desde las fuentes hasta los indicadores.
+
+La reingesta conserva los conteos, Gold mantiene una fila por viaje y los resultados de calidad quedan documentados.
+
+También evaluamos retrospectivamente treinta y dos series de demanda. En el procesamiento de eventos comprobamos la detección de reentregas y la restauración del estado local.
+
+Estos resultados permiten sustentar tanto el funcionamiento del proceso OLAP como las pruebas de modelos y recuperación realizadas.
+
+17. Next Steps — Del piloto a la operación
+
+Los siguientes pasos se concentran en actualizar los datos y validar el comportamiento operativo.
+
+Primero, recibir viajes, tráfico y sensores del mismo período para medir su cobertura temporal. Después, conectar la flota, los turnos y las solicitudes vigentes para evaluar las asignaciones.
+
+Para mantenimiento necesitamos ampliar el historial por activo y registrar las fallas. Finalmente, debemos ensayar la API bajo carga en la nube, medir sus tiempos de respuesta y comprobar la recuperación regional.
+
+Gracias. Quedamos atentos a sus preguntas.
