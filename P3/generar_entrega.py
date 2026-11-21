@@ -84,7 +84,8 @@ def main():
             with ZipFile(target) as package:
                 if package.testzip():
                     raise ValueError("Paquete dañado")
-            target.replace(OUT / target.name)
+            # Conservar los permisos de la carpeta de entrega al copiar desde el temporal.
+            shutil.copyfile(target, OUT / target.name)
 
 
 if __name__ == "__main__":
