@@ -1,0 +1,103 @@
+{
+  "run_id": "p3_20261121_024215_12824b",
+  "backend": "sqlite",
+  "data_origin": "synthetic_generated_for_p3",
+  "completed_at": "2026-11-21T02:42:16.472925+00:00",
+  "elapsed_seconds": 1.302,
+  "input_sha256": {
+    "censo_demografia_ine_datalandia.csv": "6775ca7e15ce9f2d6cbbe0d032d4e0a71abe968641428fd3930ae6bf262c8188",
+    "uber_movement_speeds_datalandia.csv": "b9487162ee5cfefa4c71e816e456640197f0a160a531207b9966dc4707a081ac",
+    "nyc_tlc_trips_lumina_multimodal.csv": "8f16bdb2b74593f12159b20e49dcb88186ce9e49a024d59bbc455143f42a8661"
+  },
+  "bronze_counts": {
+    "p3_bronze_census": 24,
+    "p3_bronze_speeds": 4968,
+    "p3_bronze_trips": 602,
+    "p3_bronze_iot": 240,
+    "p3_deadletter": 2
+  },
+  "gold_rows": 600,
+  "unique_trip_ids": 600,
+  "traffic_matched_trips": 540,
+  "iot_matched_trips": 600,
+  "sql_sha256": "c0fbba67ff107e2e69a91af147072f4c7f5d10514c39008c8b1e2d699b87ca4b",
+  "api_report": {
+    "status": "ok",
+    "backend": "sqlite",
+    "source": "sqlite:p3_gold_kpi",
+    "data_origin": "synthetic_generated_for_p3",
+    "run_id": "p3_20261121_024215_12824b",
+    "processed_at": "2026-11-21T02:42:15.781836+00:00",
+    "queried_at": "2026-11-21T02:42:15.959963+00:00",
+    "summary": {
+      "total_trips": 600,
+      "total_km": 9549.81,
+      "total_revenue_usd": 4295.94
+    },
+    "by_mode": [
+      {
+        "transport_mode": "LUMINA_BIKE_AND_OART",
+        "total_trips": 58,
+        "total_km": 962.84,
+        "total_revenue_usd": 356.9,
+        "revenue_per_km_usd": 0.3707,
+        "avg_duration_min": 26.86,
+        "avg_passengers": 3.81,
+        "traffic_matched_trips": 52,
+        "iot_matched_trips": 58
+      },
+      {
+        "transport_mode": "LUMINA_BUS_RAPID",
+        "total_trips": 91,
+        "total_km": 1428.28,
+        "total_revenue_usd": 635.79,
+        "revenue_per_km_usd": 0.4451,
+        "avg_duration_min": 31.42,
+        "avg_passengers": 4.07,
+        "traffic_matched_trips": 80,
+        "iot_matched_trips": 91
+      },
+      {
+        "transport_mode": "LUMINA_EV_MINIVAN_POOL",
+        "total_trips": 134,
+        "total_km": 2146.45,
+        "total_revenue_usd": 1452.02,
+        "revenue_per_km_usd": 0.6765,
+        "avg_duration_min": 29.49,
+        "avg_passengers": 3.79,
+        "traffic_matched_trips": 123,
+        "iot_matched_trips": 134
+      },
+      {
+        "transport_mode": "LUMINA_MULTIMODAL_OART",
+        "total_trips": 226,
+        "total_km": 3598.67,
+        "total_revenue_usd": 1851.23,
+        "revenue_per_km_usd": 0.5144,
+        "avg_duration_min": 22.32,
+        "avg_passengers": 4.02,
+        "traffic_matched_trips": 206,
+        "iot_matched_trips": 226
+      },
+      {
+        "transport_mode": "PERSONAL_CAR_BENCHMARK",
+        "total_trips": 91,
+        "total_km": 1413.57,
+        "total_revenue_usd": 1952.83,
+        "revenue_per_km_usd": 1.3815,
+        "avg_duration_min": 37.75,
+        "avg_passengers": 1.0,
+        "traffic_matched_trips": 79,
+        "iot_matched_trips": 91
+      }
+    ],
+    "latency_ms": 1.54
+  },
+  "verification": {
+    "trip_grain": "passed",
+    "api_reads_gold": "passed",
+    "consumer_references_api": "passed",
+    "legacy_template_resolved": "passed"
+  },
+  "browser_visual_review": "not_performed"
+}

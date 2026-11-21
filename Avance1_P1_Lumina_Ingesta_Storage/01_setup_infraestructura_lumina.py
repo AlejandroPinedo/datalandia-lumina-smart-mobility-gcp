@@ -36,7 +36,7 @@ def run_cmd(cmd: list[str], desc: str) -> bool:
         print(f"   ℹ️  El recurso ya existe ({desc}), continuando...")
         return True
     print(f"   ⚠️  Detalle en {desc}: {stderr[:280]}")
-    return False
+    raise RuntimeError(f"No se pudo aprovisionar: {desc}")
 
 
 def crear_infraestructura_gcp():

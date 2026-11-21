@@ -11,6 +11,7 @@ para responder a las 4 Verticales de Negocio de Lumina.
 
 from google.cloud import bigquery
 import config
+from pipeline_sql import table
 
 
 def ejecutar_consulta(bq_client: bigquery.Client, titulo: str, sql: str):
@@ -47,11 +48,12 @@ def verificar_cruces_multifuente():
       ROUND(AVG(t.effective_speed_kmh), 1) AS velocidad_lumina_kmh,
       ROUND(AVG(u.avg_speed_kmh), 1) AS velocidad_calle_uber_kmh,
       ROUND(AVG(t.passenger_count), 1) AS ocupacion_prom_pax
-    FROM {ds}.{config.BQ_TABLE_TLC_TRIPS} t
-    LEFT JOIN {ds}.{config.BQ_TABLE_UBER_SPEEDS} u
+    FROM {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_TLC_TRIPS)} t
+    LEFT JOIN {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_UBER_SPEEDS)} u
       ON t.origin_zone_id = u.origin_zone_id
      AND t.dest_zone_id = u.dest_zone_id
-     AND t.hod = u.hod
+     AND EXTRACT(HOUR FROM t.pickup_datetime) = u.hod
+     AND DATE(t.pickup_datetime) = u.travel_date
     GROUP BY t.transport_mode
     ORDER BY costo_prom_km_usd ASC
     """
@@ -68,7 +70,7 @@ def verificar_cruces_multifuente():
         origin_zone_id,
         COUNT(*) AS viajes_originados,
         ROUND(AVG(duration_minutes), 1) AS duracion_prom_min
-      FROM {ds}.{config.BQ_TABLE_TLC_TRIPS}
+      FROM {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_TLC_TRIPS)}
       GROUP BY origin_zone_id
     ),
     iot_por_zona AS (
@@ -76,7 +78,8 @@ def verificar_cruces_multifuente():
         zone_id,
         ROUND(AVG(passenger_load_pct), 1) AS ocupacion_oart_pct,
         COUNTIF(requiere_mantenimiento_pdm) AS alertas_pdm_activas
-      FROM {ds}.{config.BQ_TABLE_IOT_AOT}
+      FROM {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_IOT_AOT)}
+      WHERE timestamp_evento >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 HOUR)
       GROUP BY zone_id
     )
     SELECT
@@ -89,14 +92,14 @@ def verificar_cruces_multifuente():
       IFNULL(v.viajes_originados, 0) AS viajes_tlc,
       IFNULL(i.ocupacion_oart_pct, 0.0) AS carga_tren_oart_pct,
       IFNULL(i.alertas_pdm_activas, 0) AS alertas_pdm_oart
-    FROM {ds}.{config.BQ_TABLE_CENSO_INE} c
+    FROM {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_CENSO_INE)} c
     LEFT JOIN viajes_por_zona v ON c.zone_id = v.origin_zone_id
     LEFT JOIN iot_por_zona i ON c.zone_id = i.zone_id
     ORDER BY c.indice_prioridad_primera_milla DESC
     """
     ejecutar_consulta(
         bq_client,
-        "CRUCE 2 (F4 Censo INE + F1 TLC + F3 IoT AoT): Integración de las 4 Fuentes en los 8 Condados",
+        "CRUCE 2 (F4 Censo INE + F1 TLC + F3 IoT AoT): Integración de censo, viajes e IoT de la última hora",
         sql_v2_demografia,
     )
 
@@ -106,7 +109,7 @@ def verificar_cruces_multifuente():
       origen_fuente,
       motivo_error,
       COUNT(*) AS eventos_aislados
-    FROM {ds}.{config.BQ_TABLE_DEADLETTER}
+    FROM {table(config.BQ_DATASET_BRONZE, config.BQ_TABLE_DEADLETTER)}
     GROUP BY origen_fuente, motivo_error
     ORDER BY eventos_aislados DESC
     """

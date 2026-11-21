@@ -1,24 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-02_ingesta_batch_multifuente.py
-Implementa la Capa de Ingesta Batch Multifuente hacia Cloud Storage (Data Lake) y
-BigQuery (Capa Bronze) integrando las 3 fuentes históricas/referenciales del caso:
-  1. F4 - Censo de Población y Vivienda (INE) -> 9.25 millones de residentes en los
-          8 condados de DataLandia, reflejando el 89% a < 8 km de una estación OART,
-          adultos mayores en suburbios y jóvenes universitarios.
-  2. F2 - SF Caltrain / Uber Movement Speeds -> Tiempos de viaje y velocidades horarias
-          entre las zonas de DataLandia, reflejando la congestión crítica de 24 km/h
-          (15 mph) en horas punta frente a horarios valle.
-  3. F1 - NYC TLC Trip Record Data (adaptado a Lumina) -> Viajes multimodales de las
-          12 agencias unificadas (Tren OART + Minivan + Bike) comparados contra viajes
-          en automóvil particular (Personal Car Benchmark), calculando el costo por km.
+"""Generación de datos sintéticos o carga de CSV canónicos mediante staging y MERGE.
+Por defecto solo escribe archivos locales. --upload habilita la escritura en GCP.
+No descarga ni homologa automáticamente los datasets externos sugeridos por el taller."""
 
-Flujo de Ingesta:
-  Generación/Adaptación Local (CSV abiertos) -> Subida a gs://{BUCKET}/landing/batch/
-  -> Carga nativa vía `bq load` hacia las tablas particionadas/clusterizadas en BigQuery.
-"""
-
+import argparse
 import csv
 from datetime import datetime, timedelta, timezone
 import hashlib
@@ -45,7 +31,7 @@ def run_cmd(cmd: list[str], desc: str) -> bool:
         print(f"   ✅ {desc}")
         return True
     print(f"   ⚠️  Aviso en {desc}: {(res.stderr or res.stdout).strip()[:280]}")
-    return False
+    raise RuntimeError(f"Fallo de ingesta: {desc}")
 
 
 def generar_censo_demografia_ine() -> Path:
@@ -67,6 +53,20 @@ def generar_censo_demografia_ine() -> Path:
         "ZDL-008": (1060000, 390000, 19.4, 25.0, 3700.0, 19.0, 82.5, 79.0),
     }
 
+    perfiles_censales = {f"CNT-{i:02d}": profile for i, profile in enumerate(perfiles_censales.values(), 1)}
+    # Repartir los totales de cada condado entre sus zonas sin duplicar población.
+    reparto = {}
+    for county, profile in perfiles_censales.items():
+        zones = [z for z in config.DATALANDIA_ZONES if z["county_id"] == county]
+        weight = sum(z["population"] for z in zones)
+        remaining_pop, remaining_homes = profile[:2]
+        for i, zone in enumerate(zones):
+            pop = round(profile[0] * zone["population"] / weight) if i < len(zones) - 1 else remaining_pop
+            homes = round(profile[1] * zone["population"] / weight) if i < len(zones) - 1 else remaining_homes
+            reparto[zone["zone_id"]] = (pop, homes, *profile[2:])
+            remaining_pop -= pop
+            remaining_homes -= homes
+
     fieldnames = [
         "zone_id", "zone_name", "county_id", "county_name",
         "nearest_oart_station_id", "zone_type", "poblacion_residente",
@@ -77,11 +77,11 @@ def generar_censo_demografia_ine() -> Path:
     ]
 
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator=chr(10))
         writer.writeheader()
         for z in config.DATALANDIA_ZONES:
             zid = z["zone_id"]
-            pob, viv, p_may, p_jov, ing, sin_auto, cob_oart, prio = perfiles_censales[zid]
+            pob, viv, p_may, p_jov, ing, sin_auto, cob_oart, prio = reparto[zid]
             writer.writerow({
                 "zone_id": zid,
                 "zone_name": z["zone_name"],
@@ -167,7 +167,7 @@ def generar_uber_movement_speeds() -> Path:
                 })
 
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator=chr(10))
         writer.writeheader()
         writer.writerows(rows)
 
@@ -234,7 +234,7 @@ def generar_nyc_tlc_trips_multimodal(num_trips: int = 600) -> Path:
         pax = 1 if modo == "PERSONAL_CAR_BENCHMARK" else random.randint(2, 6)
 
         rows.append({
-            "trip_id": f"TRIP-{uuid.uuid4().hex[:10].upper()}",
+            "trip_id": "TRIP-" + hashlib.sha256(f"{base_day.date()}:{i}:{num_trips}".encode()).hexdigest()[:24],
             "pickup_datetime": pickup_dt.strftime("%Y-%m-%d %H:%M:%S"),
             "dropoff_datetime": dropoff_dt.strftime("%Y-%m-%d %H:%M:%S"),
             "hod": hod,
@@ -260,7 +260,7 @@ def generar_nyc_tlc_trips_multimodal(num_trips: int = 600) -> Path:
         })
 
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator=chr(10))
         writer.writeheader()
         writer.writerows(rows)
 
@@ -268,42 +268,69 @@ def generar_nyc_tlc_trips_multimodal(num_trips: int = 600) -> Path:
     return csv_path
 
 
-def ejecutar_ingesta_batch_gcp():
-    config.mostrar_resumen_config()
+def cargar_csv_sin_reemplazar(local_file, table_name, merge_keys):
+    """Carga staging con esquema del destino y MERGE idempotente por llave natural."""
+    stage = f"{table_name}_stage_{uuid.uuid4().hex[:12]}"
+    target = f"{config.GCP_PROJECT_ID}.{config.BQ_DATASET_BRONZE}.{table_name}"
+    staging = f"{config.GCP_PROJECT_ID}.{config.BQ_DATASET_BRONZE}.{stage}"
+    digest = hashlib.sha256(local_file.read_bytes()).hexdigest()[:16]
+    uri = f"gs://{config.GCS_BUCKET_DATALAKE}/landing/batch/{table_name}/{digest}.csv"
+    query_prefix = ["bq", "query", "--use_legacy_sql=false", f"--project_id={config.GCP_PROJECT_ID}",
+                    f"--location={config.GCP_LOCATION}"]
+    run_cmd(["gcloud", "storage", "cp", str(local_file), uri,
+             f"--project={config.GCP_PROJECT_ID}"], "Preservar lote en GCS")
+    run_cmd(query_prefix + [f"CREATE TABLE `{staging}` LIKE `{target}`"], "Crear staging")
+    try:
+        run_cmd(["bq", "load", "--source_format=CSV", "--skip_leading_rows=1",
+                 f"--project_id={config.GCP_PROJECT_ID}", f"--location={config.GCP_LOCATION}",
+                 staging, uri], "Cargar staging (sin reemplazar Bronze)")
+        with local_file.open(encoding="utf-8", newline="") as f:
+            columns = next(csv.reader(f))
+        # Los nombres provienen del esquema de los CSV admitidos, nunca de SQL libre.
+        if not all(c.replace("_", "").isalnum() and not c[0].isdigit() for c in columns):
+            raise ValueError("Cabecera CSV no válida")
+        on = " AND ".join(f"T.`{k}` = S.`{k}`" for k in merge_keys)
+        names = ", ".join(f"`{c}`" for c in columns)
+        values = ", ".join(f"S.`{c}`" for c in columns)
+        updates = ", ".join(f"T.`{c}` = S.`{c}`" for c in columns if c not in merge_keys)
+        partition = ", ".join(f"`{k}`" for k in merge_keys)
+        sql = (f"MERGE `{target}` T USING (SELECT * FROM `{staging}` "
+               f"QUALIFY ROW_NUMBER() OVER (PARTITION BY {partition} ORDER BY ts_ingesta_bq DESC) = 1) S "
+               f"ON {on} WHEN MATCHED THEN UPDATE SET {updates} "
+               f"WHEN NOT MATCHED THEN INSERT ({names}) VALUES ({values})")
+        run_cmd(query_prefix + [sql], "MERGE idempotente a Bronze")
+    finally:
+        run_cmd(query_prefix + [f"DROP TABLE IF EXISTS `{staging}`"], "Limpiar staging")
 
-    csv_censo = generar_censo_demografia_ine()
-    csv_uber = generar_uber_movement_speeds()
-    csv_tlc = generar_nyc_tlc_trips_multimodal(num_trips=600)
 
-    # 1. Subir archivos crudos al Data Lake en Cloud Storage (Zona Landing Batch)
-    archivos_landing = [
-        (csv_censo, f"gs://{config.GCS_BUCKET_DATALAKE}/landing/batch/censo_ine/{csv_censo.name}", config.BQ_TABLE_CENSO_INE),
-        (csv_uber,  f"gs://{config.GCS_BUCKET_DATALAKE}/landing/batch/uber_movement/{csv_uber.name}", config.BQ_TABLE_UBER_SPEEDS),
-        (csv_tlc,   f"gs://{config.GCS_BUCKET_DATALAKE}/landing/batch/tlc_trips/{csv_tlc.name}", config.BQ_TABLE_TLC_TRIPS),
-    ]
-
-    for local_file, gcs_uri, bq_table in archivos_landing:
-        ok_gcs = run_cmd(
-            ["gcloud", "storage", "cp", str(local_file), gcs_uri, f"--project={config.GCP_PROJECT_ID}"],
-            f"Subiendo '{local_file.name}' al Data Lake GCS ({gcs_uri})",
-        )
-        source_to_load = gcs_uri if ok_gcs else str(local_file)
-        run_cmd(
-            [
-                "bq", "load",
-                "--replace",
-                "--source_format=CSV",
-                "--skip_leading_rows=1",
-                f"--project_id={config.GCP_PROJECT_ID}",
-                f"{config.BQ_DATASET_BRONZE}.{bq_table}",
-                source_to_load,
-            ],
-            f"Cargando '{local_file.name}' en BigQuery Bronze ({config.BQ_DATASET_BRONZE}.{bq_table})",
-        )
-
-    print("\n✅ ¡Ingesta Batch Multifuente (NYC TLC + Uber Movement + Censo INE) completada en GCS y BigQuery!")
-    print("👉 Siguiente paso: python3 03_simulador_streaming_iot_aot_pubsub.py")
+def ejecutar_ingesta_batch_gcp(upload=False, input_dir=None, num_trips=600):
+    if input_dir:
+        directory = Path(input_dir)
+        files = [directory / n for n in (
+            "censo_demografia_ine_datalandia.csv", "uber_movement_speeds_datalandia.csv",
+            "nyc_tlc_trips_lumina_multimodal.csv")]
+        if not all(p.is_file() for p in files):
+            raise FileNotFoundError("Se requieren los tres CSV con esquema canónico")
+    else:
+        print("Generando datos SINTÉTICOS para demostración; no son descargas de NYC/Uber/INE.")
+        files = [generar_censo_demografia_ine(), generar_uber_movement_speeds(),
+                 generar_nyc_tlc_trips_multimodal(num_trips=num_trips)]
+    if not upload:
+        print("Archivos locales listos. No se escribió en GCP. Usar --upload para cargar mediante MERGE.")
+        return
+    for path, table, keys in zip(files,
+        [config.BQ_TABLE_CENSO_INE, config.BQ_TABLE_UBER_SPEEDS, config.BQ_TABLE_TLC_TRIPS],
+        [("zone_id",), ("origin_zone_id", "dest_zone_id", "travel_date", "hod"), ("trip_id",)]):
+        cargar_csv_sin_reemplazar(path, table, keys)
+    print("Ingesta completada; tablas Bronze preservadas mediante MERGE.")
 
 
 if __name__ == "__main__":
-    ejecutar_ingesta_batch_gcp()
+    parser = argparse.ArgumentParser(description="Generación sintética local o carga incremental segura")
+    parser.add_argument("--upload", action="store_true", help="Cargar en GCP mediante staging + MERGE")
+    parser.add_argument("--input-dir", help="Usar tres CSV canónicos existentes, sin generar datos")
+    parser.add_argument("--num-trips", type=int, default=600)
+    args = parser.parse_args()
+    if args.num_trips <= 0:
+        parser.error("--num-trips debe ser positivo")
+    ejecutar_ingesta_batch_gcp(args.upload, args.input_dir, args.num_trips)

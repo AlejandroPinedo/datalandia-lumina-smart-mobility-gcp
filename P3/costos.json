@@ -1,0 +1,34 @@
+{
+  "scenario": "Piloto OLAP P3; no dimensiona toda la metrópoli ni el carril IoT continuo",
+  "currency": "USD",
+  "region": "US / us-central1",
+  "price_checked_on": "2026-11-20",
+  "months": 12,
+  "usage_monthly": {
+    "bigquery_scanned_tib": 2,
+    "bigquery_logical_storage_gib": 100,
+    "cloud_run_vcpu_seconds": 10000,
+    "cloud_run_gib_seconds": 5000,
+    "cloud_run_requests": 10000
+  },
+  "prices_usd": {
+    "bigquery_per_tib": 6.25,
+    "bigquery_storage_per_gib_month": 0.023,
+    "cloud_run_per_vcpu_second": 0.000024,
+    "cloud_run_per_gib_second": 0.0000025,
+    "cloud_run_per_million_requests": 0.4
+  },
+  "free_tier_applied": false,
+  "contingency_pct": 20,
+  "sources": [
+    "https://cloud.google.com/bigquery/pricing",
+    "https://cloud.google.com/run/pricing"
+  ],
+  "excluded": [
+    "Impuestos, soporte y personal",
+    "Egreso y transferencias entre regiones",
+    "Construcción e imágenes de contenedores, logs por encima de cuotas",
+    "Streaming Pub/Sub y Dataflow continuo, Composer y DRP multirregional",
+    "Variación de volumen, tipo de cambio y precios"
+  ]
+}

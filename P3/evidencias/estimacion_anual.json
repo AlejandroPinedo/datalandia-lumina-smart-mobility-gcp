@@ -1,0 +1,27 @@
+{
+  "scenario": "Piloto OLAP P3; no dimensiona toda la metrópoli ni el carril IoT continuo",
+  "currency": "USD",
+  "monthly_lines": {
+    "bigquery_queries": 12.5,
+    "bigquery_storage": 2.3,
+    "cloud_run_cpu": 0.24,
+    "cloud_run_memory": 0.0125,
+    "cloud_run_requests": 0.004
+  },
+  "monthly_subtotal": 15.0565,
+  "contingency_pct": 20,
+  "monthly_with_contingency": 18.0678,
+  "first_year_with_contingency": 216.81,
+  "sources": [
+    "https://cloud.google.com/bigquery/pricing",
+    "https://cloud.google.com/run/pricing"
+  ],
+  "excluded": [
+    "Impuestos, soporte y personal",
+    "Egreso y transferencias entre regiones",
+    "Construcción e imágenes de contenedores, logs por encima de cuotas",
+    "Streaming Pub/Sub y Dataflow continuo, Composer y DRP multirregional",
+    "Variación de volumen, tipo de cambio y precios"
+  ],
+  "limitation": "Estimación del piloto con supuestos; no es factura, presupuesto aprobado ni TCO metropolitano."
+}

@@ -9,3 +9,7 @@ __pycache__/
 venv/
 .env
 .env.local
+
+# Configuración local, credenciales y dependencias de ejecución (nunca publicar)
+.runtime/
+.review_tmp/

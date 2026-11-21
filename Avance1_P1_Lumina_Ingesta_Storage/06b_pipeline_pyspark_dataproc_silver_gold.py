@@ -1,25 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-06b_pipeline_pyspark_dataproc_silver_gold.py
-Pipeline de Procesamiento y Transformación Distribuida en Apache Spark (PySpark).
-Diseñado para ejecución en Google Cloud Dataproc o modo standalone local.
+"""Spark real para Silver Parquet o demo Python explícita.
+Gold multifuente se construye mediante el pipeline SQL, no mediante este job."""
 
-Cumple estrictamente con la Rúbrica de la Entrega 2 (P2):
-  - Motores de procesamiento (Spark / PySpark) para computación masiva distribuida.
-  - Limpieza y deduplicación con Window Functions (`row_number().over(Window)`).
-  - Enriquecimiento geoespacial y cruce multifuente de las 4 fuentes heterogéneas de DataLandia:
-      * F1: Viajes Multimodales (TLC NYC adaptado a DataLandia)
-      * F2: Velocidades de Congestión (Uber Movement Speeds)
-      * F3: Telemetría IoT en Estaciones OART (Array of Things)
-      * F4: Demografía y Zonas Censo (INE DataLandia)
-  - Construcción del Modelo Dimensional en Estrella (Star Schema):
-      * `dim_zonas_condados_gold`
-      * `fact_movilidad_multimodal_gold`
-      * `kpi_ejecutivo_condados_gold`
-  - Exportación optimizada en formato columnar Parquet particionado y compatibilidad con BigQuery Connector.
-"""
-
+import argparse
 import os
 import sys
 import hashlib
@@ -41,11 +25,7 @@ except ImportError:
 
 
 def inicializar_spark(app_name: str = "Lumina-P2-Spark-Medallion"):
-    """
-    Inicializa una sesión de Spark optimizada para GCP Dataproc.
-    Si el entorno local no tiene Java Runtime instalado, retorna None para activar
-    el motor de simulación distribuida compatible.
-    """
+    """Inicializa Spark real. Si falta el runtime retorna None; no activa un fallback."""
     if not PYSPARK_AVAILABLE:
         return None
 
@@ -56,6 +36,7 @@ def inicializar_spark(app_name: str = "Lumina-P2-Spark-Medallion"):
             .config("spark.sql.adaptive.enabled", "true")
             .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
             .config("spark.sql.shuffle.partitions", "20")
+            .config("spark.sql.session.timeZone", "UTC")
             .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
         )
         spark = builder.getOrCreate()
@@ -64,7 +45,7 @@ def inicializar_spark(app_name: str = "Lumina-P2-Spark-Medallion"):
         return spark
     except Exception as exc:
         print(f"ℹ️  Aviso de Entorno: Java Runtime no detectado en el host local ({exc}).")
-        print("   Activando ejecución mediante el Emulador de Transformaciones Spark AQE para demostración local.")
+        print("   Spark no se ejecutó. Use --mode=demo-python solo para la demostración explícita.")
         print("   (En Google Cloud Dataproc se ejecuta de forma nativa en el clúster con JVM administrada).")
         return None
 
@@ -144,13 +125,10 @@ def transformar_bronze_a_silver_trips(spark, df_bronze_trips):
 # ==============================================================================
 
 def ejecutar_simulacion_spark_local(landing_dir: str):
-    """
-    Ejecuta exactamente la misma lógica de cómputo, deduplicación y cruce de Spark
-    cuando se prueba en un host de desarrollo sin Java Runtime preinstalado.
-    """
+    """Demo Python limitada a 20,000 filas. No reproduce ni acredita ejecución Spark."""
     import csv
 
-    print("\n⚙️  Iniciando motor de cómputo columnar compatible (Simulación Spark AQE)...")
+    print("\nDEMO PYTHON: no ejecuta Spark, no certifica AQE ni cómputo distribuido.")
     path_tlc = os.path.join(landing_dir, "nyc_tlc_trips_lumina_multimodal.csv")
     path_uber = os.path.join(landing_dir, "uber_movement_speeds_datalandia.csv")
     path_censo = os.path.join(landing_dir, "censo_demografia_ine_datalandia.csv")
@@ -174,11 +152,11 @@ def ejecutar_simulacion_spark_local(landing_dir: str):
     with open(path_uber, mode="r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for r in reader:
-            src = int(r.get("sourceid", 1))
-            dst = int(r.get("dstid", 2))
+            src = r["origin_zone_id"]
+            dst = r["dest_zone_id"]
             hour = int(r.get("hod", r.get("hour", 0)))
             speed = float(r.get("avg_speed_kmh", r.get("speed_kmh_mean", 24.0)))
-            uber_lookup[(src, dst, hour)] = speed
+            uber_lookup[(src, dst, r["travel_date"], hour)] = speed
 
     # 3. Ingesta, Deduplicación y Enriquecimiento de Viajes
     total_leidos = 0
@@ -235,9 +213,9 @@ def ejecutar_simulacion_spark_local(landing_dir: str):
                     periodo = "VALLE"
 
                 # Cruce con Uber Speeds
-                vel_vial = uber_lookup.get((p_uid, d_uid, hora), 24.0)
-                tiempo_vial = (dist_km / vel_vial) * 60.0
-                ahorro = round(max(0.0, tiempo_vial - dur_min), 2)
+                vel_vial = uber_lookup.get((r["origin_zone_id"], r["dest_zone_id"], str(t1.date()), hora))
+                tiempo_vial = (dist_km / vel_vial) * 60.0 if vel_vial else None
+                ahorro = round(tiempo_vial - dur_min, 2) if tiempo_vial is not None else None
                 supera_cuello = vel_efectiva > 24.0
                 county_id = r.get("county_id") or f"CNT-{((p_uid - 1) % 8) + 1:02d}"
 
@@ -273,13 +251,13 @@ def ejecutar_simulacion_spark_local(landing_dir: str):
         kpis[k]["dur"] += v["duracion_min"]
         kpis[k]["vel"] += v["velocidad_efectiva"]
         kpis[k]["costo"] += v["costo_usd"]
-        kpis[k]["ahorro"] += v["ahorro_min"]
+        kpis[k]["ahorro"] += v["ahorro_min"] or 0.0
         if v["supera_cuello"]:
             kpis[k]["supera"] += 1
 
     condados_dict = {c["county_id"]: c["county_name"] for c in censo_rows}
 
-    print("\n⭐ [Spark Gold] Resultados del Data Mart Ejecutivo (`kpi_ejecutivo_condados_gold`):")
+    print("\n[DEMO PYTHON] Resumen en memoria; no materializa una tabla Gold:")
     print("-" * 115)
     print(f"{'Condado':<22} | {'Período':<8} | {'Viajes':<8} | {'Dist(km)':<9} | {'Vel(km/h)':<10} | {'Costo/km':<10} | {'Ahorro(h)':<10} | {'% > 24 km/h'}")
     print("-" * 115)
@@ -308,31 +286,37 @@ def ejecutar_simulacion_spark_local(landing_dir: str):
 # ==============================================================================
 
 def main():
-    print("=" * 80)
-    print("  LUMINA SMART MOBILITY — PIPELINE PYSPARK MEDALLION (ENTREGA 2 - P2)")
-    print("  Universidad de Ingeniería y Tecnología (UTEC) - Sección 1")
-    print("=" * 80)
-
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    landing_dir = os.path.join(base_dir, "data_landing_local")
-
-    spark = inicializar_spark()
-
-    if spark is not None:
-        path_tlc = os.path.join(landing_dir, "nyc_tlc_trips_lumina_multimodal.csv")
-        df_bronze_trips = spark.read.option("header", "true").schema(esquema_tlc_bronze()).csv(path_tlc)
-        df_silver = transformar_bronze_a_silver_trips(spark, df_bronze_trips)
-        df_silver.show(5)
-        spark.stop()
-    else:
+    parser = argparse.ArgumentParser(description="Spark real o demo Python explícita")
+    parser.add_argument("--mode", choices=["spark", "demo-python"], default="spark")
+    parser.add_argument("--input", help="CSV canónico local o gs://... accesible desde Spark")
+    parser.add_argument("--output", help="Directorio Parquet Silver; obligatorio para Spark")
+    args = parser.parse_args()
+    landing_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_landing_local")
+    if args.mode == "demo-python":
         ejecutar_simulacion_spark_local(landing_dir)
-
-    print("\n💡 COMANDO PARA ENVIAR ESTE JOB A GOOGLE CLOUD DATAPROC:")
-    print("   gcloud dataproc jobs submit pyspark 06b_pipeline_pyspark_dataproc_silver_gold.py \\")
-    print("     --cluster=lumina-dataproc-cluster \\")
-    print("     --region=us-central1 \\")
-    print("     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar")
-    print("\n✅ Verificación de Pipeline PySpark completada con éxito.")
+        print("Demo Python finalizada. No se ejecutó Spark ni se escribió Gold.")
+        return
+    if not args.input or not args.output:
+        parser.error("Spark requiere --input y --output; no reemplaza tablas BigQuery")
+    spark = inicializar_spark()
+    if spark is None:
+        raise RuntimeError("Spark no disponible. Instale PySpark y Java o ejecute en Dataproc.")
+    try:
+        df = spark.read.option("header", "true").csv(args.input)
+        # Adaptador del CSV canónico a los campos del transformador Spark.
+        if "trip_distance_km" in df.columns:
+            df = (df.withColumn("trip_distance", F.col("trip_distance_km").cast("double") / F.lit(1.60934))
+                  .withColumn("tpep_pickup_datetime", F.col("pickup_datetime"))
+                  .withColumn("tpep_dropoff_datetime", F.col("dropoff_datetime"))
+                  .withColumn("PULocationID", F.col("pulocation_id"))
+                  .withColumn("DOLocationID", F.col("dolocation_id"))
+                  .withColumn("total_amount", F.col("total_fare_usd").cast("double"))
+                  .withColumn("modo_transporte", F.col("transport_mode")))
+        result = transformar_bronze_a_silver_trips(spark, df)
+        result.write.mode("errorifexists").partitionBy("fecha_viaje").parquet(args.output)
+        print("Spark Silver materializado en Parquet. Gold multifuente se construye con el pipeline SQL.")
+    finally:
+        spark.stop()
 
 
 if __name__ == "__main__":

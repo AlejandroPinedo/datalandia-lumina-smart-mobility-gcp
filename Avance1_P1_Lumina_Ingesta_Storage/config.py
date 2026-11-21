@@ -38,6 +38,15 @@ GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID", "bigdata-herles-pinedo")
 GCP_REGION = os.getenv("GCP_REGION", "us-central1")
 GCP_LOCATION = os.getenv("GCP_LOCATION", "US")
 
+# Supuestos de escenario; no son tarifas observadas ni una demostración económica.
+CAR_FIXED_COST_USD = float(os.getenv("CAR_FIXED_COST_USD", "3.20"))
+CAR_VARIABLE_COST_USD_KM = float(os.getenv("CAR_VARIABLE_COST_USD_KM", "1.18"))
+PLANNING_TRIPS_PER_VEHICLE_DAY = int(os.getenv("PLANNING_TRIPS_PER_VEHICLE_DAY", "20"))
+if PLANNING_TRIPS_PER_VEHICLE_DAY <= 0:
+    raise ValueError("PLANNING_TRIPS_PER_VEHICLE_DAY debe ser positivo")
+if not (0 <= CAR_FIXED_COST_USD < 1e6 and 0 <= CAR_VARIABLE_COST_USD_KM < 1e6):
+    raise ValueError("Los costos del escenario deben ser finitos y no negativos")
+
 PUBSUB_TOPIC_IOT = os.getenv("PUBSUB_TOPIC_IOT", "lumina-iot-aot-telemetry-topic")
 PUBSUB_SUB_IOT = os.getenv("PUBSUB_SUB_IOT", "lumina-iot-aot-telemetry-sub")
 

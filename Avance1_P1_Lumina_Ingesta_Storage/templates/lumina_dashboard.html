@@ -584,12 +584,16 @@
   </style>
 </head>
 <body>
+  <aside role="status" style="padding:14px;background:#49380d;color:#fff;text-align:center">
+    Demostración académica. Indicadores de muestra y caché histórica; no acredita operación en vivo.
+    El simulador usa tarifas y velocidades supuestas. No reserva vehículos ni procesa pagos.
+  </aside>
 
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="brand">
       <span>🏙️ LUMINA SMART MOBILITY COMMAND</span>
-      <span class="brand-badge">5,000,000 BigQuery Gold Live</span>
+      <span class="brand-badge">Lumina · demostración académica</span>
       <span class="brand-badge" style="background:rgba(99,102,241,0.2);color:#A5B4FC;border-color:rgba(99,102,241,0.4);">DataLandia Metrópolis (8 Condados)</span>
     </div>
     <div class="nav-status">
@@ -718,7 +722,7 @@
           </div>
 
           <button type="button" class="btn-action" id="btn-calc-route" style="margin-top:12px;width:100%;">
-            ⚡ Planificar Ruta Óptima en BigQuery Gold
+            Comparar escenario de viaje
           </button>
         </div>
 
@@ -871,7 +875,7 @@
           <div class="chat-messages" id="chat-messages">
             <div class="msg-bubble msg-agent">
               <b>🤖 Agent Platform de DataLandia:</b><br>
-              Hola. Tengo acceso directo a los <b>5,000,000 de registros modelados en BigQuery Gold</b>, telemetría IoT de sensores AoT y el Censo INE de los 8 condados.<br><br>
+              Hola. Puedo consultar el servicio de datos cuando esté conectado. Si no hay conexión, indicaré que los datos no están disponibles.<br><br>
               ¿Qué deseas auditar o consultar sobre la operación de Lumina?
             </div>
           </div>
@@ -1050,7 +1054,7 @@
         const pax = parseInt(document.getElementById('sel-pax').value, 10);
 
         const btn = document.getElementById('btn-calc-route');
-        btn.textContent = '⏳ Consultando BigQuery Gold (5M filas)...';
+        btn.textContent = 'Calculando escenario supuesto...';
         btn.disabled = true;
 
         try {
@@ -1107,7 +1111,7 @@
         } catch (err) {
           console.error(err);
         } finally {
-          btn.textContent = '⚡ Planificar Ruta Óptima en BigQuery Gold';
+          btn.textContent = 'Comparar escenario de viaje';
           btn.disabled = false;
         }
       }
@@ -1175,7 +1179,7 @@
         chatInput.value = '';
 
         // Indicador de carga
-        const loadingDiv = appendMessage('agent', '<span style="color:var(--text-muted);display:flex;align-items:center;gap:6px;"><span>⏳</span><span>Consultando BigQuery Lakehouse (<b>4,998,926 filas</b> en vivo)...</span></span>');
+        const loadingDiv = appendMessage('agent', '<span style="color:var(--text-muted);display:flex;align-items:center;gap:6px;"><span>⏳</span><span>Consultando el servicio de datos...</span></span>');
 
         try {
           const controller = new AbortController();
@@ -1194,8 +1198,8 @@
             if (data.sql_executed) {
               html += `<div style="margin-top:12px;padding:8px 10px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);border-radius:6px;">
                 <div style="font-size:10px;color:var(--accent-sky);margin-bottom:4px;display:flex;justify-content:space-between;font-weight:600;">
-                  <span>⚡ SQL BigQuery Ejecutado</span>
-                  <span style="color:var(--text-muted);font-weight:normal;">Latencia: ${data.latency_ms || 110} ms</span>
+                  <span>⚡ SQL ejecutado</span>
+                  <span style="color:var(--text-muted);font-weight:normal;">Latencia: ${data.latency_ms ?? "N/D"} ms</span>
                 </div>
                 <pre style="margin:0;font-family:monospace;font-size:10px;color:#A5B4FC;white-space:pre-wrap;word-break:break-all;">${data.sql_executed}</pre>
               </div>`;
@@ -1205,24 +1209,8 @@
             throw new Error(`HTTP ${res.status}`);
           }
         } catch (err) {
-          console.warn("Fallo fetch a /api/v1/agent-query, utilizando motor cognitivo local:", err);
-          let reply = '';
-          const low = q.toLowerCase();
-          if (low.includes('silicon')) {
-            reply = '<b>🤖 Agent Platform · Auditoría Silicon Norte:</b><br><br>En BigQuery Gold registramos <b>624,800 viajes</b> en Silicon Norte. La población es predominantemente joven (38.0% estudiantes/tech), con una velocidad del tren OART de <b>43.2 km/h</b> vs 24.1 km/h del tráfico arterial, logrando una cobertura del 94.2%.';
-          } else if (low.includes('24 km') || low.includes('tráfico') || low.includes('cuello') || low.includes('punta')) {
-            reply = '<b>🤖 Agent Platform · Diagnóstico del Cuello de Botella Vial:</b><br><br>De los <b>4,998,926 viajes auditados en BigQuery Gold</b>, exactamente <b>3,843,477 viajes (76.9%)</b> experimentan la restricción crítica de <b>23.6 km/h (15 mph)</b> en corredores arteriales en hora punta.<br><br>• <b>Velocidad Auto Particular:</b> 23.6 km/h<br>• <b>Velocidad Lumina Troncal OART:</b> <b>41.8 km/h</b> segregada.<br>• <b>Ahorro Medio:</b> 18.2 min/viaje.';
-          } else if (low.includes('adulto') || low.includes('altos del este') || low.includes('censo') || low.includes('ine')) {
-            reply = '<b>🤖 Agent Platform · Censo INE y Cobertura Social:</b><br><br>El Censo INE reporta un <b>29.5% de adultos mayores (&gt;65 años)</b> en Altos del Este y <b>33.8%</b> en Comarca del Lago. Lumina ejecuta diariamente a las 05:00 AM el despacho de <b>Minivans Eléctricas Puerta-a-Puerta</b> con plataforma de piso bajo para garantizar acceso a la Línea OART en &lt;8 min.';
-          } else if (low.includes('sensor') || low.includes('alerta') || low.includes('iot') || low.includes('pdm') || low.includes('vibraci')) {
-            reply = '<b>🤖 Agent Platform · Auditoría IoT (AoT):</b><br><br>Se vigilan 50,000 nodos en tiempo real. Se detectó una alerta crítica de vibración de <b>11.4 mm/s</b> (umbral: 8.5 mm/s) en <code>NODE-ZDL-001-412</code> (Estación Centro Financiero). El sistema emitió la orden de Mantenimiento Predictivo al taller nocturno para proteger el SLA del 99.6%.';
-          } else if (low.includes('ahorro') || low.includes('dinero') || low.includes('costo') || low.includes('tarifa')) {
-            reply = '<b>🤖 Agent Platform · Impacto Económico:</b><br><br>En los <b>4,998,926 viajes en BigQuery Gold</b>, la tarifa Lumina es de <b>$0.42 USD/km</b> frente a <b>$1.18 USD/km</b> del vehículo privado. La ciudadanía ahorra un <b>64.4%</b> de dinero y se han acumulado <b>585,991 horas de vida ahorradas</b>.';
-          } else if (low.includes('filas') || low.includes('volumen') || low.includes('lakehouse') || low.includes('escala')) {
-            reply = '<b>🤖 Agent Platform · Arquitectura Lakehouse GCP:</b><br><br>El proyecto <code>bigdata-herles-pinedo</code> opera bajo Medallion Architecture:<br>• <b>Bronze Raw:</b> 5,000,000 filas (1,425.64 MB)<br>• <b>Silver Clean:</b> 4,958,010 filas (1,338.02 MB) deduplicadas con DLP SHA-256.<br>• <b>Gold Lakehouse:</b> <b>4,998,926 filas (959.75 MB)</b> gobernadas.<br>• <b>Total:</b> ~3.72 GB particionados.';
-          } else {
-            reply = `<b>🤖 Agent Platform · Consulta Lakehouse BigQuery:</b><br><br>Consulta procesada sobre el Lakehouse gobernado (<code>bigdata-herles-pinedo.lumina_gold_governed.fact_movilidad_multimodal_gold</code>). Distancia media de viaje: 14.8 km; SLA de puntualidad: 99.6%; reducción de CO2: >12,400 toneladas.`;
-          }
+          console.warn("API no disponible:", err);
+          const reply = 'Datos no disponibles. No se pudo consultar el servicio; no se generaron resultados de respaldo.';
           loadingDiv.innerHTML = reply;
         }
         chatMessages.scrollTop = chatMessages.scrollHeight;
