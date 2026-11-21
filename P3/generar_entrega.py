@@ -86,6 +86,8 @@ def main():
                     raise ValueError("Paquete dañado")
             # Conservar los permisos de la carpeta de entrega al copiar desde el temporal.
             shutil.copyfile(target, OUT / target.name)
+    from disenar_slides import main as design_slides
+    design_slides()
 
 
 if __name__ == "__main__":
