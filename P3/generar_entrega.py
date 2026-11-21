@@ -34,9 +34,8 @@ def main():
     ingest = load("ingesta_demostrada_latest")
     if ingest["status"] != "passed" or report["status"] != "validated_olap_pipeline":
         raise ValueError("Revise las evidencias antes de generar los materiales.")
-    slides, document = [], []
+    document = []
     def add(title, brief, detail="", old=None):
-        slides.append("# " + title + "\n\n" + brief)
         block = "## " + title + "\n\n" + brief + "\n\n" + detail
         if old:
             block += "\n\n" + image(ROOT / "Capturas de pantalla" / (old[0] + ".png"), old[1], 5.8)
@@ -58,16 +57,20 @@ def main():
         ("04-validacion", "Reconciliar la validación", "En Validación integral, contraste los viajes únicos, revise el resultado de las cuatro reglas y las fechas de las fuentes. Los identificadores de trabajo permiten rastrear la ejecución en BigQuery.")]:
         pic = OUT / "capturas" / (file + ".png")
         document.append("### " + title + "\n\n" + body + ("\n\n" + image(pic, title + " en el prototipo.", 5.8) if pic.exists() else ""))
-        if file in ("01-viajes", "04-validacion"):
-            slides.append("# Demo · " + title + "\n\n" + (image(pic, title, 6.4) if pic.exists() else body))
     add("USD 216,81 para el primer año del piloto OLAP", "El escenario supone 2 TiB consultados, 100 GiB almacenados y 10.000 solicitudes al mes. El subtotal mensual es USD 15,06. El cálculo anual incorpora 20 % de contingencia.", "La calculadora está en P3/calculadora_consumo.py y los parámetros en P3/costos.json. La estimación excluye egreso, impuestos, operación continua de IoT y despliegue metropolitano.")
     add("Conclusiones y siguientes pasos", "La consulta histórica tiene conteos conciliados y trabajos trazables. La prueba local atendió 48 solicitudes, con concurrencia 6, cero errores y p95 de 148,52 ms.\n\nPara ampliar el piloto se requieren datos contemporáneos, dimensionamiento bajo carga y pruebas de recuperación regional.", "La evaluación operativa requiere flota, turnos y solicitudes recientes. Para mantenimiento predictivo se necesita historial de fallas por activo. La latencia reportada pertenece a la API local.")
     document.append("## Trazabilidad\n\nEjecución de cierre: " + report["run_id"] + ". Consulte los manifiestos de ingesta y validación en P3/evidencias.\n\n" + table(["Etapa", "Trabajo BigQuery"], [(s["name"], s["job_id"]) for s in report["stages"][:8]]) + "\n\nRepositorio: <https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp>")
     pandoc = shutil.which("pandoc") or str(Path(os.environ["LOCALAPPDATA"]) / "Programs/Quarto/bin/tools/pandoc.exe")
     OUT.mkdir(exist_ok=True)
     header = "---\ntitle: 'Lumina | Movilidad urbana en DataLandia'\nsubtitle: 'UTEC · Big Data · Entrega 3'\nauthor: 'Herles Pinedo · David Jimenez · José Nomberto'\n---\n\n"
+    slides = (P3 / "sustentacion.md").read_text(encoding="utf-8")
+    for file, title in [("01-viajes", "Consulta del pasajero"), ("04-validacion", "Validación integral")]:
+        pic = OUT / "capturas" / (file + ".png")
+        if pic.is_file():
+            section = "# Demo · " + title + "\n\n" + image(pic, title, 6.4)
+            slides = slides.replace("# Conclusiones", section + "\n\n# Conclusiones", 1)
     with tempfile.TemporaryDirectory(dir=OUT) as tmp:
-        for ext, sections in [("docx", document), ("pptx", slides)]:
+        for ext, sections in [("docx", document), ("pptx", [slides])]:
             source = Path(tmp) / (ext + ".md")
             source.write_text(header + "\n\n".join(sections), encoding="utf-8")
             target = Path(tmp) / ("Lumina-P3." + ext)
