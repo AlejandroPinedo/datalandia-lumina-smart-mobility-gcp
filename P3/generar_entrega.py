@@ -50,13 +50,19 @@ def main():
     add("Alcance de las cuatro verticales", "**OLAP:** consulta funcional por zona y modo.\n\n**Plan diario:** 32 series evaluadas retrospectivamente.\n\n**Tiempo real:** asignación implementada, condicionada a solicitudes y flota vigentes.\n\n**Mantenimiento:** diagnóstico de antigüedad de 11 sensores.", "El modelo se seleccionó con siete días de validación y se evaluó con otros siete días. Para ZDL-001 y bicicleta/OART, la referencia estacional semanal obtuvo un error absoluto medio de 50 viajes/día y WAPE de 9,75 % en prueba. Para estimar fallas hacen falta observaciones sucesivas y etiquetas.")
     add("El consumidor reconoce las reentregas", "El replay procesó 11 eventos históricos y detectó los 11 duplicados al reenviarlos. La restauración del respaldo y la comprobación de integridad pasaron.", "El consumidor registra cada evento antes de confirmar recepción y conserva el último estado por sensor. La prueba de recuperación corresponde al almacenamiento local SQLite.", ("C3", "Tópico de telemetría de Pub/Sub configurado en el proyecto."))
     document.append("## Recorrido de la demostración\n\nDesde la raíz del repositorio ejecute `cd frontend`, `npm ci`, `npm run build` y `npm start`. Abra <http://127.0.0.1:3000/p3>.")
+    captions = {
+        "01-viajes": "Del Centro Financiero Metropolitano al Distrito Tecnológico Norte se observan 5 alternativas en 27.340 registros históricos.",
+        "02-registros": "La vista muestra 960 registros disponibles. Cada fila identifica un viaje con su trayecto, modo, duración y tarifa.",
+        "03-tablero": "El resumen histórico reúne 4.998.926 viajes y muestra su distribución por día y por modo.",
+        "04-validacion": "La ejecución de cierre confirma 4.996.009 viajes en Gold, 32 series de demanda evaluadas y 11 eventos procesados.",
+    }
     for file, title, body in [
         ("01-viajes", "Buscar un viaje", "En Viajar, elija origen y destino. Compare las alternativas históricas por tiempo o tarifa. Abra el detalle de una alternativa y guárdela para volver a consultarla."),
         ("02-registros", "Consultar registros", "Abra Registros, aplique un filtro y examine un viaje. Hay hasta tres registros por combinación de origen, destino, condado y modo: 960 ejemplos históricos en total."),
         ("03-tablero", "Explorar el tablero", "Seleccione el período y los modos. Observe el volumen filtrado y las medias ponderadas. La exportación de la tabla Gold previa alimenta esta vista."),
         ("04-validacion", "Reconciliar la validación", "En Validación integral, contraste los viajes únicos, revise el resultado de las cuatro reglas y las fechas de las fuentes. Los identificadores de trabajo permiten rastrear la ejecución en BigQuery.")]:
         pic = OUT / "capturas" / (file + ".png")
-        document.append("### " + title + "\n\n" + body + ("\n\n" + image(pic, title + " en el prototipo.", 5.8) if pic.exists() else ""))
+        document.append("### " + title + "\n\n" + body + ("\n\n" + image(pic, captions[file], 5.8) if pic.exists() else ""))
     add("USD 216,81 para el primer año del piloto OLAP", "El escenario supone 2 TiB consultados, 100 GiB almacenados y 10.000 solicitudes al mes. El subtotal mensual es USD 15,06. El cálculo anual incorpora 20 % de contingencia.", "La calculadora está en P3/calculadora_consumo.py y los parámetros en P3/costos.json. La estimación excluye egreso, impuestos, operación continua de IoT y despliegue metropolitano.")
     add("Conclusiones y siguientes pasos", "La consulta histórica tiene conteos conciliados y trabajos trazables. La prueba local atendió 48 solicitudes, con concurrencia 6, cero errores y p95 de 148,52 ms.\n\nPara ampliar el piloto se requieren datos contemporáneos, dimensionamiento bajo carga y pruebas de recuperación regional.", "La evaluación operativa requiere flota, turnos y solicitudes recientes. Para mantenimiento predictivo se necesita historial de fallas por activo. La latencia reportada pertenece a la API local.")
     document.append("## Trazabilidad\n\nEjecución de cierre: " + report["run_id"] + ". Consulte los manifiestos de ingesta y validación en P3/evidencias.\n\n" + table(["Etapa", "Trabajo BigQuery"], [(s["name"], s["job_id"]) for s in report["stages"][:8]]) + "\n\nRepositorio: <https://github.com/AlejandroPinedo/datalandia-lumina-smart-mobility-gcp>")
@@ -64,10 +70,10 @@ def main():
     OUT.mkdir(exist_ok=True)
     header = "---\ntitle: 'Lumina | Movilidad urbana en DataLandia'\nsubtitle: 'UTEC · Big Data · Entrega 3'\nauthor: 'Herles Pinedo · David Jimenez · José Nomberto'\n---\n\n"
     slides = (P3 / "sustentacion.md").read_text(encoding="utf-8")
-    for file, title in [("01-viajes", "Consulta del pasajero"), ("04-validacion", "Validación integral")]:
+    for file, title in [("01-viajes", "Consulta del pasajero"), ("02-registros", "Viajes registrados"), ("03-tablero", "Resumen de movilidad"), ("04-validacion", "Validación integral")]:
         pic = OUT / "capturas" / (file + ".png")
         if pic.is_file():
-            section = "# Demo · " + title + "\n\n" + image(pic, title, 6.4)
+            section = "# Demo · " + title + "\n\n" + image(pic, captions[file], 8.3)
             slides = slides.replace("# Conclusiones", section + "\n\n# Conclusiones", 1)
     with tempfile.TemporaryDirectory(dir=OUT) as tmp:
         for ext, sections in [("docx", document), ("pptx", [slides])]:
