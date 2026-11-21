@@ -10,11 +10,12 @@ $sdkCandidates = @(
 )
 $gcloudBin = $sdkCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
 if (-not $gcloudBin) { throw 'No se encontró Google Cloud SDK' }
-& $gcloudBin auth login
+& $gcloudBin auth login --update-adc
 if ($LASTEXITCODE -ne 0) { throw 'No se completó el acceso de gcloud' }
 & $gcloudBin config set project bigdata-herles-pinedo
 if ($LASTEXITCODE -ne 0) { throw 'No se pudo seleccionar el proyecto' }
-& $gcloudBin auth application-default login
-if ($LASTEXITCODE -ne 0) { throw 'No se completó el acceso de los clientes Python' }
+if (-not (Test-Path -LiteralPath (Join-Path $env:CLOUDSDK_CONFIG 'application_default_credentials.json'))) {
+    throw 'No se generaron las credenciales de los clientes Python'
+}
 & $gcloudBin auth list --filter=status:ACTIVE --format='value(account)'
 Write-Host 'Acceso local preparado. Avisa a Codex para verificar permisos del proyecto.'

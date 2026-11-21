@@ -48,6 +48,12 @@ la conexión del consumidor; la inspección visual del navegador se declara apar
 
 ## Ejecutar la demo en GCP
 
+Para minimizar la intervencion, ejecutar `P3/conectar_y_validar_gcp.ps1`: abre un unico
+inicio de sesion, prepara gcloud y ADC con `--update-adc`, instala el cliente en .runtime
+y ejecuta automaticamente la demo BigQuery. Al terminar, Codex puede leer el manifiesto local.
+Este flujo fijo se ejecuta desde la terminal del usuario con red; no habilita acceso de red
+a una sesion de Codex que lo tenga restringido. Las credenciales permanecen excluidas de Git.
+
 La sesión del navegador no equivale a autenticar los clientes locales. Ejecutar personalmente:
 
 ```powershell
